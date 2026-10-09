@@ -1,0 +1,44 @@
+﻿/* ===== STAFF DASHBOARD: HEADER AVATAR ===== */
+.staff-avatar-circle {
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    background-color: #0b1c2c;
+    color: #ffffff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+/* ===== STAFF DASHBOARD: TABLE HEADER ===== */
+.staff-table-head th {
+    background-color: transparent !important;
+    color: #9ca3af !important;
+    text-transform: uppercase;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 10px;
+}
+
+/* ===== STAFF DASHBOARD: UPCOMING / ACTIVITY LISTS ===== */
+.upcoming-item {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+    .upcoming-item:last-of-type {
+        border-bottom: none;
+    }
+
+.activity-item {
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+    .activity-item:last-of-type {
+        border-bottom: none;
+    }

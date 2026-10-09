@@ -1,0 +1,543 @@
+﻿<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>
+    </ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{E7FEF26F-CC1C-42B5-969F-0335CB56AA15}</ProjectGuid>
+    <ProjectTypeGuids>{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}</ProjectTypeGuids>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>FEHMS_FortEventHireManagementSystem</RootNamespace>
+    <AssemblyName>FEHMS_FortEventHireManagementSystem</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <UseIISExpress>true</UseIISExpress>
+    <Use64BitIISExpress />
+    <IISExpressSSLPort>44372</IISExpressSSLPort>
+    <IISExpressAnonymousAuthentication />
+    <IISExpressWindowsAuthentication />
+    <IISExpressUseClassicPipelineMode />
+    <UseGlobalApplicationHostFile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
+    <TargetFrameworkProfile />
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=4.1.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\lib\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.DynamicData" />
+    <Reference Include="System.Web.Entity" />
+    <Reference Include="System.Web.ApplicationServices" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Web" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Configuration" />
+    <Reference Include="System.Web.Services" />
+    <Reference Include="System.EnterpriseServices" />
+    <Reference Include="System.Xml.Linq" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\Aisle decorations.png" />
+    <Content Include="Images\Aisle runner.png" />
+    <Content Include="Images\anniversary-package.jpg" />
+    <Content Include="Images\Backdrop flower wall.png" />
+    <Content Include="Images\Backdrop with fairy lights.png" />
+    <Content Include="Images\Backpacking Tent.png" />
+    <Content Include="Images\Balloon Backdrop.png" />
+    <Content Include="Images\Beverage dispensary.png" />
+    <Content Include="Images\birthday-package.jpg" />
+    <Content Include="Images\Bivouac Tent.png" />
+    <Content Include="Images\Black cocktail table.png" />
+    <Content Include="Images\Black table chair cover.png" />
+    <Content Include="Images\Blue cocktail table.png" />
+    <Content Include="Images\Blue table chair cover.png" />
+    <Content Include="Images\Bounce Castle.png" />
+    <Content Include="Images\Branded event items.png" />
+    <Content Include="Images\Bubble Tent.png" />
+    <Content Include="Images\Cabin Tent.png" />
+    <Content Include="Images\Cake stand.png" />
+    <Content Include="Images\Camera.png" />
+    <Content Include="Images\Camping Dome Tent.png" />
+    <Content Include="Images\Candelabras.png" />
+    <Content Include="Images\Candy floss machine.png" />
+    <Content Include="Images\Canvas Tent.png" />
+    <Content Include="Images\Cargo Tent.png" />
+    <Content Include="Images\Catering equipment.png" />
+    <Content Include="Images\Ceiling drapes.png" />
+    <Content Include="Images\Chafing dishes.png" />
+    <Content Include="Images\Chairs.jpg" />
+    <Content Include="Images\Champagne cocktail table.png" />
+    <Content Include="Images\Champagne table chair cover.png" />
+    <Content Include="Images\chandelier.jpg" />
+    <Content Include="Images\ChatGPT Image Jul 21, 2026, 06_07_57 PM.png" />
+    <Content Include="Images\Clearspan Tent.png" />
+    <Content Include="Images\Coat Rack.png" />
+    <Content Include="Images\Coffee station.png" />
+    <Content Include="Images\combos-home.jpg" />
+    <Content Include="Images\Corporate Event Tent.png" />
+    <Content Include="Images\Cultural costumes.png" />
+    <Content Include="Images\Deccor.jpg" />
+    <Content Include="Images\Decor.jpg" />
+    <Content Include="Images\Decorative plants.png" />
+    <Content Include="Images\Discor dancefloor.png" />
+    <Content Include="Images\Discor DJ equipment.png" />
+    <Content Include="Images\Document camera.png" />
+    <Content Include="Images\Dome Tent.png" />
+    <Content Include="Images\Double Decker Tent.png" />
+    <Content Include="Images\Elagant centerpiece.png" />
+    <Content Include="Images\Event lights.png" />
+    <Content Include="Images\fairy-lights.jpg" />
+    <Content Include="Images\Fancy bar counter.png" />
+    <Content Include="Images\Fancy Candy Stall.png" />
+    <Content Include="Images\Fancy stage.png" />
+    <Content Include="Images\FEHMS_Logo.jpeg" />
+    <Content Include="Images\Festival Tent.png" />
+    <Content Include="Images\Fishing Tent.png" />
+    <Content Include="Images\Flipchart and easel.png" />
+    <Content Include="Images\Floral centre piece.png" />
+    <Content Include="Images\Floral stage.png" />
+    <Content Include="Images\Food warmer.png" />
+    <Content Include="Images\Forte Logo.png" />
+    <Content Include="Images\Frame Tent.png" />
+    <Content Include="Images\Gazebo.png" />
+    <Content Include="Images\Glamping Tent.png" />
+    <Content Include="Images\Glass podium.png" />
+    <Content Include="Images\Gold cocktail table.png" />
+    <Content Include="Images\Gold table chair cover.png" />
+    <Content Include="Images\Golf cart.png" />
+    <Content Include="Images\graduation-package.jpg" />
+    <Content Include="Images\hanging-lights.jpg" />
+    <Content Include="Images\Head table.png" />
+    <Content Include="Images\Hero background.png" />
+    <Content Include="Images\High Peak Tent.png" />
+    <Content Include="Images\Hunting Tent.png" />
+    <Content Include="Images\Industrial Tent.png" />
+    <Content Include="Images\Isitolotolo.png" />
+    <Content Include="Images\Kids Banquet Setup.png" />
+    <Content Include="Images\Kudu Horn.png" />
+    <Content Include="Images\led-uplights.jpg" />
+    <Content Include="Images\Lesiba.png" />
+    <Content Include="Images\Light-Up numbers.png" />
+    <Content Include="Images\Lighting equipment.png" />
+    <Content Include="Images\Lighting.png" />
+    <Content Include="Images\Logo.jpeg" />
+    <Content Include="Images\Lounge Furniture.png" />
+    <Content Include="Images\Luxurious crowd control barrier.png" />
+    <Content Include="Images\Luxury Tent.png" />
+    <Content Include="Images\Malay traditional attire.png" />
+    <Content Include="Images\Marimba.png" />
+    <Content Include="Images\Marquee Tent.png" />
+    <Content Include="Images\Mbira.png" />
+    <Content Include="Images\Medical Tent.png" />
+    <Content Include="Images\Military Tent.png" />
+    <Content Include="Images\Mobile bar.png" />
+    <Content Include="Images\Monitor.png" />
+    <Content Include="Images\Ndebele traditional attire.png" />
+    <Content Include="Images\Outdoor heater.png" />
+    <Content Include="Images\Outdoor umbrella.png" />
+    <Content Include="Images\Pagoda Tent.png" />
+    <Content Include="Images\Panel discussion chairs.png" />
+    <Content Include="Images\Party dancefloor.png" />
+    <Content Include="Images\Party DJ equipment.png" />
+    <Content Include="Images\Patio Heater.png" />
+    <Content Include="Images\Pedi traditional attire.png" />
+    <Content Include="Images\Pink cocktail table.png" />
+    <Content Include="Images\Pink table chair cover.png" />
+    <Content Include="Images\plastic-black.png" />
+    <Content Include="Images\plastic-blue.png" />
+    <Content Include="Images\plastic-green.png" />
+    <Content Include="Images\plastic-red.png" />
+    <Content Include="Images\plastic-white.png" />
+    <Content Include="Images\plastic-yellow.png" />
+    <Content Include="Images\Pole Tent.png" />
+    <Content Include="Images\Pop-up Tent.png" />
+    <Content Include="Images\Popcorn Machine.png" />
+    <Content Include="Images\Portable toiltes.png" />
+    <Content Include="Images\Poster boards.png" />
+    <Content Include="Images\Projection screen.png" />
+    <Content Include="Images\Projector.png" />
+    <Content Include="Images\Rectengular Banquet Setup .png" />
+    <Content Include="Images\Red generator.png" />
+    <Content Include="Images\Registration table.png" />
+    <Content Include="Images\Rooftop Tent.png" />
+    <Content Include="Images\Round Banquet Setup.png" />
+    <Content Include="Images\round-table-blue.png" />
+    <Content Include="Images\round-table-silver.png" />
+    <Content Include="Images\round-table-white.png" />
+    <Content Include="Images\Sailcloth Tent.png" />
+    <Content Include="Images\Screen Tent.png" />
+    <Content Include="Images\Segankure.png" />
+    <Content Include="Images\Self serve catering equipment.png" />
+    <Content Include="Images\Sesotho traditional attire.png" />
+    <Content Include="Images\Setswana traditional attire.png" />
+    <Content Include="Images\Signage and easel.png" />
+    <Content Include="Images\Silver cocktail table.png" />
+    <Content Include="Images\Silver table chair cover.png" />
+    <Content Include="Images\Simpl photo backdrop.png" />
+    <Content Include="Images\Simple bar counter.png" />
+    <Content Include="Images\Simple crowd control barrier.png" />
+    <Content Include="Images\Simple dancefloor.png" />
+    <Content Include="Images\Simple decorations.png" />
+    <Content Include="Images\Simple photo booth.png" />
+    <Content Include="Images\singles-home.jpg" />
+    <Content Include="Images\Sound system.png" />
+    <Content Include="Images\sound.jpg" />
+    <Content Include="Images\Stage platform.png" />
+    <Content Include="Images\Stage.png" />
+    <Content Include="Images\Star Tent.png" />
+    <Content Include="Images\steel-black.png" />
+    <Content Include="Images\steel-blue.png" />
+    <Content Include="Images\steel-gold.png" />
+    <Content Include="Images\steel-pink.png" />
+    <Content Include="Images\steel-silver.png" />
+    <Content Include="Images\steel-white.png" />
+    <Content Include="Images\Stretch Tent.png" />
+    <Content Include="Images\string-lights.jpg" />
+    <Content Include="Images\Stylish photo booth.png" />
+    <Content Include="Images\Swati traditional attire.png" />
+    <Content Include="Images\T&amp;C.png" />
+    <Content Include="Images\T&amp;Cs.jpg" />
+    <Content Include="Images\Tables and chairs.jpg" />
+    <Content Include="Images\Tables&amp;Chairs.jpg" />
+    <Content Include="Images\Tents.jpg" />
+    <Content Include="Images\tiffany-black.png" />
+    <Content Include="Images\tiffany-champagne.png" />
+    <Content Include="Images\tiffany-clear.png" />
+    <Content Include="Images\tiffany-gold.png" />
+    <Content Include="Images\tiffany-silver.png" />
+    <Content Include="Images\tiffany-white.png" />
+    <Content Include="Images\Tipi Tent.png" />
+    <Content Include="Images\Traditional drum.png" />
+    <Content Include="Images\Traditional instruments.png" />
+    <Content Include="Images\Training tables.png" />
+    <Content Include="Images\Trash bins.png" />
+    <Content Include="Images\Tshikona pipes.png" />
+    <Content Include="Images\Tunnel Tent.png" />
+    <Content Include="Images\Uhadi.png" />
+    <Content Include="Images\Umrhubhe.png" />
+    <Content Include="Images\Valentine decor draping.png" />
+    <Content Include="Images\Valentine table linen runners.png" />
+    <Content Include="Images\Wedding arch.png" />
+    <Content Include="Images\Wedding Tent.png" />
+    <Content Include="Images\wedding-blue.jpg" />
+    <Content Include="Images\wedding-gold.jpg" />
+    <Content Include="Images\wedding-silver.jpg" />
+    <Content Include="Images\wedding-white.jpg" />
+    <Content Include="Images\White cocktail table.png" />
+    <Content Include="Images\White table chair cover.png" />
+    <Content Include="Images\Whiteboard.png" />
+    <Content Include="Images\Winter Tent.png" />
+    <Content Include="Images\Wireless microphones.png" />
+    <Content Include="Images\Wooden podium.png" />
+    <Content Include="Images\Work Tent.png" />
+    <Content Include="Images\Xhosa traditional attire.png" />
+    <Content Include="Images\Yellow generator.png" />
+    <Content Include="Images\Zulu traditional attire.png" />
+    <Content Include="Presentation\Cart.aspx" />
+    <Content Include="Presentation\Catalogue.aspx" />
+    <Content Include="Presentation\Checkout.aspx" />
+    <Content Include="Presentation\CustomerDashboard.aspx" />
+    <Content Include="Presentation\DeliveryandExtras.aspx" />
+    <Content Include="Presentation\HirePackages.aspx" />
+    <Content Include="Presentation\ManageCollection.aspx" />
+    <Content Include="Presentation\ManageDelivery.aspx" />
+    <Content Include="Presentation\ManageProfile.aspx" />
+    <Content Include="Presentation\OrderConfirmation.aspx" />
+    <Content Include="Presentation\OrderSummary.aspx" />
+    <Content Include="Presentation\About.aspx" />
+    <Content Include="Presentation\Contact.aspx" />
+    <Content Include="Presentation\ForgottenPassword.aspx" />
+    <Content Include="Presentation\Payment.aspx" />
+    <Content Include="Presentation\Profile.ascx" />
+    <Content Include="Presentation\Staff.master.cs.txt" />
+    <Content Include="Presentation\Staff.master.designer.cs.txt" />
+    <Content Include="Presentation\StaffDashBoard.aspx" />
+    <Content Include="Presentation\StaffDashBoard.aspx.cs.txt" />
+    <Content Include="Presentation\StaffDashBoard.aspx.designer.cs.txt" />
+    <Content Include="Presentation\StaffProfile.aspx" />
+    <Content Include="Presentation\StaffProfile.aspx.cs.txt" />
+    <Content Include="Presentation\StaffProfile.aspx.designer.cs.txt" />
+    <Content Include="Presentation\TermsAndConditions.aspx" />
+    <Content Include="Presentation\Reviews.aspx" />
+    <Content Include="Presentation\Home.aspx" />
+    <Content Include="Presentation\Registration.aspx" />
+    <Content Include="Presentation\Login.aspx" />
+    <Content Include="Presentation\TrackOrder.aspx" />
+    <Content Include="Presentation\WebForm1.aspx" />
+    <Content Include="Stylesheet\Forte.css" />
+    <Content Include="Stylesheet\TrackOrderIntegration.css" />
+    <Content Include="Web.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Content\BookingHistory.cs" />
+    <Compile Include="Presentation\Cart.aspx.cs">
+      <DependentUpon>Cart.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\Cart.aspx.designer.cs">
+      <DependentUpon>Cart.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Catalogue.aspx.cs">
+      <DependentUpon>Catalogue.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\Catalogue.aspx.designer.cs">
+      <DependentUpon>Catalogue.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Checkout.aspx.cs">
+      <DependentUpon>Checkout.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\Checkout.aspx.designer.cs">
+      <DependentUpon>Checkout.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Customer.master.cs">
+      <DependentUpon>Customer.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\Customer.master.designer.cs">
+      <DependentUpon>Customer.master</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\CustomerDashboard.aspx.cs">
+      <DependentUpon>CustomerDashboard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\CustomerDashboard.aspx.designer.cs">
+      <DependentUpon>CustomerDashboard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\DeliveryandExtras.aspx.cs">
+      <DependentUpon>DeliveryandExtras.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\DeliveryandExtras.aspx.designer.cs">
+      <DependentUpon>DeliveryandExtras.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\HirePackages.aspx.cs">
+      <DependentUpon>HirePackages.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\HirePackages.aspx.designer.cs">
+      <DependentUpon>HirePackages.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\ManageCollection.aspx.cs">
+      <DependentUpon>ManageCollection.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\ManageCollection.aspx.designer.cs">
+      <DependentUpon>ManageCollection.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\ManageDelivery.aspx.cs">
+      <DependentUpon>ManageDelivery.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\ManageDelivery.aspx.designer.cs">
+      <DependentUpon>ManageDelivery.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\ManageProfile.aspx.cs">
+      <DependentUpon>ManageProfile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\ManageProfile.aspx.designer.cs">
+      <DependentUpon>ManageProfile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\OrderConfirmation.aspx.cs">
+      <DependentUpon>OrderConfirmation.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\OrderConfirmation.aspx.designer.cs">
+      <DependentUpon>OrderConfirmation.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\OrderSummary.aspx.cs">
+      <DependentUpon>OrderSummary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\OrderSummary.aspx.designer.cs">
+      <DependentUpon>OrderSummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Payment.aspx.cs">
+      <DependentUpon>Payment.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\Payment.aspx.designer.cs">
+      <DependentUpon>Payment.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Profile.ascx.cs">
+      <DependentUpon>Profile.ascx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\Profile.ascx.designer.cs">
+      <DependentUpon>Profile.ascx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Staff.master.cs">
+      <DependentUpon>Staff.master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\Staff.master.designer.cs">
+      <DependentUpon>Staff.master</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\StaffDashBoard.aspx.cs">
+      <DependentUpon>StaffDashBoard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\StaffDashBoard.aspx.designer.cs">
+      <DependentUpon>StaffDashBoard.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\StaffProfile.aspx.cs">
+      <DependentUpon>StaffProfile.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\StaffProfile.aspx.designer.cs">
+      <DependentUpon>StaffProfile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\SystemLayout.Master.cs">
+      <DependentUpon>SystemLayout.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\SystemLayout.Master.designer.cs">
+      <DependentUpon>SystemLayout.Master</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\About.aspx.cs">
+      <DependentUpon>About.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\About.aspx.designer.cs">
+      <DependentUpon>About.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Contact.aspx.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\Contact.aspx.designer.cs">
+      <DependentUpon>Contact.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\ForgottenPassword.aspx.cs">
+      <DependentUpon>ForgottenPassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\ForgottenPassword.aspx.designer.cs">
+      <DependentUpon>ForgottenPassword.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\TermsAndConditions.aspx.cs">
+      <DependentUpon>TermsAndConditions.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\TermsAndConditions.aspx.designer.cs">
+      <DependentUpon>TermsAndConditions.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Reviews.aspx.cs">
+      <DependentUpon>Reviews.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\Reviews.aspx.designer.cs">
+      <DependentUpon>Reviews.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Registration.aspx.cs">
+      <DependentUpon>Registration.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\Registration.aspx.designer.cs">
+      <DependentUpon>Registration.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Login.aspx.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\Login.aspx.designer.cs">
+      <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\TrackOrder.aspx.cs">
+      <DependentUpon>TrackOrder.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\TrackOrder.aspx.designer.cs">
+      <DependentUpon>TrackOrder.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Presentation\SystemLayout.Master" />
+    <Content Include="Presentation\Customer.master" />
+    <Content Include="Presentation\Staff.master" />
+    <None Include="packages.config" />
+    <None Include="Web.Debug.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+    <None Include="Web.Release.config">
+      <DependentUpon>Web.config</DependentUpon>
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(VSToolsPath)\WebApplications\Microsoft.WebApplication.targets" Condition="'$(VSToolsPath)' != ''" />
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v10.0\WebApplications\Microsoft.WebApplication.targets" Condition="false" />
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <UseIIS>True</UseIIS>
+          <AutoAssignPort>True</AutoAssignPort>
+          <DevelopmentServerPort>59633</DevelopmentServerPort>
+          <DevelopmentServerVPath>/</DevelopmentServerVPath>
+          <IISUrl>https://localhost:44372/</IISUrl>
+          <NTLMAuthentication>False</NTLMAuthentication>
+          <UseCustomServer>False</UseCustomServer>
+          <CustomServerUrl>
+          </CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+  <Import Project="packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets" Condition="Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.4.1.0\build\net472\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.targets'))" />
+  </Target>
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

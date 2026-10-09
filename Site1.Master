@@ -1,0 +1,274 @@
+﻿<%@ Master Language="C#" AutoEventWireup="true" CodeBehind="Site1.master.cs" Inherits="FEHMS_FortEventHireManagementSystem.Site1" %>
+
+<!DOCTYPE html>
+<html>
+<head runat="server">
+    <title>Forte Events</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+    <!-- Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+        :root {
+            --primary-dark: #0b1c2c;
+            --secondary-dark: #091521;
+            --accent-gold: #d4af37;
+            --accent-gold-soft: #c9a227;
+            --text-light: #ffffff;
+            --text-muted: #b0b8c1;
+            --bg-light: #f4f6f9;
+            --card-bg: #ffffff;
+        }
+
+        /* GLOBAL */
+        body {
+            margin: 0;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background-color: var(--bg-light);
+            color: #1a1a1a;
+        }
+
+        h1, h2, h3, h4, h5, .navbar-brand {
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 600;
+        }
+
+        /* NAVBAR */
+        .navbar {
+            background: linear-gradient(90deg, var(--primary-dark), var(--secondary-dark));
+            padding: 12px 0;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+
+        .navbar-brand img {
+            height: 60px;
+            width: auto;
+            object-fit: contain;
+            filter: drop-shadow(0 2px 6px rgba(0,0,0,0.4));
+        }
+
+        .nav-link {
+            color: var(--text-light) !important;
+            font-weight: 500;
+            transition: 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--accent-gold) !important;
+        }
+
+        .navbar-toggler {
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .navbar-toggler-icon {
+            filter: invert(1);
+        }
+
+        .nav-icons i {
+            color: var(--text-light);
+            font-size: 20px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .nav-icons i:hover {
+            color: var(--accent-gold);
+        }
+
+        /* MAIN CONTENT */
+        .main-content {
+            padding: 30px;
+        }
+
+        /* BUTTONS */
+        .btn-primary {
+            background-color: var(--accent-gold);
+            border: none;
+            color: #000;
+            font-weight: 600;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--accent-gold-soft);
+            color: #000;
+        }
+
+        .btn-outline-primary {
+            border: 1px solid var(--accent-gold);
+            color: var(--accent-gold);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--accent-gold);
+            color: #000;
+        }
+
+        /* CARDS */
+        .card {
+            background: var(--card-bg);
+            border: none;
+            border-radius: 12px;
+            box-shadow: 0 6px 20px rgba(0,0,0,0.08);
+            transition: 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        /* FOOTER */
+        .footer {
+            background: linear-gradient(90deg, var(--primary-dark), var(--secondary-dark));
+            color: var(--text-light);
+            padding: 50px 0 20px;
+            margin-top: 50px;
+        }
+
+        .footer h5 {
+            font-weight: 600;
+            margin-bottom: 20px;
+        }
+
+        .footer a {
+            color: var(--text-muted);
+            text-decoration: none;
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .footer a:hover {
+            color: var(--accent-gold);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 30px;
+            padding-top: 15px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .social-icons i {
+            font-size: 20px;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .social-icons i:hover {
+            color: var(--accent-gold);
+        }
+    </style>
+
+    <asp:ContentPlaceHolder ID="head" runat="server"></asp:ContentPlaceHolder>
+</head>
+
+<body>
+    <form runat="server">
+
+        <!-- NAVBAR -->
+        <nav class="navbar navbar-expand-lg">
+            <div class="container">
+
+                <!-- LOGO -->
+                <a class="navbar-brand" href="Default.aspx">
+                    <img src="Forte Logo.png" alt="Forte Events Logo" />
+                </a>
+
+                <!-- TOGGLE -->
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- MENU -->
+                <div class="collapse navbar-collapse" id="navMenu">
+                    <ul class="navbar-nav mx-auto">
+                        <li class="nav-item"><a class="nav-link" href="Default.aspx">Home</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Catalogue.aspx">Catalogue</a></li>
+                        <li class="nav-item"><a class="nav-link" href="About.aspx">About Us</a></li>
+                        <li class="nav-item"><a class="nav-link" href="HowItWorks.aspx">How It Works</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Reviews.aspx">Reviews</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Contact.aspx">Contact Us</a></li>
+                    </ul>
+
+                    <!-- RIGHT SIDE -->
+                    <div class="d-flex align-items-center gap-3 nav-icons">
+                        <i class="bi bi-cart"></i>
+                        <asp:Button ID="btnLogin" runat="server" Text="Login" CssClass="btn btn-outline-primary" />
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- CONTENT -->
+        <div class="main-content container">
+            <asp:ContentPlaceHolder ID="MainContent" runat="server"></asp:ContentPlaceHolder>
+            <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            <div class="container">
+                <div class="row">
+
+                    <div class="col-md-3">
+                        <img src="Forte Logo.png" style="height:70px;" />
+                        <p class="mt-3">
+                            We provide premium event hire equipment and décor to make your events unforgettable.
+                        </p>
+                    </div>
+
+                    <div class="col-md-2">
+                        <h5>Quick Links</h5>
+                        <a href="Default.aspx">Home</a>
+                        <a href="Catalogue.aspx">Catalogue</a>
+                        <a href="About.aspx">About Us</a>
+                        <a href="HowItWorks.aspx">How It Works</a>
+                        <a href="Contact.aspx">Contact</a>
+                    </div>
+
+                    <div class="col-md-3">
+                        <h5>Our Services</h5>
+                        <a href="#">Tents & Marquees</a>
+                        <a href="#">Tables & Chairs</a>
+                        <a href="#">Décor & Lighting</a>
+                        <a href="#">Sound & Audio</a>
+                        <a href="#">Catering Equipment</a>
+                    </div>
+
+                    <div class="col-md-2">
+                        <h5>Contact</h5>
+                        <p><i class="bi bi-telephone"></i> +27 73 244 0364</p>
+                        <p><i class="bi bi-envelope"></i> info@forteevents.co.za</p>
+                        <p><i class="bi bi-geo-alt"></i> East London, EC</p>
+                    </div>
+
+                    <div class="col-md-2">
+                        <h5>Follow Us</h5>
+                        <div class="social-icons">
+                            <i class="bi bi-facebook"></i>
+                            <i class="bi bi-instagram"></i>
+                            <i class="bi bi-whatsapp"></i>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div class="footer-bottom">
+                    © <%: DateTime.Now.Year %> Forte Events | All Rights Reserved
+                </div>
+            </div>
+        </div>
+
+    </form>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
