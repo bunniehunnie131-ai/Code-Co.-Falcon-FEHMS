@@ -1,8 +1,8 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/Staff.master" AutoEventWireup="true" CodeBehind="StaffDashBoard.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.StaffDashBoard" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="StaffContent" runat="server">
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/SystemLayout.Master" AutoEventWireup="true" CodeBehind="StaffDashBoard.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.StaffDashBoard" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 
     
-    <link href="../Stylesheet/StaffDesign.css" rel="stylesheet" />
+    <link href="../Stylesheet/Forte.css" rel="stylesheet" />
 
     <!-- PAGE HEADER -->
     <div class="d-flex justify-content-between align-items-center mb-4 pb-3 border-bottom">
