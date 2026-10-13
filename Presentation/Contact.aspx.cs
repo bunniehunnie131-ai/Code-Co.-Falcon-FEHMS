@@ -13,7 +13,7 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         {
             if (!IsPostBack)
             {
-                successMessage.Visible = false;
+                /*successMessage.Visible = false;*/
             }
         }
 

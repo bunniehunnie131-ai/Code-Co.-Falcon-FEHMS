@@ -266,6 +266,7 @@
     <Content Include="Presentation\CustomerDashboard.aspx" />
     <Content Include="Presentation\DeliveryandExtras.aspx" />
     <Content Include="Presentation\HirePackages.aspx" />
+    <Content Include="Presentation\HowItWorks.aspx" />
     <Content Include="Presentation\ManageCollection.aspx" />
     <Content Include="Presentation\ManageDelivery.aspx" />
     <Content Include="Presentation\ManageProfile.aspx" />
@@ -345,6 +346,13 @@
     </Compile>
     <Compile Include="Presentation\HirePackages.aspx.designer.cs">
       <DependentUpon>HirePackages.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\HowItWorks.aspx.cs">
+      <DependentUpon>HowItWorks.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\HowItWorks.aspx.designer.cs">
+      <DependentUpon>HowItWorks.aspx</DependentUpon>
     </Compile>
     <Compile Include="Presentation\ManageCollection.aspx.cs">
       <DependentUpon>ManageCollection.aspx</DependentUpon>
