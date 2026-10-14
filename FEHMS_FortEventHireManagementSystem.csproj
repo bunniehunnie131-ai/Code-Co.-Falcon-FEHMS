@@ -260,6 +260,7 @@
     <Content Include="Images\Xhosa traditional attire.png" />
     <Content Include="Images\Yellow generator.png" />
     <Content Include="Images\Zulu traditional attire.png" />
+    <Content Include="Presentation\AssignedBookings.aspx" />
     <Content Include="Presentation\Cart.aspx" />
     <Content Include="Presentation\Catalogue.aspx" />
     <Content Include="Presentation\Checkout.aspx" />
@@ -270,6 +271,7 @@
     <Content Include="Presentation\ManageCollections.aspx" />
     <Content Include="Presentation\ManageDelivery.aspx" />
     <Content Include="Presentation\ManageProfile.aspx" />
+    <Content Include="Presentation\ManageReturns.aspx" />
     <Content Include="Presentation\OrderConfirmation.aspx" />
     <Content Include="Presentation\OrderSummary.aspx" />
     <Content Include="Presentation\About.aspx" />
@@ -296,6 +298,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Content\BookingHistory.cs" />
+    <Compile Include="Presentation\AssignedBookings.aspx.cs">
+      <DependentUpon>AssignedBookings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\AssignedBookings.aspx.designer.cs">
+      <DependentUpon>AssignedBookings.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Cart.aspx.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -372,6 +381,13 @@
     </Compile>
     <Compile Include="Presentation\ManageProfile.aspx.designer.cs">
       <DependentUpon>ManageProfile.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\ManageReturns.aspx.cs">
+      <DependentUpon>ManageReturns.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\ManageReturns.aspx.designer.cs">
+      <DependentUpon>ManageReturns.aspx</DependentUpon>
     </Compile>
     <Compile Include="Presentation\OrderConfirmation.aspx.cs">
       <DependentUpon>OrderConfirmation.aspx</DependentUpon>
