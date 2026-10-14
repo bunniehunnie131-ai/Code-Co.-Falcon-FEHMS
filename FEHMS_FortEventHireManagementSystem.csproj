@@ -267,7 +267,7 @@
     <Content Include="Presentation\DeliveryandExtras.aspx" />
     <Content Include="Presentation\HirePackages.aspx" />
     <Content Include="Presentation\HowItWorks.aspx" />
-    <Content Include="Presentation\ManageCollection.aspx" />
+    <Content Include="Presentation\ManageCollections.aspx" />
     <Content Include="Presentation\ManageDelivery.aspx" />
     <Content Include="Presentation\ManageProfile.aspx" />
     <Content Include="Presentation\OrderConfirmation.aspx" />
@@ -280,8 +280,6 @@
     <Content Include="Presentation\Staff.master.cs.txt" />
     <Content Include="Presentation\Staff.master.designer.cs.txt" />
     <Content Include="Presentation\StaffDashBoard.aspx" />
-    <Content Include="Presentation\StaffDashBoard.aspx.cs.txt" />
-    <Content Include="Presentation\StaffDashBoard.aspx.designer.cs.txt" />
     <Content Include="Presentation\StaffProfile.aspx" />
     <Content Include="Presentation\StaffProfile.aspx.cs.txt" />
     <Content Include="Presentation\StaffProfile.aspx.designer.cs.txt" />
@@ -354,12 +352,12 @@
     <Compile Include="Presentation\HowItWorks.aspx.designer.cs">
       <DependentUpon>HowItWorks.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\ManageCollection.aspx.cs">
-      <DependentUpon>ManageCollection.aspx</DependentUpon>
+    <Compile Include="Presentation\ManageCollections.aspx.cs">
+      <DependentUpon>ManageCollections.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
-    <Compile Include="Presentation\ManageCollection.aspx.designer.cs">
-      <DependentUpon>ManageCollection.aspx</DependentUpon>
+    <Compile Include="Presentation\ManageCollections.aspx.designer.cs">
+      <DependentUpon>ManageCollections.aspx</DependentUpon>
     </Compile>
     <Compile Include="Presentation\ManageDelivery.aspx.cs">
       <DependentUpon>ManageDelivery.aspx</DependentUpon>

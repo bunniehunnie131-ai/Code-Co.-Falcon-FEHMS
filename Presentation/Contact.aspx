@@ -3,143 +3,207 @@
     <link href="../Stylesheet/Forte.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <link href="Content/Forte.css" rel="stylesheet" />
+     <link href="Content/Forte.css" rel="stylesheet" />
 
-      <div class="how-page">
+    <div class="contact-page-wrapper">
+        <div class="container">
 
-        <!-- ================= INTRO ================= -->
-        <section class="how-hero">
-            <div class="how-eyebrow">How it works</div>
-            <h1>Hiring with Forte Events, step by step</h1>
-            <p>
-                Create an account, choose what you need, place your order and pay to confirm it.
-                We deliver, set up and collect &mdash; you enjoy your event.
-            </p>
-            <div class="how-actions">
-                <a href="Registration.aspx" class="btn-forte"><i class="bi bi-person-plus"></i> Create an account</a>
-                <a href="Login.aspx" class="btn-outline-forte"><i class="bi bi-box-arrow-in-right"></i> Log in</a>
-            </div>
-        </section>
-
-
-        <!-- ================= STEPS ================= -->
-        <section class="how-section">
-            <div class="how-section-head">
-                <h2>Five simple steps</h2>
+            <div class="contact-header">
+                <div class="eyebrow">Get in Touch</div>
+                <h1>We'd love to hear<br />from you!</h1>
+                <p>Have a question, need a quote, or want to discuss your next event? Our team is here to help you every step of the way.</p>
             </div>
 
-            <div class="how-steps">
+            <div class="contact-content">
 
-                <div class="how-step">
-                    <div class="how-step-marker"><div class="how-step-num">1</div></div>
-                    <div class="how-step-body">
-                        <h3 class="how-step-title">Create your account</h3>
-                        <p>Register with your correct details and accept our Terms &amp; Conditions. You only need to do this once.</p>
-                        <a href="Registration.aspx" class="how-step-link">Register <i class="bi bi-arrow-right"></i></a>
+                <div class="contact-info-section">
+
+                    <div class="contact-info-item">
+                        <div class="contact-info-item-icon"><i class="fas fa-phone"></i></div>
+                        <div class="contact-info-item-content">
+                            <div class="contact-info-item-label">Phone</div>
+                            <div class="contact-info-item-value">
+                                <a href="tel:+27685773269">+27 (68) 577-3269</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <div class="contact-info-item-icon"><i class="fas fa-envelope"></i></div>
+                        <div class="contact-info-item-content">
+                            <div class="contact-info-item-label">Email</div>
+                            <div class="contact-info-item-value">
+                                <a href="mailto:forteevents@gmail.com">forteevents@gmail.com</a>
+                                <a href="mailto:bookings@forteevents.co.za">bookings@forteevents.co.za</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <div class="contact-info-item-icon"><i class="fas fa-map-marker-alt"></i></div>
+                        <div class="contact-info-item-content">
+                            <div class="contact-info-item-label">Address</div>
+                            <div class="contact-info-item-value">
+                                East London, Eastern Cape<br />South Africa
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="contact-info-item">
+                        <div class="contact-info-item-icon"><i class="fas fa-clock"></i></div>
+                        <div class="contact-info-item-content">
+                            <div class="contact-info-item-label">Business Hours</div>
+                            <div class="contact-info-item-value">
+                                Monday - Friday: 8:30 AM - 4:30 PM<br />
+                                Saturday - Sunday: Closed<br />
+                                Public Holidays: Closed
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="emergency-box">
+                        <div class="emergency-box-icon"><i class="fas fa-headset"></i></div>
+                        <div>
+                            <h4>Need Immediate Assistance?</h4>
+                            <p>For urgent bookings or support, give us a call during business hours.</p>
+                            <a href="tel:+27685773269" class="btn-call-now">Call Now</a>
+                        </div>
+                    </div>
+
+                    <div class="connect-heading">Connect With Us</div>
+                    <div class="social-icons-row">
+                        <a href="https://www.facebook.com/ForteEvents" target="_blank" class="social-icon-circle facebook"><i class="fab fa-facebook-f"></i></a>
+                        <a href="https://www.instagram.com/ForteEvents" target="_blank" class="social-icon-circle instagram"><i class="fab fa-instagram"></i></a>
+                        <a href="https://wa.me/27685773269" target="_blank" class="social-icon-circle whatsapp"><i class="fab fa-whatsapp"></i></a>
                     </div>
                 </div>
 
-                <div class="how-step">
-                    <div class="how-step-marker"><div class="how-step-num">2</div></div>
-                    <div class="how-step-body">
-                        <h3 class="how-step-title">Log in</h3>
-                        <p>Sign in with your email address and password to start a booking and to follow your orders.</p>
-                        <a href="Login.aspx" class="how-step-link">Log in <i class="bi bi-arrow-right"></i></a>
-                    </div>
-                </div>
+                <div class="contact-form-container">
+                    <h2>Send Us a Message</h2>
+                    <div class="form-subtitle">Fill in the form below and we will get back to you as soon as possible.</div>
 
-                <div class="how-step">
-                    <div class="how-step-marker"><div class="how-step-num">3</div></div>
-                    <div class="how-step-body">
-                        <h3 class="how-step-title">Choose your items and place your order</h3>
-                        <p>Browse the catalogue, add what you need to your cart, then enter your event date and location. Check your order summary and submit it.</p>
-                        <a href="Catalogue.aspx" class="how-step-link">Browse the catalogue <i class="bi bi-arrow-right"></i></a>
-                    </div>
-                </div>
+                    <asp:Panel ID="contactForm" runat="server">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="txtFullName">Full Name <span class="required">*</span></label>
+                                <div class="input-icon-wrap">
+                                    <i class="fas fa-user"></i>
+                                    <asp:TextBox ID="txtFullName" runat="server" placeholder="Your Name"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtEmail">Email <span class="required">*</span></label>
+                                <div class="input-icon-wrap">
+                                    <i class="fas fa-envelope"></i>
+                                    <asp:TextBox ID="txtEmail" runat="server" TextMode="Email" placeholder="Email Address"></asp:TextBox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="txtPhone">Phone <span class="required">*</span></label>
+                                <div class="input-icon-wrap">
+                                    <i class="fas fa-phone"></i>
+                                    <asp:TextBox ID="txtPhone" runat="server" TextMode="Phone" placeholder="Phone Number"></asp:TextBox>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtSubject">Subject <span class="required">*</span></label>
+                                <div class="input-icon-wrap">
+                                    <i class="fas fa-tag"></i>
+                                    <asp:TextBox ID="txtSubject" runat="server" placeholder="Subject"></asp:TextBox>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="txtMessage">Message <span class="required">*</span></label>
+                            <div class="input-icon-wrap textarea-icon">
+                                <i class="fas fa-pen"></i>
+                                <asp:TextBox ID="txtMessage" runat="server" TextMode="MultiLine" placeholder="Your Message"></asp:TextBox>
+                            </div>
+                        </div>
 
-                <div class="how-step how-step-key">
-                    <div class="how-step-marker"><div class="how-step-num">4</div></div>
-                    <div class="how-step-body">
-                        <h3 class="how-step-title">Pay to confirm your booking <span class="how-tag">Important</span></h3>
-                        <p>Your order is only counted once it has been paid. Until then it stays <span class="how-pill how-pill-pending">Pending</span> and we cannot guarantee your items or your event date. When your payment is received, the status changes to <span class="how-pill how-pill-confirmed">Confirmed</span></p>
-                        <p class="how-note">Payments, changes and cancellations are covered in our <a href="TermsAndConditions.aspx">Terms &amp; Conditions</a>.</p>
-                    </div>
-                </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="ddlPreferredContact">Preferred Contact Method <span class="required">*</span></label>
+                                <asp:DropDownList ID="ddlPreferredContact" runat="server">
+                                    <asp:ListItem Value="">-- Select preferred method --</asp:ListItem>
+                                    <asp:ListItem Value="Email">Email</asp:ListItem>
+                                    <asp:ListItem Value="Phone">Phone</asp:ListItem>
+                                </asp:DropDownList>
+                            </div>
+                            <div class="form-group">
+                                <label for="txtBestTime">Best Time to Contact (Optional)</label>
+                                <asp:TextBox ID="txtBestTime" runat="server" placeholder="e.g., Weekday mornings or weekends"></asp:TextBox>
+                            </div>
+                        </div>
 
-                <div class="how-step">
-                    <div class="how-step-marker"><div class="how-step-num">5</div></div>
-                    <div class="how-step-body">
-                        <h3 class="how-step-title">We deliver, you celebrate, we collect</h3>
-                        <p>On your event date we deliver and set up your items, and we collect them again afterwards. You can follow your order at any time.</p>
-                        <a href="TrackOrder.aspx" class="how-step-link">Track my order <i class="bi bi-arrow-right"></i></a>
-                    </div>
-                </div>
+                        <asp:LinkButton ID="btnSubmit" runat="server" OnClick="btnSubmit_Click" CssClass="btn-submit">
+                            <i class="fas fa-paper-plane"></i> Send Message
+                        </asp:LinkButton>
+                        <div class="form-security-note"><i class="fas fa-lock"></i> Your information is safe and will never be shared.</div>
+                    </asp:Panel>
 
-            </div>
-        </section>
-
-
-        <!-- ================= SERVICES ================= -->
-        <section class="how-section">
-            <div class="how-section-head">
-                <h2>What you can hire</h2>
-                <p>Everything for your event, from one supplier.</p>
-            </div>
-
-            <div class="how-card-grid">
-
-                <div class="how-card">
-                    <div class="how-card-icon"><i class="fa-solid fa-tent"></i></div>
-                    <h3>Tents &amp; Marquees</h3>
-                    <p>Frame tents and marquees for any weather.</p>
-                </div>
-
-                <div class="how-card">
-                    <div class="how-card-icon"><i class="fa-solid fa-chair"></i></div>
-                    <h3>Tables &amp; Chairs</h3>
-                    <p>Banquet tables and chairs for every guest.</p>
-                </div>
-
-                <div class="how-card">
-                    <div class="how-card-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>
-                    <h3>D&eacute;cor &amp; Lighting</h3>
-                    <p>Centrepieces, backdrops and lighting for your theme.</p>
-                </div>
-
-                <div class="how-card">
-                    <div class="how-card-icon"><i class="fa-solid fa-music"></i></div>
-                    <h3>Sound, Audio &amp; DJ</h3>
-                    <p>Sound systems, microphones and DJ entertainment.</p>
-                </div>
-
-                <div class="how-card">
-                    <div class="how-card-icon"><i class="fa-solid fa-utensils"></i></div>
-                    <h3>Catering Equipment</h3>
-                    <p>Everything you need to serve your guests.</p>
-                </div>
-
-                <div class="how-card">
-                    <div class="how-card-icon"><i class="fa-solid fa-truck"></i></div>
-                    <h3>Delivery &amp; Set-up</h3>
-                    <p>On-time delivery, set-up and collection.</p>
-                </div>
-
-            </div>
-        </section>
-
-
-        <!-- ================= CLOSING ================= -->
-        <section class="how-section">
-            <div class="how-cta">
-                <h2>Ready to get started?</h2>
-                <p>Create your account and book your event today. Questions? We are happy to help.</p>
-                <div class="how-actions">
-                    <a href="Registration.aspx" class="btn-forte"><i class="bi bi-person-plus"></i> Create an account</a>
-                    <a href="Contact.aspx" class="btn-outline-forte"><i class="bi bi-envelope"></i> Contact us</a>
+                    <asp:Panel ID="successMessage" runat="server" Visible="false">
+                        <div class="success-message">
+                            <h4><i class="fas fa-check-circle"></i> Message Sent Successfully!</h4>
+                            <p>Thank you for reaching out! We've received your message and will get back to you within 2 business days. If your matter is urgent, please call us at <a href="tel:+27685773269" style="color: inherit; text-decoration: none; font-weight: 700;">+27 (68) 577-3269</a></p>
+                        </div>
+                    </asp:Panel>
                 </div>
             </div>
-        </section>
 
+            <div class="department-contacts">
+                <h3><i class="fas fa-sitemap"></i> Department Contacts</h3>
+                <p style="color: var(--ccf-medium-grey); margin-bottom: 25px;">For specific enquiries, you can reach the relevant department directly:</p>
+                <div class="departments-grid">
+                    <div class="department-card">
+                        <h4><i class="fas fa-calendar"></i> Bookings Enquiry</h4>
+                        <a href="mailto:bookings@forteevents.co.za">bookings@forteevents.co.za</a>
+                    </div>
+                    <div class="department-card">
+                        <h4><i class="fas fa-truck"></i> Delivery/Collection</h4>
+                        <a href="mailto:delivery@forteevents.co.za">delivery@forteevents.co.za</a>
+                    </div>
+                    <div class="department-card">
+                        <h4><i class="fas fa-credit-card"></i> Payment Questions</h4>
+                        <a href="mailto:payments@forteevents.co.za">payments@forteevents.co.za</a>
+                    </div>
+                    <div class="department-card">
+                        <h4><i class="fas fa-tools"></i> Damage Claims</h4>
+                        <a href="mailto:claims@forteevents.co.za">claims@forteevents.co.za</a>
+                    </div>
+                    <div class="department-card">
+                        <h4><i class="fas fa-headset"></i> Technical Support</h4>
+                        <a href="mailto:support@forteevents.co.za">support@forteevents.co.za</a>
+                    </div>
+                </div>
+            </div>
+
+            
+            </div>
+
+
+            <div class="additional-info-section">
+                <h3><i class="fas fa-circle-info"></i> Additional Information</h3>
+
+                <div class="info-box">
+                    <h4><i class="fas fa-question-circle"></i> Have a Quick Question?</h4>
+                    <p>Check our <a href="~/Presentation/FAQ.aspx" runat="server">Frequently Asked Questions</a> page first - you might find the answer you're looking for!</p>
+                </div>
+
+                <div class="info-box">
+                    <h4><i class="fas fa-universal-access"></i> Accessibility</h4>
+                    <p>We're committed to serving all customers. If you have any accessibility needs or require alternative contact methods, please <strong>don't hesitate to reach out</strong>. We're here to help and will make special arrangements if needed.</p>
+                </div>
+
+                <div class="info-box">
+                    <h4><i class="fas fa-lock"></i> Privacy & Security</h4>
+                    <p>Your information is safe with us. We take data privacy seriously and will never share your details without your consent. For more information, please see our <a href="~/Presentation/Privacy.aspx" runat="server">Privacy Policy</a>.</p>
+                </div>
+            </div>
+
+        
     </div>
 
 </asp:Content>

@@ -1,611 +1,158 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Presentation/SystemLayout.Master" CodeBehind="ManageDelivery.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.ManageDelivery" %>
-
-<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
-
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/SystemLayout.Master" AutoEventWireup="true" CodeBehind="ManageDelivery.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.ManageDelivery" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
+</asp:Content>
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
     <style>
-    /* ==============================
-       FEHMS MANAGE DELIVERY
-       ============================== */
-
-    :root {
-        --fehms-primary: #1e3a8a;
-        --fehms-primary-dark: #142c6b;
-        --fehms-primary-light: #dbeafe;
-        --fehms-accent: #3b82f6;
-        --fehms-background: #f4f6f9;
-        --fehms-white: #ffffff;
-        --fehms-text: #1f2937;
-        --fehms-muted: #64748b;
-        --fehms-border: #e5e7eb;
-        --fehms-success: #15803d;
-        --fehms-success-bg: #dcfce7;
-        --fehms-danger: #b91c1c;
-        --fehms-danger-bg: #fee2e2;
-    }
-
-    /* Page */
-    .delivery-page {
-        background: var(--fehms-background);
-        min-height: 100vh;
-        padding: 10px 5px 40px;
-    }
-
-    /* Header */
-    .delivery-header {
-        background: var(--fehms-white);
-        border-radius: 16px;
-        padding: 28px 32px;
-        margin-bottom: 24px;
-        border: 1px solid var(--fehms-border);
-        box-shadow: 0 4px 18px rgba(15, 23, 42, 0.06);
-    }
-
-    .delivery-header h1 {
-        margin: 0 0 7px;
-        color: var(--fehms-primary-dark);
-        font-size: 30px;
-        font-weight: 700;
-        letter-spacing: -0.3px;
-    }
-
-    .delivery-header p {
-        margin: 0;
-        color: var(--fehms-muted);
-        font-size: 15px;
-    }
-
-    /* ==============================
-       STAT CARDS
-       ============================== */
-
-    .delivery-stats {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 18px;
-        margin-bottom: 24px;
-    }
-
-    .delivery-stat-card {
-        background: var(--fehms-white);
-        border: 1px solid var(--fehms-border);
-        border-radius: 14px;
-        padding: 21px;
-        display: flex;
-        align-items: center;
-        gap: 16px;
-        box-shadow: 0 4px 15px rgba(15, 23, 42, 0.05);
-        transition: all 0.2s ease;
-    }
-
-    .delivery-stat-card:hover {
-        transform: translateY(-2px);
-        box-shadow: 0 8px 22px rgba(15, 23, 42, 0.09);
-    }
-
-    .delivery-stat-icon {
-        width: 50px;
-        height: 50px;
-        min-width: 50px;
-        border-radius: 12px;
-        background: var(--fehms-primary-light);
-        color: var(--fehms-primary);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 22px;
-    }
-
-    .delivery-stat-label {
-        display: block;
-        color: var(--fehms-muted);
-        font-size: 13px;
-        font-weight: 500;
-        margin-bottom: 3px;
-    }
-
-    .delivery-stat-card h3 {
-        margin: 0;
-        color: var(--fehms-text);
-        font-size: 25px;
-        font-weight: 700;
-    }
-
-    /* ==============================
-       FILTER CARD
-       ============================== */
-
-    .delivery-filter-card {
-        background: var(--fehms-white);
-        border: 1px solid var(--fehms-border);
-        border-radius: 14px;
-        padding: 23px;
-        margin-bottom: 24px;
-        display: grid;
-        grid-template-columns: 2fr 1fr auto;
-        gap: 18px;
-        align-items: end;
-        box-shadow: 0 4px 15px rgba(15, 23, 42, 0.05);
-    }
-
-    .delivery-search label,
-    .delivery-status-filter label {
-        display: block;
-        color: var(--fehms-text);
-        font-size: 13px;
-        font-weight: 600;
-        margin-bottom: 8px;
-    }
-
-    .form-control,
-    .form-select {
-        border: 1px solid #d1d5db;
-        border-radius: 9px;
-        padding: 11px 13px;
-        min-height: 44px;
-        color: var(--fehms-text);
-        background-color: #ffffff;
-        font-size: 14px;
-    }
-
-    .form-control:focus,
-    .form-select:focus {
-        border-color: var(--fehms-primary);
-        box-shadow: 0 0 0 3px rgba(30, 58, 138, 0.12);
-        outline: none;
-    }
-
-    .form-control::placeholder {
-        color: #9ca3af;
-    }
-
-    /* Filter Buttons */
-    .delivery-filter-buttons {
-        display: flex;
-        gap: 9px;
-    }
-
-    .delivery-search-button,
-    .delivery-clear-button {
-        min-height: 44px;
-        padding: 10px 20px;
-        border-radius: 9px;
-        font-size: 14px;
-        font-weight: 600;
-        border: none;
-    }
-
-    .delivery-search-button {
-        background: var(--fehms-primary);
-        color: #ffffff;
-    }
-
-    .delivery-search-button:hover {
-        background: var(--fehms-primary-dark);
-        color: #ffffff;
-    }
-
-    .delivery-clear-button {
-        background: #e5e7eb;
-        color: #374151;
-    }
-
-    .delivery-clear-button:hover {
-        background: #d1d5db;
-        color: #1f2937;
-    }
-
-    /* ==============================
-       TABLE CARD
-       ============================== */
-
-    .delivery-table-card {
-        background: var(--fehms-white);
-        border: 1px solid var(--fehms-border);
-        border-radius: 14px;
-        overflow: hidden;
-        box-shadow: 0 4px 15px rgba(15, 23, 42, 0.05);
-    }
-
-    .delivery-table-header {
-        padding: 22px 25px;
-        border-bottom: 1px solid var(--fehms-border);
-        background: #ffffff;
-    }
-
-    .delivery-table-header h2 {
-        margin: 0 0 5px;
-        color: var(--fehms-primary-dark);
-        font-size: 19px;
-        font-weight: 700;
-    }
-
-    .delivery-table-header p {
-        margin: 0;
-        color: var(--fehms-muted);
-        font-size: 13px;
-    }
-
-    /* Table */
-    .delivery-table {
-        margin: 0;
-        width: 100%;
-        color: var(--fehms-text);
-        vertical-align: middle;
-    }
-
-    .delivery-table thead th {
-        background: #f8fafc;
-        color: #475569;
-        border-bottom: 1px solid var(--fehms-border);
-        padding: 14px 16px;
-        font-size: 12px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.3px;
-        white-space: nowrap;
-    }
-
-    .delivery-table tbody td {
-        padding: 16px;
-        border-bottom: 1px solid #eef2f7;
-        color: #374151;
-        font-size: 13px;
-        vertical-align: middle;
-    }
-
-    .delivery-table tbody tr {
-        transition: background-color 0.15s ease;
-    }
-
-    .delivery-table tbody tr:hover {
-        background-color: #f8faff;
-    }
-
-    .delivery-table tbody tr:last-child td {
-        border-bottom: none;
-    }
-
-    /* Delivery Address */
-    .delivery-address {
-        line-height: 1.6;
-        color: #4b5563;
-    }
-
-    /* ==============================
-       STATUS BADGES
-       ============================== */
-
-    .status-badge {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        padding: 6px 11px;
-        border-radius: 20px;
-        font-size: 11px;
-        font-weight: 700;
-        white-space: nowrap;
-    }
-
-    .status-scheduled {
-        background: #dbeafe;
-        color: #1e3a8a;
-    }
-
-    .status-delivered {
-        background: var(--fehms-success-bg);
-        color: var(--fehms-success);
-    }
-
-    .status-overdue {
-        background: var(--fehms-danger-bg);
-        color: var(--fehms-danger);
-    }
-
-    .status-default {
-        background: #e5e7eb;
-        color: #374151;
-    }
-
-    /* ==============================
-       VIEW BUTTON
-       ============================== */
-
-    .view-delivery-button {
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
-        background: #eff6ff;
-        color: var(--fehms-primary);
-        border: 1px solid #bfdbfe;
-        padding: 7px 12px;
-        border-radius: 7px;
-        font-size: 12px;
-        font-weight: 600;
-        text-decoration: none;
-        transition: all 0.2s ease;
-    }
-
-    .view-delivery-button:hover {
-        background: var(--fehms-primary);
-        border-color: var(--fehms-primary);
-        color: #ffffff;
-        text-decoration: none;
-    }
-
-    /* ==============================
-       PAGING
-       ============================== */
-
-    .delivery-table tr:last-child td {
-        border-bottom: none;
-    }
-
-    .delivery-table-card table > tbody > tr:last-child {
-        border-bottom: none;
-    }
-
-    /* ==============================
-       RESPONSIVE
-       ============================== */
-
-    @media (max-width: 1100px) {
-        .delivery-stats {
-            grid-template-columns: repeat(2, 1fr);
+        .nav-tabs .nav-link {
+            color: #17365d;
+            font-weight: 600;
         }
+        .nav-tabs .nav-link.active {
+            color: #0d6efd;
+            font-weight: 700;
+            border-bottom: 3px solid #0d6efd;
 
-        .delivery-filter-card {
-            grid-template-columns: 1fr 1fr;
         }
-
-        .delivery-filter-buttons {
-            grid-column: 1 / -1;
+        .delivery-status-badge{
+            color: #111 !important;
         }
-    }
-
-    @media (max-width: 700px) {
-        .delivery-page {
-            padding: 5px 0 30px;
+        .delivery-thumb{
+            display:block;
+            width:200px;
+            height:150px;
+            object-fit:cover;
         }
+        .delivery-detail-thumb {
+    display: block;
+    width: 100px;
+    height: 75px;
+    object-fit: cover;
+}
 
-        .delivery-header {
-            padding: 22px;
-        }
+.delivery-package-image {
+    display: block;
+    width: 100%;
+    max-width: 220px;
+    height: 140px;
+    object-fit: cover;
+}
+    </style>
 
-        .delivery-header h1 {
-            font-size: 25px;
-        }
+      <div class="staff-page-content container-fluid px-3 px-xl-4 py-3">
+     <div class="page-header">
+         <h1 class="page-title">My Deliveries</h1>
+         <p class="page-subtitle mb-0">View and update your assigned deliveries.</p>
+     </div>
 
-        .delivery-stats {
-            grid-template-columns: 1fr;
-        }
+     <div class="card mb-3">
+         <div class="card-body">
+             <ul class="nav nav-tabs delivery-tabs mb-3">
+                 <li class="nav-item"><asp:LinkButton ID="lnkAll" runat="server" CssClass="nav-link active" OnClick="FilterAll_Click" /></li>
+                 <li class="nav-item"><asp:LinkButton ID="lnkPending" runat="server" CssClass="nav-link" OnClick="FilterPending_Click" /></li>
+                 <li class="nav-item"><asp:LinkButton ID="lnkOutForDelivery" runat="server" CssClass="nav-link" OnClick="FilterOut_Click" /></li>
+                 <li class="nav-item"><asp:LinkButton ID="lnkCompleted" runat="server" CssClass="nav-link" OnClick="FilterCompleted_Click" /></li>
+             </ul>
+             <div class="row g-2 align-items-center">
+                 <div class="col-sm-6 col-lg-2"><asp:TextBox ID="txtDate" runat="server" TextMode="Date" CssClass="form-control" /></div>
+                 <div class="col-sm-6 col-lg-2">
+                     <asp:DropDownList ID="ddlStatus" runat="server" CssClass="form-select">
+                         <asp:ListItem Text="All Statuses" Value="" />
+                         <asp:ListItem Text="Pending" Value="Pending" />
+                         <asp:ListItem Text="Out for Delivery" Value="Out for Delivery" />
+                         <asp:ListItem Text="Scheduled" Value="Scheduled" />
+                         <asp:ListItem Text="Completed" Value="Completed" />
+                     </asp:DropDownList>
+                 </div>
+                 <div class="col-sm-8 col-lg-6"><asp:TextBox ID="txtSearch" runat="server" CssClass="form-control" placeholder="Search by booking ID or customer..." /></div>
+                 <div class="col-sm-4 col-lg-2"><asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-forte w-100" OnClick="Search_Click" /></div>
+             </div>
+         </div>
+     </div>
 
-        .delivery-filter-card {
-            grid-template-columns: 1fr;
-            padding: 18px;
-        }
+     <asp:Panel ID="pnlDeliveryMessage" runat="server" Visible="false" CssClass="alert alert-info" role="status">
+         <asp:Literal ID="litDeliveryMessage" runat="server" />
+     </asp:Panel>
 
-        .delivery-filter-buttons {
-            grid-column: auto;
-        }
+     <asp:Repeater ID="rptDeliveries" runat="server" OnItemCommand="rptDeliveries_ItemCommand">
+         <ItemTemplate>
+             <div class="card mb-3">
+                 <div class="row g-0 align-items-center">
+                     <div class="col-auto p-3">
+                         <img src='<%#: Eval("ImageUrl") %>' alt="Event setup" class="img-fluid rounded delivery-thumb" />
+                     </div>
+                     <div class="col">
+                         <div class="card-body ps-0">
+                             <div class="d-flex flex-wrap justify-content-between align-items-start gap-2">
+                                 <div>
+                                     <div class="fw-bold"><%#: Eval("BookingId") %> – <%#: Eval("EventType") %></div>
+                                     <div><%#: Eval("Customer") %></div>
+                                     <div class="small text-muted mt-1"><i class="bi bi-calendar3 me-1"></i><%#: Eval("EventDate", "{0:dd MMM yyyy}") %> | <%#: Eval("EventTime") %></div>
+                                     <div class="small text-muted"><i class="bi bi-geo-alt me-1"></i><%#: Eval("Venue") %></div>
+                                     <div class="small text-muted mt-1"><%#: Eval("Items") %></div>
+                                 </div>
+                                 <span class='badge delivery-status-badge <%# StatusBadge(Eval("Status")) %>'><%#: Eval("Status") %></span>
+                             </div>
+                         </div>
+                     </div>
+                     <div class="col-12 col-md-auto px-3 pb-3 pt-md-3">
+                         <div class="d-flex flex-row flex-md-column gap-2">
+                             <asp:LinkButton ID="lnkViewDetails" runat="server" CssClass="btn btn-sm btn-outline-primary" CausesValidation="false" CommandName="ViewDetails" CommandArgument='<%#: Eval("BookingId") %>'>View</asp:LinkButton>
+                             <asp:DropDownList ID="ddlDeliveryStatus" runat="server" CssClass="form-select form-select-sm" SelectedValue='<%# Eval("Status") %>'>
+                                 <asp:ListItem Text="Pending" Value="Pending" />
+                                 <asp:ListItem Text="Out for Delivery" Value="Out for Delivery" />
+                                 <asp:ListItem Text="Delivered" Value="Delivered" />
+                             </asp:DropDownList>
+                             <asp:LinkButton ID="lnkUpdateStatus" runat="server" CssClass="btn btn-sm btn-forte" CausesValidation="false" CommandName="UpdateStatus" CommandArgument='<%#: Eval("BookingId") %>' OnClientClick="return confirm('Update this delivery status?');">Update</asp:LinkButton>
+                         </div>
+                     </div>
+                 </div>
+             </div>
+         </ItemTemplate>
+     </asp:Repeater>
 
-        .delivery-search-button,
-        .delivery-clear-button {
-            flex: 1;
-        }
-
-        .delivery-table-header {
-            padding: 18px;
-        }
-
-        .table-responsive {
-            overflow-x: auto;
-        }
-    }
-</style>
-    
-    <div class="delivery-page">
-
-    <!-- Page Header -->
-    <div class="delivery-header">
-        <div>
-            <h1>Manage Deliveries</h1>
-            <p>View and monitor all scheduled and completed deliveries.</p>
-        </div>
-    </div>
-
-    <!-- Delivery Summary -->
-    <div class="delivery-stats">
-
-        <div class="delivery-stat-card">
-            <div class="delivery-stat-icon">
-                <i class="bi bi-truck"></i>
-            </div>
-            <div>
-                <span class="delivery-stat-label">Scheduled</span>
-                <h3>12</h3>
-            </div>
-        </div>
-
-        <div class="delivery-stat-card">
-            <div class="delivery-stat-icon">
-                <i class="bi bi-check-circle"></i>
-            </div>
-            <div>
-                <span class="delivery-stat-label">Delivered</span>
-                <h3>28</h3>
-            </div>
-        </div>
-
-        <div class="delivery-stat-card">
-            <div class="delivery-stat-icon">
-                <i class="bi bi-exclamation-circle"></i>
-            </div>
-            <div>
-                <span class="delivery-stat-label">Overdue</span>
-                <h3>3</h3>
-            </div>
-        </div>
-
-        <div class="delivery-stat-card">
-            <div class="delivery-stat-icon">
-                <i class="bi bi-box-seam"></i>
-            </div>
-            <div>
-                <span class="delivery-stat-label">Total Deliveries</span>
-                <h3>43</h3>
-            </div>
-        </div>
-
-    </div>
-
-    <!-- Search and Filter -->
-    <div class="delivery-filter-card">
-
-        <div class="delivery-search">
-            <label for="txtSearch">Search Deliveries</label>
-            <asp:TextBox 
-                ID="txtSearch" 
-                runat="server"
-                CssClass="form-control"
-                placeholder="Search by booking reference or customer name">
-            </asp:TextBox>
-        </div>
-
-        <div class="delivery-status-filter">
-            <label for="ddlStatus">Delivery Status</label>
-
-            <asp:DropDownList 
-                ID="ddlStatus" 
-                runat="server"
-                CssClass="form-select">
-
-                <asp:ListItem Text="All Deliveries" Value=""></asp:ListItem>
-                <asp:ListItem Text="Scheduled" Value="Scheduled"></asp:ListItem>
-                <asp:ListItem Text="Delivered" Value="Delivered"></asp:ListItem>
-                <asp:ListItem Text="Overdue" Value="Overdue"></asp:ListItem>
-
-            </asp:DropDownList>
-        </div>
-
-        <div class="delivery-filter-buttons">
-
-            <asp:Button 
-                ID="btnSearch"
-                runat="server"
-                Text="Search"
-                CssClass="btn btn-primary delivery-search-button" />
-
-            <asp:Button 
-                ID="btnClear"
-                runat="server"
-                Text="Clear"
-                CssClass="btn btn-secondary delivery-clear-button" />
-
-        </div>
-
-    </div>
-
-    <!-- Deliveries Table -->
-    <div class="delivery-table-card">
-
-        <div class="delivery-table-header">
-            <div>
-                <h2>Delivery Records</h2>
-                <p>Scheduled and completed deliveries</p>
-            </div>
-        </div>
-
-        <div class="table-responsive">
-
-            <asp:GridView 
-                ID="gvDeliveries"
-                runat="server"
-                AutoGenerateColumns="False"
-                CssClass="table delivery-table"
-                GridLines="None"
-                EmptyDataText="No delivery records found."
-                AllowPaging="True"
-                PageSize="10" OnSelectedIndexChanged="gvDeliveries_SelectedIndexChanged">
-
-                <Columns>
-
-                    <asp:BoundField 
-                        DataField="DeliveryID"
-                        HeaderText="Delivery ID" />
-
-                    <asp:BoundField 
-                        DataField="BookingReference"
-                        HeaderText="Booking Reference" />
-
-                    <asp:BoundField 
-                        DataField="CustomerName"
-                        HeaderText="Customer" />
-
-                    <asp:BoundField 
-                        DataField="Phone"
-                        HeaderText="Contact Number" />
-
-                    <asp:BoundField 
-                        DataField="ScheduledDate"
-                        HeaderText="Delivery Date"
-                        DataFormatString="{0:dd MMM yyyy}" />
-
-                    <asp:TemplateField HeaderText="Delivery Address">
-
-                        <ItemTemplate>
-
-                            <div class="delivery-address">
-                                <%# Eval("StreetAddress") %><br />
-                                <%# Eval("Suburb") %>,
-                                <%# Eval("City") %><br />
-                                <%# Eval("PostalCode") %>
-                            </div>
-
-                        </ItemTemplate>
-
-                    </asp:TemplateField>
-
-                    <asp:BoundField 
-                        DataField="StaffName"
-                        HeaderText="Assigned Staff" />
-
-                    <asp:TemplateField HeaderText="Status">
-
-                        <ItemTemplate>
-
-                            <span class='status-badge <%# GetStatusClass(Eval("DeliveryStatus").ToString()) %>'>
-                                <%# Eval("DeliveryStatus") %>
-                            </span>
-
-                        </ItemTemplate>
-
-                    </asp:TemplateField>
-
-                    <asp:TemplateField HeaderText="Action">
-                        <ItemTemplate>
-
-                            <asp:LinkButton
-
-                                ID="btnView"
-                                runat="server"
-                                CommandName="ViewDelivery"
-                                CommandArgument='<%# Eval("DeliveryID") %>'
-                                CssClass="view-delivery-button">
-                                <i class="bi bi-eye"></i>
-                                View
-
-                            </asp:LinkButton>
-
-                        </ItemTemplate>
-
-                    </asp:TemplateField>
-
-                </Columns>
-
-            </asp:GridView>
-
-        </div>
-    </div>
-</div>
+     <asp:Panel ID="pnlDeliveryDetailsModal" runat="server" ClientIDMode="Static" CssClass="modal fade" TabIndex="-1" role="dialog" aria-labelledby="deliveryDetailsTitle" aria-hidden="true">
+         <div class="modal-dialog modal-xl modal-dialog-scrollable">
+             <div class="modal-content">
+                 <div class="modal-header">
+                     <div><h2 class="modal-title h5" id="deliveryDetailsTitle">Delivery details</h2><div class="small text-muted"><asp:Literal ID="litDeliveryDetailBooking" runat="server" /></div></div>
+                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                 </div>
+                 <div class="modal-body">
+                     <div class="card mb-4">
+                         <div class="card-header fw-semibold">Customer and delivery information</div>
+                         <div class="card-body"><div class="row g-3">
+                             <div class="col-sm-6 col-lg-3"><div class="small text-muted">Customer</div><strong><asp:Literal ID="litDeliveryDetailCustomer" runat="server" /></strong><div><asp:Literal ID="litDeliveryDetailPhone" runat="server" /></div></div>
+                             <div class="col-sm-6 col-lg-3"><div class="small text-muted">Event</div><strong><asp:Literal ID="litDeliveryDetailEvent" runat="server" /></strong><div><asp:Literal ID="litDeliveryDetailDate" runat="server" /></div></div>
+                             <div class="col-sm-6 col-lg-3"><div class="small text-muted">Equipment needed</div><strong><asp:Literal ID="litDeliveryDetailNeededAt" runat="server" /></strong></div>
+                             <div class="col-sm-6 col-lg-3"><div class="small text-muted">Status</div><strong><asp:Literal ID="litDeliveryDetailStatus" runat="server" /></strong></div>
+                             <div class="col-md-6"><div class="small text-muted">Delivery address</div><strong><asp:Literal ID="litDeliveryDetailAddress" runat="server" /></strong></div>
+                             <div class="col-md-6"><div class="small text-muted">Delivery instructions</div><asp:Literal ID="litDeliveryDetailInstructions" runat="server" /></div>
+                         </div></div>
+                     </div>
+                     <h3 class="h6 mb-3">Equipment for delivery</h3>
+                     <asp:Panel ID="pnlDeliveryPackageDetail" runat="server" Visible="false" CssClass="card">
+                         <div class="row g-0 align-items-center">
+                             <div class="col-md-4 p-3"><asp:Image ID="imgDeliveryPackage" runat="server" CssClass="img-fluid rounded" /></div>
+                             <div class="col-md-8 p-3"><div class="fw-semibold mb-2"><asp:Literal ID="litDeliveryPackageName" runat="server" /></div>
+                                 <asp:Repeater ID="rptDeliveryPackageItems" runat="server"><ItemTemplate><div class="d-flex justify-content-between border-bottom py-2"><span><%#: Eval("Name") %></span><strong>Qty <%#: Eval("Quantity") %></strong></div></ItemTemplate></asp:Repeater>
+                             </div>
+                         </div>
+                     </asp:Panel>
+                     <asp:Repeater ID="rptDeliveryDetailItems" runat="server">
+                         <ItemTemplate>
+                             <div class="card mb-2"><div class="row g-0 align-items-center">
+                                 <div class="col-auto p-3"><img src='<%#: Eval("ImageUrl") %>' alt='<%#: Eval("Name") %>' class="img-fluid rounded delivery-detail-thumb" /></div>
+                                 <div class="col px-2"><strong><%#: Eval("Name") %></strong><div class="small text-muted">Booking item</div></div>
+                                 <div class="col-auto px-4"><span class="small text-muted">Quantity</span><div class="fw-semibold text-center"><%#: Eval("Quantity") %></div></div>
+                             </div></div>
+                         </ItemTemplate>
+                     </asp:Repeater>
+                 </div>
+                 <div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button></div>
+             </div>
+         </div>
+     </asp:Panel>
+     <asp:Panel ID="pnlNoDeliveries" runat="server" Visible="false" CssClass="card p-4 text-center text-muted">No deliveries match your search.</asp:Panel>
+ </div>
 
 </asp:Content>
