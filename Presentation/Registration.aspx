@@ -1,4 +1,5 @@
-﻿<%@ Page Title="Registration"
+﻿
+<%@ Page Title="Registration"
     Language="C#"
     MasterPageFile="~/Presentation/SystemLayout.Master"
     AutoEventWireup="true"
@@ -10,7 +11,6 @@
     runat="server">
 
     <style>
-
         .register-container {
             max-width: 500px;
             margin: 60px auto;
@@ -56,6 +56,7 @@
             border-radius: 10px;
             padding: 12px;
             font-weight: 500;
+            width: 100%;
         }
 
         .btn-register:hover {
@@ -105,7 +106,6 @@
             color: #6c757d;
             font-size: 12px;
         }
-
     </style>
 
 </asp:Content>
@@ -117,36 +117,28 @@
 
     <link href="Content/Forte.css" rel="stylesheet" />
 
-
     <div class="register-container">
 
         <div class="register-card">
 
-            <h3>
-                Create Your Account
-            </h3>
+            <h3>Create Your Account</h3>
 
-            <p>
-                Join Forte Events Catering &amp; Decor Hire
-            </p>
-
+            <p>Join Forte Events Catering &amp; Decor Hire</p>
 
             <!-- FULL NAME -->
-
             <div class="mb-3">
 
                 <asp:TextBox
                     ID="txtFullName"
                     runat="server"
                     CssClass="form-control"
-                    placeholder="Full Name">
+                    placeholder="Full Name"
+                    MaxLength="150">
                 </asp:TextBox>
 
             </div>
 
-
-            <!-- EMAIL -->
-
+            <!-- EMAIL ADDRESS -->
             <div class="mb-3">
 
                 <asp:TextBox
@@ -154,14 +146,13 @@
                     runat="server"
                     CssClass="form-control"
                     placeholder="Email Address"
-                    TextMode="Email">
+                    TextMode="Email"
+                    MaxLength="254">
                 </asp:TextBox>
 
             </div>
 
-
             <!-- DATE OF BIRTH -->
-
             <div class="mb-3">
 
                 <asp:TextBox
@@ -173,23 +164,20 @@
 
             </div>
 
-
-            <!-- ID NUMBER -->
-
+            <!-- SOUTH AFRICAN ID NUMBER -->
             <div class="mb-3">
 
                 <asp:TextBox
                     ID="txtIDNumber"
                     runat="server"
                     CssClass="form-control"
-                    placeholder="ID Number">
+                    placeholder="ID Number"
+                    MaxLength="13">
                 </asp:TextBox>
 
             </div>
 
-
             <!-- PASSWORD -->
-
             <div class="mb-3">
 
                 <asp:TextBox
@@ -197,14 +185,12 @@
                     runat="server"
                     TextMode="Password"
                     CssClass="form-control"
-                    placeholder="Password">
+                    placeholder="Password (minimum 12 characters)">
                 </asp:TextBox>
 
             </div>
 
-
             <!-- CONFIRM PASSWORD -->
-
             <div class="mb-3">
 
                 <asp:TextBox
@@ -217,9 +203,7 @@
 
             </div>
 
-
             <!-- TERMS AND CONDITIONS -->
-
             <div class="terms mb-3">
 
                 <div class="form-check">
@@ -235,47 +219,32 @@
                         I agree to the
 
                         <a href="javascript:void(0);"
-                           onclick="openTermsPage();">
-
+                           onclick="openTermsPage(); return false;">
                             Terms &amp; Conditions
-
                         </a>
 
                         and
 
                         <a href="PrivacyPolicy.aspx">
-
                             Privacy Policy
-
                         </a>
 
                     </label>
 
                 </div>
 
-
                 <div class="terms-info">
-
-                    You must review and accept the Terms &amp; Conditions
-                    before registering.
-
+                    You must review and accept the Terms &amp;
+                    Conditions before registering.
                 </div>
 
-
-                <!-- ACCEPTED MESSAGE -->
-
-                <div id="termsStatus"
-                     class="terms-status">
-
-                    ✓ Terms and Conditions accepted
-
+                <div id="termsStatus" class="terms-status">
+                    &#10003; Terms and Conditions accepted
                 </div>
 
             </div>
 
-
             <!-- REGISTER BUTTON -->
-
             <div class="d-grid">
 
                 <asp:Button
@@ -283,15 +252,12 @@
                     runat="server"
                     Text="Register"
                     CssClass="btn btn-register"
-                    OnClientClick="return checkTermsBeforeRegister();"
-                   
-                    />
+                    OnClick="btnRegister_Click"
+                    OnClientClick="return checkTermsBeforeRegister();" />
 
             </div>
 
-
-            <!-- LOGIN -->
-
+            <!-- LOGIN LINK -->
             <div class="bottom-link">
 
                 Already have an account?
@@ -300,9 +266,7 @@
                     ID="hlLoginHere"
                     runat="server"
                     NavigateUrl="Login.aspx">
-
                     Login here
-
                 </asp:HyperLink>
 
             </div>
@@ -312,13 +276,9 @@
     </div>
 
 
-     <script>
-         
+    <script type="text/javascript">
 
-        /* =====================================================
-           SAVE REGISTRATION INFORMATION
-           ===================================================== */
-
+        // Save only non-sensitive details before opening Terms.
         function saveRegistrationDetails() {
 
             sessionStorage.setItem(
@@ -328,7 +288,6 @@
                 ).value
             );
 
-
             sessionStorage.setItem(
                 "registrationEmail",
                 document.getElementById(
@@ -336,376 +295,169 @@
                 ).value
             );
 
-
             sessionStorage.setItem(
                 "registrationDOB",
                 document.getElementById(
                     "<%= txtDateOfBirth.ClientID %>"
                 ).value
             );
-
-
-            sessionStorage.setItem(
-                "registrationID",
-                document.getElementById(
-                    "<%= txtIDNumber.ClientID %>"
-                ).value
-            );
-
-
-            sessionStorage.setItem(
-                "registrationPassword",
-                document.getElementById(
-                    "<%= txtPassword.ClientID %>"
-                ).value
-            );
-
-
-            sessionStorage.setItem(
-                "registrationConfirmPassword",
-                document.getElementById(
-                    "<%= txtConfirmPassword.ClientID %>"
-                ).value
-            );
-
         }
 
 
-        /* =====================================================
-           OPEN TERMS WHEN REGISTRATION CHECKBOX IS CLICKED
-           ===================================================== */
-
+        // Open Terms when the checkbox is selected.
         function openTermsAndConditions(checkbox) {
-
-            /*
-             * Only redirect when the customer
-             * is trying to check the box.
-             */
 
             if (checkbox.checked) {
 
-                /*
-                 * Save registration details.
-                 */
+                checkbox.checked = false;
 
                 saveRegistrationDetails();
-
-
-                /*
-                 * Tell WebForm1 that we came
-                 * from Registration.
-                 */
 
                 sessionStorage.setItem(
                     "returnToRegistration",
                     "true"
                 );
 
+                sessionStorage.removeItem("termsAccepted");
 
-                /*
-                 * Remove any old acceptance.
-                 */
-
-                sessionStorage.removeItem(
-                    "termsAccepted"
-                );
-
-
-                /*
-                 * Open Terms and Conditions.
-                 */
-
-                window.location.href =
-                    "WebForm1.aspx";
-
+                window.location.href = "WebForm1.aspx";
             }
-
             else {
 
-                /*
-                 * Customer manually unchecked
-                 * the checkbox.
-                 */
+                sessionStorage.removeItem("termsAccepted");
 
-                sessionStorage.removeItem(
-                    "termsAccepted"
-                );
-
-
-                const status =
-                    document.getElementById(
-                        "termsStatus"
-                    );
-
+                var status = document.getElementById("termsStatus");
 
                 if (status) {
-
-                    status.style.display =
-                        "none";
-
+                    status.style.display = "none";
                 }
-
             }
-
         }
 
 
-        /* =====================================================
-           OPEN TERMS USING TEXT LINK
-           ===================================================== */
-
+        // Open Terms when the text link is clicked.
         function openTermsPage() {
 
-            /*
-             * Save registration information
-             * before leaving the page.
-             */
-
             saveRegistrationDetails();
-
 
             sessionStorage.setItem(
                 "returnToRegistration",
                 "true"
             );
 
+            sessionStorage.removeItem("termsAccepted");
 
-            /*
-             * Open WebForm1.
-             */
-
-            window.location.href =
-                "WebForm1.aspx";
-
+            window.location.href = "WebForm1.aspx";
         }
 
 
-        /* =====================================================
-           RESTORE REGISTRATION INFORMATION
-           ===================================================== */
-
+        // Restore safe registration information.
         function restoreRegistrationDetails() {
 
-            const fullName =
-                sessionStorage.getItem(
-                    "registrationFullName"
-                );
+            var fullName =
+                sessionStorage.getItem("registrationFullName");
 
+            var email =
+                sessionStorage.getItem("registrationEmail");
 
-            const email =
-                sessionStorage.getItem(
-                    "registrationEmail"
-                );
-
-
-            const dob =
-                sessionStorage.getItem(
-                    "registrationDOB"
-                );
-
-
-            const idNumber =
-                sessionStorage.getItem(
-                    "registrationID"
-                );
-
-
-            const password =
-                sessionStorage.getItem(
-                    "registrationPassword"
-                );
-
-
-            const confirmPassword =
-                sessionStorage.getItem(
-                    "registrationConfirmPassword"
-                );
-
-
-            /*
-             * Restore Full Name
-             */
+            var dob =
+                sessionStorage.getItem("registrationDOB");
 
             if (fullName !== null) {
 
                 document.getElementById(
                     "<%= txtFullName.ClientID %>"
                 ).value = fullName;
-
             }
-
-
-            /*
-             * Restore Email
-             */
 
             if (email !== null) {
 
                 document.getElementById(
                     "<%= txtEmailAddress.ClientID %>"
                 ).value = email;
-
             }
-
-
-            /*
-             * Restore Date of Birth
-             */
 
             if (dob !== null) {
 
                 document.getElementById(
                     "<%= txtDateOfBirth.ClientID %>"
                 ).value = dob;
-
             }
-
-
-            /*
-             * Restore ID Number
-             */
-
-            if (idNumber !== null) {
-
-                document.getElementById(
-                    "<%= txtIDNumber.ClientID %>"
-                ).value = idNumber;
-
-            }
-
-
-            /*
-             * Restore Password
-             */
-
-            if (password !== null) {
-
-                document.getElementById(
-                    "<%= txtPassword.ClientID %>"
-                ).value = password;
-
-            }
-
-
-            /*
-             * Restore Confirm Password
-             */
-
-            if (confirmPassword !== null) {
-
-                document.getElementById(
-                    "<%= txtConfirmPassword.ClientID %>"
-                ).value = confirmPassword;
-
-            }
-
         }
 
 
-        /* =====================================================
-           RESTORE TERMS ACCEPTANCE
-           ===================================================== */
-
+        // Restore acceptance after returning from Terms.
         function restoreTermsAcceptance() {
 
-            const termsAccepted =
-                sessionStorage.getItem(
-                    "termsAccepted"
-                );
+            var accepted =
+                sessionStorage.getItem("termsAccepted");
 
+            var checkbox = document.getElementById(
+                "<%= cbUserAgreement.ClientID %>"
+            );
 
-            if (termsAccepted === "true") {
+            var status =
+                document.getElementById("termsStatus");
 
-                const checkbox =
-                    document.getElementById(
-                        "<%= cbUserAgreement.ClientID %>"
-                    );
-
+            if (accepted === "true") {
 
                 if (checkbox) {
-
-                    /*
-                     * THIS IS WHAT TICKS THE
-                     * REGISTRATION CHECKBOX.
-                     */
-
                     checkbox.checked = true;
-
                 }
-
-
-                const status =
-                    document.getElementById(
-                        "termsStatus"
-                    );
-
 
                 if (status) {
+                    status.style.display = "block";
+                }
+            }
+            else {
 
-                    status.style.display =
-                        "block";
-
+                if (checkbox) {
+                    checkbox.checked = false;
                 }
 
+                if (status) {
+                    status.style.display = "none";
+                }
             }
-
         }
 
 
-        /* =====================================================
-           PREVENT REGISTERING WITHOUT ACCEPTING TERMS
-           ===================================================== */
-
+        // Check acceptance before submitting registration.
         function checkTermsBeforeRegister() {
 
-            const termsAccepted =
-                sessionStorage.getItem(
-                    "termsAccepted"
-                );
+            var accepted =
+                sessionStorage.getItem("termsAccepted");
 
+            var checkbox = document.getElementById(
+                "<%= cbUserAgreement.ClientID %>"
+            );
 
-            if (termsAccepted !== "true") {
+            if (accepted !== "true" ||
+                !checkbox ||
+                !checkbox.checked) {
 
                 alert(
                     "Please read and accept the Terms and Conditions before registering."
                 );
 
                 return false;
-
             }
 
-
             return true;
-
         }
 
 
-        /* =====================================================
-           PAGE LOAD
-           ===================================================== */
+        // Restore information when the page opens.
+        window.addEventListener("load", function () {
 
-        window.addEventListener(
-            "load",
-            function () {
+            // Clear sensitive values saved by the old version.
+            sessionStorage.removeItem("registrationID");
+            sessionStorage.removeItem("registrationPassword");
+            sessionStorage.removeItem("registrationConfirmPassword");
 
-                /*
-                 * Restore information entered
-                 * before opening WebForm1.
-                 */
-
-                restoreRegistrationDetails();
-
-
-                /*
-                 * Restore accepted Terms.
-                 * This automatically ticks
-                 * the checkbox.
-                 */
-
-                restoreTermsAcceptance();
-
-            }
-        ); 
+            restoreRegistrationDetails();
+            restoreTermsAcceptance();
+        });
 
     </script>
 
