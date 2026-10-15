@@ -9,6 +9,7 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            // Get the current page name and convert it to lowercase.
             string currentPage = Path.GetFileName(
                 Request.AppRelativeCurrentExecutionFilePath
             );
@@ -20,11 +21,17 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
                 currentPage == "customerdashboard.aspx" ||
                 currentPage == "trackorder.aspx" ||
                 currentPage == "ordersummary.aspx" ||
-                currentPage == "manageprofile.aspx";
+                currentPage == "manageprofile.aspx" ||
+                currentPage == "reviews.aspx" ||
+                currentPage == "reviewsummary.aspx" ||
+                currentPage == "about.aspx" ||
+                currentPage == "contact.aspx" ||
+                currentPage == "viewtermsandconditions.aspx";
 
             // STAFF PAGES
             bool isStaffPage =
                 currentPage == "staffdashboard.aspx" ||
+                currentPage == "staffdashbord.aspx" ||
                 currentPage == "staffprofile.aspx" ||
                 currentPage == "managedelivery.aspx" ||
                 currentPage == "managecollection.aspx" ||
