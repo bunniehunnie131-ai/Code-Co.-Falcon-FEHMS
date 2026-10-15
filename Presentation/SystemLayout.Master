@@ -48,6 +48,8 @@
             font-weight: 600;
         }
 
+        /* MAIN NAVIGATION */
+
         .navbar {
             position: relative;
             z-index: 1000;
@@ -139,6 +141,8 @@
             filter: invert(1);
         }
 
+        /* GENERAL PAGE CONTENT */
+
         .main-content {
             min-height: 500px;
             padding-top: 35px;
@@ -205,6 +209,8 @@
             min-height: 100%;
         }
 
+        /* PORTAL BRANDING */
+
         .portal-brand {
             display: flex;
             align-items: center;
@@ -256,11 +262,14 @@
             border-radius: 8px;
             color: #cbd5e1;
             text-decoration: none;
+            font-size: 13px;
             transition: background-color .2s ease, color .2s ease;
         }
 
         .sidebar-nav-link i {
+            width: 20px;
             font-size: 18px;
+            text-align: center;
             flex-shrink: 0;
         }
 
@@ -270,6 +279,25 @@
         .staff-sidebar .sidebar-nav-link.active {
             color: #fff !important;
             background: #1e3a8a;
+        }
+
+        /* CUSTOMER SIDEBAR ADDITIONS */
+
+        .customer-sidebar {
+            height: auto;
+            min-height: 100%;
+        }
+
+        .customer-sidebar .portal-nav-label {
+            margin-top: 8px;
+        }
+
+        .customer-sidebar .sidebar-nav-link {
+            padding: 11px 10px;
+        }
+
+        .customer-sidebar .sidebar-nav-link span {
+            min-width: 0;
         }
 
         .portal-sidebar-footer {
@@ -297,7 +325,8 @@
         }
 
         .customer-page-content,
-        .staff-page-content {
+        .staff-page-content,
+        .public-page-content {
             flex: 1 1 0;
             min-width: 0;
         }
@@ -378,6 +407,8 @@
             font-size: 13px;
         }
 
+        /* TABLET NAVIGATION */
+
         @media (max-width: 991px) {
             .navbar-brand {
                 margin-right: 0;
@@ -399,6 +430,8 @@
                 padding-bottom: 8px;
             }
         }
+
+        /* MOBILE LAYOUT */
 
         @media (max-width: 767.98px) {
             .main-content.customer-layout,
@@ -439,6 +472,7 @@
 <form id="form1" runat="server">
 
     <!-- MAIN NAVIGATION -->
+
     <nav class="navbar navbar-expand-lg">
         <div class="container">
 
@@ -473,7 +507,7 @@
                         <a class="nav-link" href="HowItWorks.aspx">How It Works</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="Reviews.aspx">Reviews</a>
+                        <a class="nav-link" href="ReviewSummary.aspx">Reviews</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="Contact.aspx">Contact Us</a>
@@ -481,7 +515,9 @@
                 </ul>
 
                 <div class="nav-icons">
-                    <a href="Cart.aspx" class="cart-button" title="Shopping Cart">
+                    <a href="Cart.aspx"
+                       class="cart-button"
+                       title="Shopping Cart">
                         <i class="bi bi-cart3"></i>
                     </a>
 
@@ -497,10 +533,12 @@
     </nav>
 
     <!-- MAIN PAGE AREA -->
+
     <main id="mainContentLayout" runat="server"
           class="main-content container">
 
         <!-- CUSTOMER SIDEBAR -->
+
         <asp:Panel ID="pnlCustomerSidebar" runat="server"
                    Visible="false" CssClass="customer-sidebar">
 
@@ -510,60 +548,144 @@
                     <span class="portal-brand-icon">
                         <i class="bi bi-person-circle"></i>
                     </span>
+
                     <div>
                         <div class="portal-brand-title">Customer Portal</div>
-                        <div class="portal-brand-sub">Manage your event hire</div>
+                        <div class="portal-brand-sub">
+                            Manage your event hire
+                        </div>
                     </div>
                 </div>
 
-                <div class="portal-nav-label">Menu</div>
+                <!-- CUSTOMER ACCOUNT -->
+
+                <div class="portal-nav-label">My Account</div>
 
                 <ul class="sidebar-nav">
+
                     <li class="sidebar-nav-item">
-                        <a href="CustomerDashboard.aspx" class="sidebar-nav-link">
+                        <a href="CustomerDashboard.aspx"
+                           class="sidebar-nav-link">
                             <i class="bi bi-speedometer2"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
+
                     <li class="sidebar-nav-item">
-                        <a href="TrackOrder.aspx" class="sidebar-nav-link">
+                        <a href="TrackOrder.aspx"
+                           class="sidebar-nav-link">
                             <i class="bi bi-calendar-event"></i>
                             <span>Track Order</span>
                         </a>
                     </li>
+
                     <li class="sidebar-nav-item">
-                        <a href="Catalogue.aspx" class="sidebar-nav-link">
-                            <i class="bi bi-bag-plus"></i>
-                            <span>Continue Shopping</span>
-                        </a>
-                    </li>
-                    <li class="sidebar-nav-item">
-                        <a href="OrderSummary.aspx" class="sidebar-nav-link">
+                        <a href="OrderSummary.aspx"
+                           class="sidebar-nav-link">
                             <i class="bi bi-receipt"></i>
                             <span>Order Summary</span>
                         </a>
                     </li>
+
                     <li class="sidebar-nav-item">
-                        <a href="ManageProfile.aspx" class="sidebar-nav-link">
+                        <a href="ManageProfile.aspx"
+                           class="sidebar-nav-link">
                             <i class="bi bi-person-gear"></i>
                             <span>Profile Settings</span>
                         </a>
                     </li>
+
                 </ul>
 
+                <!-- SHOPPING AND SERVICES -->
+
+                <div class="portal-nav-label mt-4">
+                    Explore Forte Events
+                </div>
+
+                <ul class="sidebar-nav">
+
+                    <li class="sidebar-nav-item">
+                        <a href="Catalogue.aspx"
+                           class="sidebar-nav-link">
+                            <i class="bi bi-grid"></i>
+                            <span>Browse Catalogue</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-item">
+                        <a href="HirePackages.aspx"
+                           class="sidebar-nav-link">
+                            <i class="bi bi-box-seam"></i>
+                            <span>Hire Packages</span>
+                        </a>
+                    </li>
+
+                </ul>
+
+                <!-- INFORMATION AND SUPPORT -->
+
+                <div class="portal-nav-label mt-4">
+                    Information &amp; Support
+                </div>
+
+                <ul class="sidebar-nav">
+
+                    <li class="sidebar-nav-item">
+                        <a href="Reviews.aspx"
+                           class="sidebar-nav-link">
+                            <i class="bi bi-star"></i>
+                            <span>Reviews</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-item">
+                        <a href="About.aspx"
+                           class="sidebar-nav-link">
+                            <i class="bi bi-info-circle"></i>
+                            <span>About Us</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-item">
+                        <a href="Contact.aspx"
+                           class="sidebar-nav-link">
+                            <i class="bi bi-headset"></i>
+                            <span>Contact Us</span>
+                        </a>
+                    </li>
+
+                    <li class="sidebar-nav-item">
+                        <a href="TermsAndConditions.aspx"
+                           class="sidebar-nav-link">
+                            <i class="bi bi-file-earmark-text"></i>
+                            <span>Terms &amp; Conditions</span>
+                        </a>
+                    </li>
+
+                </ul>
+
+                <!-- CUSTOMER LOGOUT -->
+
                 <div class="portal-sidebar-footer">
-                    <asp:LinkButton ID="lnkCustomerLogout" runat="server"
+
+                    <asp:LinkButton ID="lnkCustomerLogout"
+                        runat="server"
                         CssClass="btn-sidebar-logout"
                         OnClick="lnkCustomerLogout_Click">
+
                         <i class="bi bi-box-arrow-right"></i>
                         <span>Log Out</span>
+
                     </asp:LinkButton>
+
                 </div>
 
             </div>
         </asp:Panel>
 
         <!-- STAFF SIDEBAR -->
+
         <asp:Panel ID="pnlStaffSidebar" runat="server"
                    Visible="false" CssClass="staff-sidebar">
 
@@ -573,55 +695,91 @@
                     <span class="portal-brand-icon">
                         <i class="bi bi-briefcase-fill"></i>
                     </span>
+
                     <div>
                         <div class="portal-brand-title">Staff Portal</div>
-                        <div class="portal-brand-sub">Operations &amp; logistics</div>
+                        <div class="portal-brand-sub">
+                            Operations &amp; logistics
+                        </div>
                     </div>
                 </div>
 
                 <div class="portal-nav-label">Operations</div>
 
                 <ul class="sidebar-nav">
+
                     <li class="sidebar-nav-item">
-                        <a href="StaffDashBoard.aspx" class="sidebar-nav-link">
+                        <a href="StaffDashBoard.aspx"
+                           class="sidebar-nav-link">
                             <i class="bi bi-house-door-fill"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
+
                     <li class="sidebar-nav-item">
-                        <a href="ManageDelivery.aspx" class="sidebar-nav-link">
+                      <a href="AssignedBookings.aspx"
+                        class="sidebar-nav-link">
+                      <i class="bi bi-calendar-check"></i>
+                         <span>Assigned Bookings</span>
+                        </a>
+                     </li>
+
+                    <li class="sidebar-nav-item">
+                        <a href="ManageDelivery.aspx"
+                           class="sidebar-nav-link">
                             <i class="bi bi-truck"></i>
                             <span>Manage Deliveries</span>
                         </a>
                     </li>
+
+                    
+                      <li class="sidebar-nav-item">
+                        <a href="ManageReturns.aspx"
+                         class="sidebar-nav-link">
+                         <i class="bi bi-arrow-return-left"></i>
+                           <span>Manage Returns</span>
+                        </a>
+                     </li>
+
                     <li class="sidebar-nav-item">
-                        <a href="ManageCollection.aspx" class="sidebar-nav-link">
+                        <a href="ManageCollection.aspx"
+                           class="sidebar-nav-link">
                             <i class="bi bi-box-arrow-in-down"></i>
                             <span>Manage Collections</span>
                         </a>
                     </li>
+
                     <li class="sidebar-nav-item">
-                        <a href="StaffProfile.aspx" class="sidebar-nav-link">
+                        <a href="StaffProfile.aspx"
+                           class="sidebar-nav-link">
                             <i class="bi bi-person-gear"></i>
                             <span>Profile Settings</span>
                         </a>
                     </li>
+
                 </ul>
 
                 <div class="portal-sidebar-footer">
-                    <asp:LinkButton ID="lnkStaffLogout" runat="server"
+
+                    <asp:LinkButton ID="lnkStaffLogout"
+                        runat="server"
                         CssClass="btn-sidebar-logout"
                         OnClick="lnkStaffLogout_Click">
+
                         <i class="bi bi-box-arrow-right"></i>
                         <span>Log Out</span>
+
                     </asp:LinkButton>
+
                 </div>
 
             </div>
         </asp:Panel>
 
         <!-- CONTENT FOR ALL PAGES -->
-        <div id="pageContent" runat="server" class="page-content">
+
+        <div id="pageContent" runat="server"
+             class="public-page-content">
 
             <asp:ContentPlaceHolder ID="MainContent" runat="server" />
 
@@ -630,6 +788,7 @@
     </main>
 
     <!-- FOOTER -->
+
     <footer class="footer">
         <div class="container">
 
@@ -639,6 +798,7 @@
                     <img src="../Images/FEHMS_Logo.jpeg"
                          alt="Forte Events Logo"
                          class="footer-logo" />
+
                     <p class="footer-description">
                         Premium event hire equipment, catering solutions
                         and décor for memorable occasions.
@@ -651,7 +811,10 @@
                     <a href="Catalogue.aspx">Catalogue</a>
                     <a href="About.aspx">About Us</a>
                     <a href="HowItWorks.aspx">How It Works</a>
+                    <a href="Reviews.aspx">Reviews</a>
                     <a href="Contact.aspx">Contact Us</a>
+                    <a href="HirePackages.aspx">Hire Packages</a>
+                    <a href="TermsAndConditions.aspx">Terms &amp; Conditions</a>
                 </div>
 
                 <div class="col-lg-3 col-md-6">
@@ -665,14 +828,17 @@
 
                 <div class="col-lg-2 col-md-6">
                     <h5>Contact</h5>
+
                     <p class="footer-contact">
                         <i class="bi bi-telephone-fill"></i>
                         +27 73 244 0364
                     </p>
+
                     <p class="footer-contact">
                         <i class="bi bi-envelope-fill"></i>
                         info@codeandcofalcon.co.za
                     </p>
+
                     <p class="footer-contact">
                         <i class="bi bi-geo-alt-fill"></i>
                         East London, Eastern Cape
@@ -681,13 +847,16 @@
 
                 <div class="col-lg-2 col-md-6">
                     <h5>Follow Us</h5>
+
                     <div class="social-icons">
                         <a href="#" title="Facebook">
                             <i class="bi bi-facebook"></i>
                         </a>
+
                         <a href="#" title="Instagram">
                             <i class="bi bi-instagram"></i>
                         </a>
+
                         <a href="#" title="WhatsApp">
                             <i class="bi bi-whatsapp"></i>
                         </a>
@@ -706,6 +875,7 @@
     </footer>
 
     <!-- ACTIVE SIDEBAR LINK -->
+
     <script>
         (function () {
             var currentPage =
