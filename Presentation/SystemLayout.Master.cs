@@ -1,11 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.HtmlControls;
-using System.Web.UI.WebControls;
 
 namespace FEHMS_FortEventHireManagementSystem.Presentation
 {
@@ -19,25 +15,27 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
 
             currentPage = (currentPage ?? "").ToLowerInvariant();
 
-            // Customer pages
+            // CUSTOMER PAGES
             bool isCustomerPage =
                 currentPage == "customerdashboard.aspx" ||
                 currentPage == "trackorder.aspx" ||
                 currentPage == "ordersummary.aspx" ||
                 currentPage == "manageprofile.aspx";
 
-            // Staff pages
+            // STAFF PAGES
             bool isStaffPage =
                 currentPage == "staffdashboard.aspx" ||
                 currentPage == "staffprofile.aspx" ||
                 currentPage == "managedelivery.aspx" ||
-                currentPage == "managecollection.aspx";
+                currentPage == "managecollection.aspx" ||
+                currentPage == "assignedbookings.aspx" ||
+                currentPage == "managereturns.aspx";
 
-            // Show only the correct sidebar
+            // DISPLAY THE CORRECT SIDEBAR
             pnlCustomerSidebar.Visible = isCustomerPage;
             pnlStaffSidebar.Visible = isStaffPage;
 
-            // Apply the correct layout
+            // APPLY THE CORRECT PAGE LAYOUT
             if (isCustomerPage)
             {
                 mainContentLayout.Attributes["class"] =
@@ -64,6 +62,7 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
             }
         }
 
+        // CUSTOMER LOGOUT
         protected void lnkCustomerLogout_Click(
             object sender,
             EventArgs e)
@@ -71,6 +70,7 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
             LogOutUser();
         }
 
+        // STAFF LOGOUT
         protected void lnkStaffLogout_Click(
             object sender,
             EventArgs e)
@@ -78,6 +78,7 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
             LogOutUser();
         }
 
+        // SHARED LOGOUT FUNCTION
         private void LogOutUser()
         {
             Session.Clear();
