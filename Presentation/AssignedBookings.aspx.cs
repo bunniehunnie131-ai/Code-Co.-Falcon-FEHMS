@@ -1,10 +1,8 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
-using System.Web.UI.WebControls;
 
 namespace FEHMS_FortEventHireManagementSystem.Presentation
 {
@@ -109,5 +107,70 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
             return "bg-warning-subtle text-dark border";
         }
 
+            if (type.Equals(
+                "Collection",
+                StringComparison.OrdinalIgnoreCase))
+            {
+                return ResolveUrl(
+                    "~/Presentation/ManageCollection.aspx")
+                    + "?BookingId=" + Server.UrlEncode(id);
+            }
+
+            return "#";
+        }
+
+        protected void FilterBookings(object sender, EventArgs e)
+        {
+            BindAssignedBookings();
+        }
+
+        private void BindAssignedBookings()
+        {
+            List<AssignedBooking> bookings = GetAssignedBookings();
+
+            string searchText = txtSearch.Text.Trim();
+            string selectedStatus = ddlStatus.SelectedValue;
+            string selectedDate = txtDate.Text;
+
+            if (!string.IsNullOrWhiteSpace(searchText))
+            {
+                bookings = bookings.Where(b =>
+                    b.BookingId.IndexOf(
+                        searchText,
+                        StringComparison.OrdinalIgnoreCase) >= 0 ||
+
+                    b.Customer.IndexOf(
+                        searchText,
+                        StringComparison.OrdinalIgnoreCase) >= 0 ||
+
+                    b.Venue.IndexOf(
+                        searchText,
+                        StringComparison.OrdinalIgnoreCase) >= 0
+                ).ToList();
+            }
+
+            if (!string.IsNullOrWhiteSpace(selectedStatus))
+            {
+                bookings = bookings.Where(b =>
+                    b.Status.Equals(
+                        selectedStatus,
+                        StringComparison.OrdinalIgnoreCase)
+                ).ToList();
+            }
+
+            DateTime eventDate;
+
+            if (DateTime.TryParse(selectedDate, out eventDate))
+            {
+                bookings = bookings.Where(b =>
+                    b.EventDate.Date == eventDate.Date
+                ).ToList();
+            }
+
+            rptAssignedBookings.DataSource = bookings;
+            rptAssignedBookings.DataBind();
+
+            pnlNoAssignedBookings.Visible = bookings.Count == 0;
+        }
     }
 }
