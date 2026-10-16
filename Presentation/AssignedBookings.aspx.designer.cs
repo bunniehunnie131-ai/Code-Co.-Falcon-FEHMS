@@ -15,6 +15,33 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
     {
 
         /// <summary>
+        /// lnkAllBookings control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkAllBookings;
+
+        /// <summary>
+        /// lnkDeliveryBookings control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkDeliveryBookings;
+
+        /// <summary>
+        /// lnkCollectionBookings control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkCollectionBookings;
+
+        /// <summary>
         /// txtSearch control.
         /// </summary>
         /// <remarks>

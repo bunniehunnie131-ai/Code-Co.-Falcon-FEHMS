@@ -4,7 +4,10 @@
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
    <div class="d-flex justify-content-between align-items-start flex-wrap gap-3 mb-4 pb-3 border-bottom">
-        <div><h2 class="text-navy mb-1 heading-font">Manage Returns</h2><p class="text-muted mb-0">Record the condition of returned items.</p></div>
+        <div><h2 class="text-navy mb-1 heading-font">Manage Returns</h2>
+            <p class="text-muted mb-0">Record the condition of returned items.</p>
+
+        </div>
         <span class="badge text-bg-secondary">Static demo data</span>
     </div>
     <asp:Panel ID="pnlMessage" runat="server" Visible="false" CssClass="alert alert-success"><asp:Label ID="lblMessage" runat="server" /></asp:Panel>

@@ -12,9 +12,9 @@
     <div class="card">
         <div class="card-body">
             <ul class="nav nav-tabs assigned-bookings-tabs mb-3">
-                <li class="nav-item"><a class="nav-link active" href="#allBookings">All</a></li>
-                <li class="nav-item"><a class="nav-link" href="#deliveryBookings">Deliveries</a></li>
-                <li class="nav-item"><a class="nav-link" href="#collectionBookings">Collections</a></li>
+                <li class="nav-item"><asp:LinkButton ID="lnkAllBookings" runat="server" CssClass="nav-link active" OnClick="FilterAll_Click" CausesValidation="false">All</asp:LinkButton></li>
+                <li class="nav-item"><asp:LinkButton ID="lnkDeliveryBookings" runat="server" CssClass="nav-link" OnClick="FilterDelivery_Click" CausesValidation="false">Deliveries</asp:LinkButton></li>
+                <li class="nav-item"><asp:LinkButton ID="lnkCollectionBookings" runat="server" CssClass="nav-link" OnClick="FilterCollection_Click" CausesValidation="false">Collections</asp:LinkButton></li>
             </ul>
 
             <div class="row g-2 align-items-center mb-3">

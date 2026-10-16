@@ -3,7 +3,7 @@
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-   <style>
+    <style>
     
     .staff-page-content .badge
     {
@@ -58,11 +58,6 @@
             <div class="col-xl-4">
                 <div class="card h-100">
                     <div class="card-header"><h2 class="h5 mb-0">Quick Actions</h2></div>
-                    <div class="list-group list-group-flush">
-                        <a href="ManageDeliveries.aspx" class="list-group-item list-group-item-action"><i class="bi bi-truck me-2 text-primary"></i>View My Deliveries</a>
-                        <a href="ManageCollection.aspx" class="list-group-item list-group-item-action"><i class="bi bi-box-seam me-2 text-success"></i>View My Collections</a>
-                        <a href="ManageCollection.aspx" class="list-group-item list-group-item-action"><i class="bi bi-arrow-return-left me-2 text-warning"></i>Record a Return</a>
-                    </div>
                     <div class="card-body">
                         <h3 class="h6">Recent Activity</h3>
                         <asp:Repeater ID="rptActivity" runat="server"><ItemTemplate><div class="border-top py-2"><div><i class='bi <%#: Eval("Icon") %> me-2 text-primary'></i><%#: Eval("Message") %></div><small class="text-muted"><%#: Eval("When") %></small></div></ItemTemplate></asp:Repeater>

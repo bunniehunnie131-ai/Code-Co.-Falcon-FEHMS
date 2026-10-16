@@ -48,7 +48,6 @@
       <div class="staff-page-content container-fluid px-3 px-xl-4 py-3">
      <div class="page-header d-flex flex-wrap justify-content-between align-items-center gap-3">
          <div><h1 class="page-title">My Collections</h1><p class="page-subtitle mb-0">View and update your assigned collections.</p></div>
-         <span class="badge badge-forte"><asp:Literal ID="litTotalCollections" runat="server" /> assigned</span>
      </div>
 
      <div class="card mb-3">

@@ -269,6 +269,7 @@
     <Content Include="Presentation\HirePackages.aspx" />
     <Content Include="Presentation\HowItWorks.aspx" />
     <Content Include="Presentation\ManageCollections.aspx" />
+    <Content Include="Presentation\ManageCustomers.aspx" />
     <Content Include="Presentation\ManageDelivery.aspx" />
     <Content Include="Presentation\ManageProfile.aspx" />
     <Content Include="Presentation\ManageReturns.aspx" />
@@ -279,8 +280,6 @@
     <Content Include="Presentation\ForgottenPassword.aspx" />
     <Content Include="Presentation\Payment.aspx" />
     <Content Include="Presentation\Profile.ascx" />
-    <Content Include="Presentation\Staff.master.cs.txt" />
-    <Content Include="Presentation\Staff.master.designer.cs.txt" />
     <Content Include="Presentation\StaffDashBoard.aspx" />
     <Content Include="Presentation\StaffProfile.aspx" />
     <Content Include="Presentation\StaffProfile.aspx.cs.txt" />
@@ -326,13 +325,6 @@
     <Compile Include="Presentation\Checkout.aspx.designer.cs">
       <DependentUpon>Checkout.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Customer.master.cs">
-      <DependentUpon>Customer.master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Presentation\Customer.master.designer.cs">
-      <DependentUpon>Customer.master</DependentUpon>
-    </Compile>
     <Compile Include="Presentation\CustomerDashboard.aspx.cs">
       <DependentUpon>CustomerDashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -367,6 +359,13 @@
     </Compile>
     <Compile Include="Presentation\ManageCollections.aspx.designer.cs">
       <DependentUpon>ManageCollections.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\ManageCustomers.aspx.cs">
+      <DependentUpon>ManageCustomers.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\ManageCustomers.aspx.designer.cs">
+      <DependentUpon>ManageCustomers.aspx</DependentUpon>
     </Compile>
     <Compile Include="Presentation\ManageDelivery.aspx.cs">
       <DependentUpon>ManageDelivery.aspx</DependentUpon>
@@ -416,13 +415,6 @@
     </Compile>
     <Compile Include="Presentation\Profile.ascx.designer.cs">
       <DependentUpon>Profile.ascx</DependentUpon>
-    </Compile>
-    <Compile Include="Presentation\Staff.master.cs">
-      <DependentUpon>Staff.master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Presentation\Staff.master.designer.cs">
-      <DependentUpon>Staff.master</DependentUpon>
     </Compile>
     <Compile Include="Presentation\StaffDashBoard.aspx.cs">
       <DependentUpon>StaffDashBoard.aspx</DependentUpon>
@@ -512,8 +504,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Presentation\SystemLayout.Master" />
-    <Content Include="Presentation\Customer.master" />
-    <Content Include="Presentation\Staff.master" />
     <None Include="packages.config" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
