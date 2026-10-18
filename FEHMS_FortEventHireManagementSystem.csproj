@@ -292,6 +292,7 @@
     <Content Include="Presentation\Login.aspx" />
     <Content Include="Presentation\TrackOrder.aspx" />
     <Content Include="Presentation\WebForm1.aspx" />
+    <Content Include="Presentation\ReviewSummary.aspx" />
     <Content Include="Stylesheet\Forte.css" />
     <Content Include="Stylesheet\TrackOrderIntegration.css" />
     <Content Include="Web.config" />
@@ -495,6 +496,14 @@
       <DependentUpon>TrackOrder.aspx</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Presentation\ReviewSummary.aspx.cs">
+      <DependentUpon>ReviewSummary.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\ReviewSummary.aspx.designer.cs">
+      <DependentUpon>ReviewSummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Service\RegistrationSecurityService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Presentation\SystemLayout.Master" />
