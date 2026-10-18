@@ -274,6 +274,7 @@
     <Content Include="Presentation\About.aspx" />
     <Content Include="Presentation\Contact.aspx" />
     <Content Include="Presentation\ForgottenPassword.aspx" />
+    <Content Include="Presentation\PackageDetails.aspx" />
     <Content Include="Presentation\Payment.aspx" />
     <Content Include="Presentation\Profile.ascx" />
     <Content Include="Presentation\Staff.master.cs.txt" />
@@ -380,6 +381,13 @@
     </Compile>
     <Compile Include="Presentation\OrderSummary.aspx.designer.cs">
       <DependentUpon>OrderSummary.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\PackageDetails.aspx.cs">
+      <DependentUpon>PackageDetails.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\PackageDetails.aspx.designer.cs">
+      <DependentUpon>PackageDetails.aspx</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Payment.aspx.cs">
       <DependentUpon>Payment.aspx</DependentUpon>
