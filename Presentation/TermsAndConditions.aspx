@@ -1,4 +1,4 @@
-<%@ Page Title="Terms and Conditions"
+﻿<%@ Page Title="Terms and Conditions"
     Language="C#"
     MasterPageFile="~/Presentation/SystemLayout.Master"
     AutoEventWireup="true"
@@ -266,7 +266,11 @@
 <asp:Content ID="Content2"
     ContentPlaceHolderID="MainContent"
     runat="server">
-<div class="terms-container">
+
+    <link href="Content/Forte.css" rel="stylesheet" />
+
+
+    <div class="terms-container">
 
         <div class="terms-card">
 

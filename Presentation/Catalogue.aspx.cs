@@ -319,14 +319,6 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
             int productId,
             int quantity)
         {
-            if (!Convert.ToBoolean(Session["LoggedIn"] ?? false) || Session["UserID"] == null ||
-                !string.Equals(Convert.ToString(Session["UserRole"]), "Customer", StringComparison.OrdinalIgnoreCase))
-            {
-                Response.Redirect("Login.aspx?returnUrl=" + Server.UrlEncode(Request.RawUrl), false);
-                Context.ApplicationInstance.CompleteRequest();
-                return;
-            }
-
             string query =
                 @"SELECT
                     ProductID,
@@ -661,7 +653,7 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
 
 
             btnViewCart.Text =
-                "Cart ("
+                "🛒 Cart ("
                 +
                 totalItems
                 +

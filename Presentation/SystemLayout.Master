@@ -1,4 +1,4 @@
-<%@ Master Language="C#" AutoEventWireup="true"
+﻿<%@ Master Language="C#" AutoEventWireup="true"
     CodeBehind="SystemLayout.master.cs"
     Inherits="FEHMS_FortEventHireManagementSystem.Presentation.SystemLayout" %>
 
@@ -16,7 +16,421 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
           rel="stylesheet" />
 
-    <link href="<%= ResolveUrl("~/Stylesheet/Forte.css") %>" rel="stylesheet" />
+    <style>
+        :root {
+            --forte-navy: #071827;
+            --forte-dark: #0b1c2c;
+            --forte-blue: #2457d6;
+            --forte-blue-light: #3b6ff0;
+            --page-background: #f5f7fb;
+            --shadow-soft: 0 8px 30px rgba(7,24,39,.08);
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', 'Segoe UI', sans-serif;
+            background: var(--page-background);
+            color: #172033;
+            line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6, .navbar-brand {
+            font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+            font-weight: 600;
+        }
+
+        .navbar {
+            position: relative;
+            z-index: 1000;
+            min-height: 86px;
+            padding: 8px 0;
+            background: linear-gradient(135deg, var(--forte-navy), var(--forte-dark));
+            border-bottom: 1px solid rgba(255,255,255,.08);
+            box-shadow: 0 4px 20px rgba(0,0,0,.12);
+        }
+
+        .navbar-brand {
+            display: flex;
+            align-items: center;
+            margin-right: 35px;
+        }
+
+        .navbar-brand img {
+            height: 68px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .navbar-nav {
+            gap: 5px;
+        }
+
+        .navbar .nav-link {
+            color: #e8edf5 !important;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 10px 12px !important;
+            border-radius: 8px;
+        }
+
+        .navbar .nav-link:hover {
+            color: #fff !important;
+            background: rgba(36,87,214,.2);
+        }
+
+        .nav-icons {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .cart-button {
+            width: 42px;
+            height: 42px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            background: rgba(255,255,255,.06);
+            border: 1px solid rgba(255,255,255,.12);
+            border-radius: 9px;
+            text-decoration: none;
+        }
+
+        .cart-button:hover {
+            color: white;
+            background: var(--forte-blue);
+        }
+
+        .btn-login, .btn-forte {
+            background: var(--forte-blue);
+            border: 1px solid var(--forte-blue);
+            color: white;
+            font-weight: 600;
+            border-radius: 9px;
+            padding: 10px 20px;
+        }
+
+        .btn-login {
+            height: 42px;
+            padding: 0 20px;
+        }
+
+        .btn-login:hover, .btn-forte:hover {
+            color: white;
+            background: var(--forte-blue-light);
+            border-color: var(--forte-blue-light);
+        }
+
+        .navbar-toggler {
+            border-color: rgba(255,255,255,.25);
+        }
+
+        .navbar-toggler-icon {
+            filter: invert(1);
+        }
+
+        .main-content {
+            min-height: 500px;
+            padding-top: 35px;
+            padding-bottom: 35px;
+        }
+
+        .card {
+            border: 1px solid #e7ebf1;
+            border-radius: 14px;
+            box-shadow: var(--shadow-soft);
+        }
+
+        .text-forte {
+            color: var(--forte-blue) !important;
+        }
+
+        .text-navy {
+            color: var(--forte-navy) !important;
+        }
+
+        .form-control, .form-select {
+            border-radius: 9px;
+            border: 1px solid #dce2ea;
+            padding: 10px 13px;
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: var(--forte-blue);
+            box-shadow: 0 0 0 3px rgba(36,87,214,.12);
+        }
+
+        /* SHARED CUSTOMER AND STAFF PORTAL LAYOUT */
+
+        .main-content.customer-layout,
+        .main-content.staff-layout {
+            display: flex;
+            flex-direction: row;
+            align-items: stretch;
+            gap: 24px;
+            width: 100%;
+            max-width: 1320px;
+            min-width: 0;
+            min-height: 500px;
+            margin: 0 auto;
+            padding: 30px 15px 35px;
+        }
+
+        .customer-sidebar,
+        .staff-sidebar {
+            flex: 0 0 250px;
+            width: 250px;
+            min-width: 250px;
+            align-self: stretch;
+            background: #0f172a;
+            color: #fff;
+            border-radius: 12px;
+            padding: 22px 16px;
+        }
+
+        .customer-sidebar-inner,
+        .staff-sidebar-inner {
+            display: flex;
+            flex-direction: column;
+            min-height: 100%;
+        }
+
+        .portal-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 30px;
+        }
+
+        .portal-brand-icon {
+            font-size: 25px;
+            color: #fff;
+            flex-shrink: 0;
+        }
+
+        .portal-brand-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: #fff;
+        }
+
+        .portal-brand-sub {
+            font-size: 12px;
+            color: #cbd5e1;
+        }
+
+        .portal-nav-label {
+            margin-bottom: 12px;
+            color: #94a3b8;
+            font-size: 12px;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .sidebar-nav-item {
+            margin-bottom: 6px;
+        }
+
+        .sidebar-nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px;
+            border-radius: 8px;
+            color: #cbd5e1;
+            text-decoration: none;
+            transition: background-color .2s ease, color .2s ease;
+        }
+
+        .sidebar-nav-link i {
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .customer-sidebar .sidebar-nav-link:hover,
+        .customer-sidebar .sidebar-nav-link.active,
+        .staff-sidebar .sidebar-nav-link:hover,
+        .staff-sidebar .sidebar-nav-link.active {
+            color: #fff !important;
+            background: #1e3a8a;
+        }
+
+        .portal-sidebar-footer {
+            margin-top: auto;
+            padding-top: 25px;
+        }
+
+        .btn-sidebar-logout {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            width: 100%;
+            padding: 12px;
+            border: 0;
+            background: transparent;
+            color: #fca5a5;
+            text-align: left;
+            text-decoration: none;
+            border-radius: 8px;
+        }
+
+        .btn-sidebar-logout:hover {
+            background: #7f1d1d;
+            color: #fff;
+        }
+
+        .customer-page-content,
+        .staff-page-content {
+            flex: 1 1 0;
+            min-width: 0;
+        }
+
+        .customer-page-content .table-responsive,
+        .staff-page-content .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+        }
+
+        /* FOOTER */
+
+        .footer {
+            margin-top: 60px;
+            padding: 50px 0 20px;
+            background: linear-gradient(135deg, var(--forte-navy), #091521);
+            color: #d7dee8;
+        }
+
+        .footer-logo {
+            height: 85px;
+            width: auto;
+            object-fit: contain;
+            margin-bottom: 8px;
+        }
+
+        .footer-description, .footer-contact {
+            color: #aeb9c8;
+            font-size: 14px;
+        }
+
+        .footer h5 {
+            color: #fff;
+            font-size: 16px;
+            margin-bottom: 18px;
+        }
+
+        .footer a {
+            display: block;
+            color: #aeb9c8;
+            text-decoration: none;
+            margin-bottom: 9px;
+            font-size: 14px;
+        }
+
+        .footer a:hover {
+            color: #fff;
+        }
+
+        .footer-contact i {
+            color: var(--forte-blue-light);
+            margin-right: 8px;
+        }
+
+        .social-icons {
+            display: flex;
+            gap: 9px;
+        }
+
+        .social-icons a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 38px;
+            height: 38px;
+            margin: 0;
+            border: 1px solid rgba(255,255,255,.1);
+            border-radius: 8px;
+            background: rgba(255,255,255,.06);
+        }
+
+        .footer-bottom {
+            margin-top: 35px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,.08);
+            text-align: center;
+            color: #7f8da0;
+            font-size: 13px;
+        }
+
+        @media (max-width: 991px) {
+            .navbar-brand {
+                margin-right: 0;
+            }
+
+            .navbar-brand img {
+                height: 58px;
+            }
+
+            .navbar-nav {
+                margin-top: 15px;
+                padding: 10px;
+                background: rgba(255,255,255,.03);
+                border-radius: 10px;
+            }
+
+            .nav-icons {
+                margin-top: 15px;
+                padding-bottom: 8px;
+            }
+        }
+
+        @media (max-width: 767.98px) {
+            .main-content.customer-layout,
+            .main-content.staff-layout {
+                flex-direction: column;
+                gap: 18px;
+                min-height: auto;
+                padding: 20px 15px;
+            }
+
+            .customer-sidebar,
+            .staff-sidebar {
+                flex: 0 0 auto;
+                width: 100%;
+                min-width: 0;
+            }
+
+            .customer-sidebar-inner,
+            .staff-sidebar-inner {
+                min-height: auto;
+            }
+
+            .portal-sidebar-footer {
+                margin-top: 15px;
+                padding-top: 10px;
+            }
+
+            .footer {
+                padding-top: 40px;
+            }
+        }
+    </style>
+
     <asp:ContentPlaceHolder ID="head" runat="server" />
 </head>
 
@@ -173,7 +587,7 @@
                             <span>Dashboard</span>
                         </a>
                     </li>
-                    <li class="sidebar-nav-item">
+                    <li class=sidebar-nav-item>
                         <a href="AssignedBookings.aspx" class="sidebar-nav-link">
                             <i class="bi bi-clipboard-check"></i>
                             <span>Assigned Bookings</span>
@@ -191,14 +605,14 @@
                             <span>Manage Collections</span>
                         </a>
                     </li>
-                    <li class="sidebar-nav-item">
+                    <li class="side-nav-item">
                         <a href="ManageReturns.aspx" class="sidebar-nav-link">
                             <i class="bi bi-arrow-repeat"></i>
                                 <span>Manage Returns</span>
                         </a>
                     </li>
                     <li class="sidebar-nav-item">
-                        <a href="StaffProfile.aspx" class="sidebar-nav-link">
+                        <a href="Profile.ascx" class="sidebar-nav-link">
                             <i class="bi bi-person-gear"></i>
                             <span>Profile Settings</span>
                         </a>
@@ -330,5 +744,3 @@
 
 </body>
 </html>
-
-

@@ -1,7 +1,9 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/SystemLayout.Master" AutoEventWireup="true" CodeBehind="Reviews.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.WebForm6" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/SystemLayout.Master" AutoEventWireup="true" CodeBehind="Reviews.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.WebForm6" %>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div class="review-container">
+    <link href="Content/Forte.css" rel="stylesheet" />
+    
+    <div class="review-container">
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-lg-8 col-xl-7">
@@ -100,4 +102,3 @@
     </div>
 </div>
 </asp:Content>
-

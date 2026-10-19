@@ -1,4 +1,4 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/SystemLayout.Master" AutoEventWireup="true" CodeBehind="Error404.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.Error404" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/SystemLayout.Master" AutoEventWireup="true" CodeBehind="Error404.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.Error404" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
     <link href="../Stylesheet/Forte.css" rel="stylesheet" />
@@ -51,4 +51,3 @@
     </div>
 
 </asp:Content>
-

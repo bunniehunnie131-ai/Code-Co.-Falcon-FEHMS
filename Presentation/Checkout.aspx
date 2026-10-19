@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Checkout.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.Checkout" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Checkout.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.Checkout" %>
 
 
 <!DOCTYPE html>
@@ -67,4 +67,3 @@
 </form>
 </body>
 </html>
-

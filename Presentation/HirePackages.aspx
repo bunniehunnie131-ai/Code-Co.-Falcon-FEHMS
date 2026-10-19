@@ -1,4 +1,4 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/SystemLayout.Master" AutoEventWireup="true" CodeBehind="HirePackages.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.HirePackages" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/SystemLayout.Master" AutoEventWireup="true" CodeBehind="HirePackages.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.HirePackages" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -1996,5 +1996,4 @@ banquets and premium events.
 </html>
 
 </asp:Content>
-
 

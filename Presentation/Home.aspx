@@ -1,5 +1,7 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/SystemLayout.Master" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.WebForm7" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/SystemLayout.Master" AutoEventWireup="true" CodeBehind="Home.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.WebForm7" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+    <link href="Content/Forte.css" rel="stylesheet" />
+ 
 <!-- HERO SECTION -->
 <div class="hero-section text-white d-flex align-items-center" style="background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('../Images/Hero background.png') no-repeat center center / cover; min-height: 450px;">
     <div class="container">
@@ -120,4 +122,3 @@
 </div>
 
 </asp:Content>
-

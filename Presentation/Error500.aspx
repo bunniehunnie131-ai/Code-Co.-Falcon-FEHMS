@@ -1,4 +1,4 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/SystemLayout.Master" AutoEventWireup="true" CodeBehind="Error500.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.Error500" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/SystemLayout.Master" AutoEventWireup="true" CodeBehind="Error500.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.Error500" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
     <link href="../Stylesheet/Forte.css" rel="stylesheet" />
@@ -57,4 +57,3 @@
     </div>
 
 </asp:Content>
-

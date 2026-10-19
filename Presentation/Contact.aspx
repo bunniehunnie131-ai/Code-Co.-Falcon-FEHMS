@@ -1,9 +1,11 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/SystemLayout.Master" AutoEventWireup="true" CodeBehind="Contact.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.WebForm3" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/SystemLayout.Master" AutoEventWireup="true" CodeBehind="Contact.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.WebForm3" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="../Stylesheet/Forte.css" rel="stylesheet" />
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-<div class="contact-page-wrapper">
+     <link href="Content/Forte.css" rel="stylesheet" />
+
+    <div class="contact-page-wrapper">
         <div class="container">
 
             <div class="contact-header">
@@ -205,4 +207,3 @@
     </div>
 
 </asp:Content>
-

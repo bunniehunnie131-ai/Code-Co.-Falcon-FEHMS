@@ -1,4 +1,4 @@
-<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="OrderConfirmation.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.OrderConfirmation" %>
+﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="OrderConfirmation.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.OrderConfirmation" %>
 
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
@@ -94,5 +94,4 @@
 </form>
 </body>
 </html>
-
 

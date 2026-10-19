@@ -1,5 +1,5 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/SystemLayout.Master" AutoEventWireup="true" CodeBehind="ManageDeliveries.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.ManageDeliveries" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/Staff.master" AutoEventWireup="true" CodeBehind="ManageDeliveries.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.ManageDeliveries" %>
+<asp:Content ID="Content1" ContentPlaceHolderID="StaffContent" runat="server">
     
     <div class="delivery-page">
 
@@ -207,4 +207,3 @@
 </div>
 
 </asp:Content>
-

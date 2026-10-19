@@ -1,4 +1,4 @@
-<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/SystemLayout.Master" AutoEventWireup="true" CodeBehind="StaffDashBoard.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.StaffDashBoard" %>
+﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/SystemLayout.Master" AutoEventWireup="true" CodeBehind="StaffDashBoard.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.StaffDashBoard" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 </asp:Content>
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
@@ -68,4 +68,3 @@
     </div>
 
 </asp:Content>
-
