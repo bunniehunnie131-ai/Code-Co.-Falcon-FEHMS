@@ -1,16 +1,14 @@
 <%@ Page Title="Customer Dashboard"
     Language="C#"
-    MasterPageFile="~/Presentation/Customer.master"
+    MasterPageFile="~/Presentation/SystemLayout.Master"
     AutoEventWireup="true"
     CodeBehind="CustomerDashboard.aspx.cs"
     Inherits="FEHMS_FortEventHireManagementSystem.Presentation.CustomerDashboard"
     Culture="en-ZA" %>
 
 <asp:Content ID="Content1"
-    ContentPlaceHolderID="CustomerContent"
+    ContentPlaceHolderID="MainContent"
     runat="server">
-
-    <link href="../Stylesheet/Forte.css" rel="stylesheet" />
 
     <div class="d-flex justify-content-between align-items-center
                 flex-wrap gap-3 mb-4 pb-3 border-bottom">
@@ -77,6 +75,8 @@
         My Bookings
     </h4>
 
+    <asp:Label ID="lblDashboardMessage" runat="server" Visible="false" CssClass="alert alert-danger d-block" />
+
     <div class="table-responsive">
         <table class="table table-hover align-middle border">
             <thead class="table-light">
@@ -122,7 +122,7 @@
                                     Track / View Details
                                 </a>
 
-                                <a href='CustomerDashboard.aspx?receipt=<%#: Eval("DownloadId") %>'
+                                <a href='OrderSummary.aspx?booking=<%#: Eval("DownloadId") %>'
                                    class="btn btn-sm btn-outline-secondary mb-1">
                                     Download Receipt
                                 </a>
@@ -139,8 +139,8 @@
         Visible="false"
         CssClass="text-center text-muted py-4">
 
-        You have no saved bookings in this session.
-        <a href="Catelogue.aspx">Browse our catalogue</a>
+        You do not have any bookings yet.
+        <a href="Catalogue.aspx">Browse our catalogue</a>
         to make a booking.
     </asp:Panel>
 

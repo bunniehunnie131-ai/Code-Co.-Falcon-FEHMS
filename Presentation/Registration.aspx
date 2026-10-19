@@ -1,4 +1,4 @@
-﻿
+
 <%@ Page Title="Registration"
     Language="C#"
     MasterPageFile="~/Presentation/SystemLayout.Master"
@@ -9,115 +9,13 @@
 <asp:Content ID="Content1"
     ContentPlaceHolderID="head"
     runat="server">
-
-    <style>
-        .register-container {
-            max-width: 500px;
-            margin: 60px auto;
-        }
-
-        .register-card {
-            background: #ffffff;
-            padding: 35px;
-            border-radius: 14px;
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.08);
-        }
-
-        .register-card h3 {
-            text-align: center;
-            font-weight: 600;
-            color: #142c6b;
-            margin-bottom: 8px;
-        }
-
-        .register-card p {
-            text-align: center;
-            color: #6c757d;
-            font-size: 14px;
-            margin-bottom: 25px;
-        }
-
-        .form-control,
-        .form-select {
-            border-radius: 10px;
-            padding: 12px;
-        }
-
-        .form-control:focus,
-        .form-select:focus {
-            border-color: #142c6b;
-            box-shadow: 0 0 0 0.15rem rgba(20, 44, 107, 0.15);
-        }
-
-        .btn-register {
-            background-color: #142c6b;
-            border: none;
-            color: #ffffff;
-            border-radius: 10px;
-            padding: 12px;
-            font-weight: 500;
-            width: 100%;
-        }
-
-        .btn-register:hover {
-            background-color: #0f2255;
-            color: #ffffff;
-        }
-
-        .terms {
-            font-size: 13px;
-        }
-
-        .terms a {
-            color: #0d6efd;
-            text-decoration: none;
-            cursor: pointer;
-        }
-
-        .terms a:hover {
-            text-decoration: underline;
-        }
-
-        .bottom-link {
-            text-align: center;
-            margin-top: 15px;
-            font-size: 14px;
-        }
-
-        .bottom-link a {
-            color: #0d6efd;
-            text-decoration: none;
-        }
-
-        .bottom-link a:hover {
-            text-decoration: underline;
-        }
-
-        .terms-status {
-            display: none;
-            margin-top: 8px;
-            color: #198754;
-            font-size: 13px;
-            font-weight: 500;
-        }
-
-        .terms-info {
-            margin-top: 5px;
-            color: #6c757d;
-            font-size: 12px;
-        }
-    </style>
-
 </asp:Content>
 
 
 <asp:Content ID="Content2"
     ContentPlaceHolderID="MainContent"
     runat="server">
-
-    <link href="Content/Forte.css" rel="stylesheet" />
-
-    <div class="register-container">
+<div class="register-container">
 
         <div class="register-card">
 
@@ -462,3 +360,4 @@
     </script>
 
 </asp:Content>
+

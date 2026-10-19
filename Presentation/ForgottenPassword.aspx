@@ -1,4 +1,4 @@
-﻿<%@ Page Title="Forgot Password" Language="C#" 
+<%@ Page Title="Forgot Password" Language="C#" 
     MasterPageFile="~/Presentation/SystemLayout.Master" 
     AutoEventWireup="true" 
     CodeBehind="ForgottenPassword.aspx.cs" 
@@ -51,9 +51,7 @@
 </asp:Content>
 
 <asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
-    <link href="Content/Forte.css" rel="stylesheet" />
-
-    <div class="forgot-container">
+<div class="forgot-container">
         <div class="card">
 
             <h3>Forgot Password</h3>

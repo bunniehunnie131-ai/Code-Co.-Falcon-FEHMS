@@ -12,6 +12,13 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
     {
         protected void Page_Load(object sender, EventArgs e)
         {
+            if (!IsCustomerSignedIn())
+            {
+                Response.Redirect("Login.aspx?returnUrl=" + Server.UrlEncode(Request.RawUrl), false);
+                Context.ApplicationInstance.CompleteRequest();
+                return;
+            }
+
             DataTable cart = GetCart();
             if (cart.Rows.Count == 0)
             {
@@ -27,6 +34,13 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
             }
 
             LoadCartSummary();
+        }
+
+        private bool IsCustomerSignedIn()
+        {
+            return Convert.ToBoolean(Session["LoggedIn"] ?? false) &&
+                   Session["UserID"] != null &&
+                   string.Equals(Convert.ToString(Session["UserRole"]), "Customer", StringComparison.OrdinalIgnoreCase);
         }
 
         private DataTable GetCart()

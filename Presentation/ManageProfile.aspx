@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Presentation/SystemLayout.Master" CodeBehind="ManageProfile.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.ManageProfile" %>
+<%@ Page Language="C#" AutoEventWireup="true" MasterPageFile="~/Presentation/SystemLayout.Master" CodeBehind="ManageProfile.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.ManageProfile" %>
 
 <asp:Content ID="Content1" ContentPlaceHolderID="MainContent" runat="server">
 

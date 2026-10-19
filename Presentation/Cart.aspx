@@ -1,4 +1,4 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Cart.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.Cart" %>
+<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Cart.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.Cart" %>
 
 
 <!DOCTYPE html>

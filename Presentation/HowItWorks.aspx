@@ -1,4 +1,4 @@
-﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/SystemLayout.Master" AutoEventWireup="true" CodeBehind="HowItWorks.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.HowItWorks" %>
+<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/SystemLayout.Master" AutoEventWireup="true" CodeBehind="HowItWorks.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.HowItWorks" %>
 <asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
     <link href="../Stylesheet/Forte.css" rel="stylesheet" />
 
@@ -258,3 +258,4 @@
     </div>
 </section>
 </asp:Content>
+

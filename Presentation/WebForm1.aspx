@@ -1,4 +1,4 @@
-﻿%@ Page Title="Terms and Conditions"
+%@ Page Title="Terms and Conditions"
     Language="C#"
     AutoEventWireup="true"
     CodeBehind="TermsAndConditions.aspx.cs"
