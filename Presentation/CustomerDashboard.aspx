@@ -1,13 +1,13 @@
 <%@ Page Title="Customer Dashboard"
     Language="C#"
-    MasterPageFile="~/Presentation/Customer.master"
+    MasterPageFile="~/Presentation/SystemLayout.Master"
     AutoEventWireup="true"
     CodeBehind="CustomerDashboard.aspx.cs"
     Inherits="FEHMS_FortEventHireManagementSystem.Presentation.CustomerDashboard"
     Culture="en-ZA" %>
 
 <asp:Content ID="Content1"
-    ContentPlaceHolderID="CustomerContent"
+    ContentPlaceHolderID="MainContent"
     runat="server">
 
     <link href="../Stylesheet/Forte.css" rel="stylesheet" />

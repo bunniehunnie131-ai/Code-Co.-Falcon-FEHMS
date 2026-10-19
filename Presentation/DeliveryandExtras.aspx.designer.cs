@@ -33,15 +33,6 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         protected global::System.Web.UI.WebControls.Label lblMessage;
 
         /// <summary>
-        /// lblEventDate control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblEventDate;
-
-        /// <summary>
         /// lblEventType control.
         /// </summary>
         /// <remarks>
@@ -49,6 +40,15 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Label lblEventType;
+
+        /// <summary>
+        /// lblEventDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEventDate;
 
         /// <summary>
         /// lblItemTotalTop control.
@@ -60,6 +60,24 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         protected global::System.Web.UI.WebControls.Label lblItemTotalTop;
 
         /// <summary>
+        /// lblEventEnd control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEventEnd;
+
+        /// <summary>
+        /// lblFullName control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblFullName;
+
+        /// <summary>
         /// txtFullName control.
         /// </summary>
         /// <remarks>
@@ -69,6 +87,15 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         protected global::System.Web.UI.WebControls.TextBox txtFullName;
 
         /// <summary>
+        /// lblEmailAddress control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblEmailAddress;
+
+        /// <summary>
         /// txtEmail control.
         /// </summary>
         /// <remarks>
@@ -76,6 +103,15 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtEmail;
+
+        /// <summary>
+        /// lblPhoneNumber control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPhoneNumber;
 
         /// <summary>
         /// txtPhone control.
@@ -285,6 +321,33 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         protected global::System.Web.UI.WebControls.TextBox txtDJQty;
 
         /// <summary>
+        /// txtDJHours control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtDJHours;
+
+        /// <summary>
+        /// lblDJRate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDJRate;
+
+        /// <summary>
+        /// lblDJMinimumHours control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDJMinimumHours;
+
+        /// <summary>
         /// chkCaterer control.
         /// </summary>
         /// <remarks>
@@ -292,15 +355,6 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.CheckBox chkCaterer;
-
-        /// <summary>
-        /// txtCatererQty control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.TextBox txtCatererQty;
 
         /// <summary>
         /// chkBartender control.
@@ -321,6 +375,33 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         protected global::System.Web.UI.WebControls.TextBox txtBartenderQty;
 
         /// <summary>
+        /// txtBartenderHours control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtBartenderHours;
+
+        /// <summary>
+        /// lblBartenderRate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblBartenderRate;
+
+        /// <summary>
+        /// lblBartenderMinimumHours control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblBartenderMinimumHours;
+
+        /// <summary>
         /// chkWaiter control.
         /// </summary>
         /// <remarks>
@@ -337,6 +418,33 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtWaiterQty;
+
+        /// <summary>
+        /// txtWaiterHours control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtWaiterHours;
+
+        /// <summary>
+        /// lblWaiterRate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblWaiterRate;
+
+        /// <summary>
+        /// lblWaiterMinimumHours control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblWaiterMinimumHours;
 
         /// <summary>
         /// chkClown control.
@@ -357,6 +465,33 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         protected global::System.Web.UI.WebControls.TextBox txtClownQty;
 
         /// <summary>
+        /// txtClownHours control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtClownHours;
+
+        /// <summary>
+        /// lblClownRate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblClownRate;
+
+        /// <summary>
+        /// lblClownMinimumHours control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblClownMinimumHours;
+
+        /// <summary>
         /// chkPhotographer control.
         /// </summary>
         /// <remarks>
@@ -373,6 +508,33 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtPhotographerQty;
+
+        /// <summary>
+        /// txtPhotographerHours control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.TextBox txtPhotographerHours;
+
+        /// <summary>
+        /// lblPhotographerRate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPhotographerRate;
+
+        /// <summary>
+        /// lblPhotographerMinimumHours control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblPhotographerMinimumHours;
 
         /// <summary>
         /// lblItemTotal control.
