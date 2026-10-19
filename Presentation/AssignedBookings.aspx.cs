@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -8,7 +9,7 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
 {
     public partial class AssignedBookings : System.Web.UI.Page
     {
-        public string AssignmentFilterKey { get; private set; }
+        private const string AssignmentFilterKey = "AssignedBookings.AssignmentFilter";
 
         private sealed class AssignedBookingViewModel
         {
@@ -47,6 +48,12 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
             bool filterByDate = DateTime.TryParseExact(txtDate.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out eventDate);
 
             IEnumerable<AssignedBookingViewModel> filtered = all;
+            string assignmentFilter = Convert.ToString(ViewState[AssignmentFilterKey]);
+            if (string.Equals(assignmentFilter, "Delivery", StringComparison.OrdinalIgnoreCase))
+                filtered = filtered.Where(x => string.Equals(x.AssignmentType, "Delivery", StringComparison.OrdinalIgnoreCase));
+            else if (string.Equals(assignmentFilter, "Collection", StringComparison.OrdinalIgnoreCase))
+                filtered = filtered.Where(x => string.Equals(x.AssignmentType, "Collection", StringComparison.OrdinalIgnoreCase));
+
             if (!string.IsNullOrEmpty(search))
                 filtered = filtered.Where(x => Contains(x.BookingId, search) || Contains(x.Customer, search) || Contains(x.Venue, search));
             if (!string.IsNullOrEmpty(status))
@@ -58,6 +65,40 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
             rptAssignedBookings.DataSource = results;
             rptAssignedBookings.DataBind();
             pnlNoAssignedBookings.Visible = results.Count == 0;
+            UpdateAssignmentTabs(all);
+        }
+
+        private void UpdateAssignmentTabs(List<AssignedBookingViewModel> all)
+        {
+            lnkAllBookings.Text = "All (" + all.Count + ")";
+            lnkDeliveryBookings.Text = "Deliveries (" + all.Count(x => x.AssignmentType == "Delivery") + ")";
+            lnkCollectionBookings.Text = "Collections (" + all.Count(x => x.AssignmentType == "Collection") + ")";
+
+            string selected = Convert.ToString(ViewState[AssignmentFilterKey]);
+            lnkAllBookings.CssClass = "nav-link" + (String.IsNullOrEmpty(selected) ? " active" : String.Empty);
+            lnkDeliveryBookings.CssClass = "nav-link" + (selected == "Delivery" ? " active" : String.Empty);
+            lnkCollectionBookings.CssClass = "nav-link" + (selected == "Collection" ? " active" : String.Empty);
+        }
+
+        private void SelectAssignment(string assignmentType)
+        {
+            ViewState[AssignmentFilterKey] = assignmentType;
+            BindAssignedBookings();
+        }
+
+        protected void FilterAll_Click(object sender, EventArgs e)
+        {
+            SelectAssignment(String.Empty);
+        }
+
+        protected void FilterDelivery_Click(object sender, EventArgs e)
+        {
+            SelectAssignment("Delivery");
+        }
+
+        protected void FilterCollection_Click(object sender, EventArgs e)
+        {
+            SelectAssignment("Collection");
         }
 
         private static bool Contains(string value, string search)
@@ -69,17 +110,6 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         {
             BindAssignedBookings();
         }
-
-        protected void FilterAll_Click(object sender, EventArgs e) { SelectAssignment(string.Empty); }
-
-        private void SelectAssignment(string assignmentType)
-        {
-            ViewState[AssignmentFilterKey] = assignmentType;
-            BindAssignedBookings();
-        }
-
-        protected void FilterDelivery_Click(object sender, EventArgs e) { SelectAssignment("Delivery"); }
-        protected void FilterCollection_Click(object sender, EventArgs e) { SelectAssignment("Collection"); }
 
         protected string ResolveAssignmentUrl(object assignmentType, object bookingId)
         {
@@ -105,72 +135,6 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
             if (status == "Out for Delivery") return "bg-primary-subtle text-dark border";
             if (status == "Scheduled") return "bg-secondary-subtle text-dark border";
             return "bg-warning-subtle text-dark border";
-        }
-
-            if (type.Equals(
-                "Collection",
-                StringComparison.OrdinalIgnoreCase))
-            {
-                return ResolveUrl(
-                    "~/Presentation/ManageCollection.aspx")
-                    + "?BookingId=" + Server.UrlEncode(id);
-            }
-
-            return "#";
-        }
-
-        protected void FilterBookings(object sender, EventArgs e)
-        {
-            BindAssignedBookings();
-        }
-
-        private void BindAssignedBookings()
-        {
-            List<AssignedBooking> bookings = GetAssignedBookings();
-
-            string searchText = txtSearch.Text.Trim();
-            string selectedStatus = ddlStatus.SelectedValue;
-            string selectedDate = txtDate.Text;
-
-            if (!string.IsNullOrWhiteSpace(searchText))
-            {
-                bookings = bookings.Where(b =>
-                    b.BookingId.IndexOf(
-                        searchText,
-                        StringComparison.OrdinalIgnoreCase) >= 0 ||
-
-                    b.Customer.IndexOf(
-                        searchText,
-                        StringComparison.OrdinalIgnoreCase) >= 0 ||
-
-                    b.Venue.IndexOf(
-                        searchText,
-                        StringComparison.OrdinalIgnoreCase) >= 0
-                ).ToList();
-            }
-
-            if (!string.IsNullOrWhiteSpace(selectedStatus))
-            {
-                bookings = bookings.Where(b =>
-                    b.Status.Equals(
-                        selectedStatus,
-                        StringComparison.OrdinalIgnoreCase)
-                ).ToList();
-            }
-
-            DateTime eventDate;
-
-            if (DateTime.TryParse(selectedDate, out eventDate))
-            {
-                bookings = bookings.Where(b =>
-                    b.EventDate.Date == eventDate.Date
-                ).ToList();
-            }
-
-            rptAssignedBookings.DataSource = bookings;
-            rptAssignedBookings.DataBind();
-
-            pnlNoAssignedBookings.Visible = bookings.Count == 0;
         }
     }
 }

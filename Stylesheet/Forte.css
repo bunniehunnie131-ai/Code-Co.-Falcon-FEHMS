@@ -1071,3 +1071,343 @@ a {
         padding: 18px;
     }
 }
+body:has(.error-page) .navbar a {
+    margin-right: 0;
+}
+
+body:has(.error-page) .navbar .navbar-brand {
+    margin-right: 35px;
+}
+
+body:has(.error-page) .navbar .cart-button:hover {
+    color: var(--white);
+}
+
+body:has(.error-page) .footer {
+    text-align: left;
+    border-top: 0;
+}
+
+
+/* ---------- Card ---------- */
+
+.error-card {
+    display: grid;
+    grid-template-columns: minmax(260px, 400px) 1fr;
+    gap: 56px;
+    align-items: center;
+    padding: 48px 56px;
+    background: linear-gradient(180deg, var(--surface-color), #f1f6ff);
+    border: 1px solid var(--border-light);
+    border-radius: 20px;
+    box-shadow: var(--shadow-medium);
+}
+
+
+/* ---------- Message ---------- */
+
+.error-code {
+    margin: 0 0 4px;
+    color: var(--secondary-color);
+    font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+    font-size: 6rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -2px;
+}
+
+.error-title {
+    margin: 0 0 14px;
+    color: var(--secondary-color);
+    font-size: 2.1rem;
+    font-weight: 700;
+}
+
+.error-text {
+    max-width: 520px;
+    margin: 0 0 26px;
+    color: var(--text-color);
+    font-size: 1.05rem;
+}
+
+.error-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+    .error-actions .btn-forte,
+    .error-actions .btn-outline-forte {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: auto;
+        margin: 0;
+        padding: 12px 26px;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: var(--radius-medium);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .error-actions .btn-forte {
+        color: var(--white);
+        background: var(--info-color);
+        border: 1px solid var(--info-color);
+    }
+
+        .error-actions .btn-forte:hover {
+            color: var(--white);
+            background: var(--primary-light);
+            border-color: var(--primary-light);
+            box-shadow: var(--blue-shadow);
+            transform: translateY(-2px);
+        }
+
+    .error-actions .btn-outline-forte {
+        color: var(--info-color);
+        background: var(--white);
+        border: 1px solid var(--info-color);
+    }
+
+        .error-actions .btn-outline-forte:hover {
+            color: var(--info-color);
+            background: var(--info-light);
+            transform: translateY(-2px);
+        }
+
+
+/* ---------- Help links ---------- */
+
+.error-help {
+    max-width: 560px;
+    margin-top: 30px;
+    padding-top: 22px;
+    border-top: 1px solid var(--border-color);
+}
+
+.error-help-title {
+    margin: 0 0 14px;
+    color: var(--secondary-color);
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.error-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 28px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+    .error-links a {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--secondary-color);
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+        .error-links a i {
+            color: var(--info-color);
+            font-size: 1.25rem;
+        }
+
+        .error-links a:hover {
+            color: var(--info-color);
+        }
+
+
+/* ---------- Downtime notice (503) ---------- */
+
+.error-notice {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    max-width: 560px;
+    margin-top: 28px;
+    padding: 18px 22px;
+    background: var(--info-light);
+    border: 1px solid #bfdbfe;
+    border-radius: var(--radius-medium);
+}
+
+.error-notice-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    color: var(--white);
+    font-size: 1.2rem;
+    background: var(--info-color);
+    border-radius: 50%;
+}
+
+.error-notice strong {
+    display: block;
+    color: var(--secondary-color);
+    font-size: 0.98rem;
+}
+
+.error-notice span {
+    color: var(--muted-text);
+    font-size: 0.88rem;
+}
+
+
+/* ---------- Illustrations ---------- */
+
+.error-art {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.error-svg {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+}
+
+.ill-blob {
+    fill: #e3eeff;
+}
+
+.ill-ground {
+    fill: #c9dcf8;
+}
+
+.ill-navy {
+    fill: var(--primary-color);
+}
+
+.ill-navy-dark {
+    fill: var(--primary-dark);
+}
+
+.ill-blue {
+    fill: var(--info-color);
+}
+
+.ill-sky {
+    fill: #93c5fd;
+}
+
+.ill-pale {
+    fill: #bfdbfe;
+}
+
+.ill-steel {
+    fill: #8fa6c9;
+}
+
+.ill-white {
+    fill: var(--white);
+}
+
+.ill-red {
+    fill: var(--danger-color);
+}
+
+.ill-orange {
+    fill: #f97316;
+}
+
+.ill-shackle {
+    fill: none;
+    stroke: var(--primary-color);
+    stroke-width: 22;
+    stroke-linecap: round;
+}
+
+.ill-badge {
+    fill: var(--danger-color);
+    stroke: var(--white);
+    stroke-width: 6;
+}
+
+.ill-warning {
+    fill: var(--danger-color);
+    stroke: var(--danger-color);
+    stroke-width: 16;
+    stroke-linejoin: round;
+}
+
+.ill-outline {
+    stroke: var(--primary-dark);
+    stroke-width: 3;
+}
+
+.ill-text {
+    fill: var(--white);
+    font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+    font-size: 34px;
+    font-weight: 700;
+    text-anchor: middle;
+}
+
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 991px) {
+
+    .error-card {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding: 36px 28px;
+        text-align: center;
+    }
+
+    .error-svg {
+        max-width: 280px;
+    }
+
+    .error-text,
+    .error-help,
+    .error-notice {
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .error-actions,
+    .error-links {
+        justify-content: center;
+    }
+
+    .error-notice {
+        text-align: left;
+    }
+}
+
+@media (max-width: 576px) {
+
+    .error-code {
+        font-size: 4.5rem;
+    }
+
+    .error-title {
+        font-size: 1.7rem;
+    }
+
+    .error-card {
+        padding: 28px 18px;
+    }
+
+    .error-text br {
+        display: none;
+    }
+
+    .error-actions .btn-forte,
+    .error-actions .btn-outline-forte {
+        width: 100%;
+    }
+}
+
