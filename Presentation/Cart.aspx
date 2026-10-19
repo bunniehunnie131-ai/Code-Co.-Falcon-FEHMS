@@ -1,589 +1,638 @@
-﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Cart.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.Cart" %>
+﻿<%@ Page Title="Your Cart - Forte Events"
+    Language="C#"
+    MasterPageFile="~/Presentation/SystemLayout.Master"
+    AutoEventWireup="true"
+    CodeBehind="Cart.aspx.cs"
+    Inherits="FEHMS_FortEventHireManagementSystem.Presentation.Cart" %>
 
-
-<!DOCTYPE html>
-
-<html xmlns="http://www.w3.org/1999/xhtml">
-
-<head runat="server">
-
-    <title>Your Cart - Forte Event Hire</title>
-
-    <meta name="viewport"
-        content="width=device-width, initial-scale=1.0" />
-
-    <!-- BOOTSTRAP CSS -->
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-        rel="stylesheet" />
-
+<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
 
     <style>
+        /* =========================================
+           FEHMS - FORTE EVENTS CART PAGE
+           ========================================= */
 
-        * {
+        .fehms-cart {
+            --forte-navy: #071827;
+            --forte-dark: #0b1c2c;
+            --forte-blue: #2457d6;
+            --forte-blue-light: #3b6ff0;
+            --forte-bg: #f5f7fb;
+            --forte-border: #e2e8f0;
+            --forte-text: #334155;
+            --forte-muted: #64748b;
+            --forte-white: #ffffff;
+
+            min-height: 100vh;
+            padding: 30px 0 50px;
+            background: var(--forte-bg);
+            color: var(--forte-text);
+            font-family: 'Inter', 'Segoe UI', Arial, sans-serif;
+        }
+
+        .fehms-cart,
+        .fehms-cart * {
             box-sizing: border-box;
         }
 
-        body {
-            margin: 0;
-
-            font-family:
-                'Segoe UI',
-                Arial,
-                Helvetica,
-                sans-serif;
-
-            background:
-                linear-gradient(
-                    135deg,
-                    #16324F,
-                    #1E4C74,
-                    #2D89EF
-                );
-
-            min-height: 100vh;
+        .fehms-cart .cart-container {
+            width: 100%;
+            max-width: 1320px;
+            margin: 0 auto;
+            padding: 0 24px;
         }
 
+        /* Page heading */
 
-        /* ==========================================
-           TOP BAR
-        ========================================== */
+        .fehms-cart .cart-hero {
+            position: relative;
+            overflow: hidden;
+            padding: 38px 40px;
+            margin-bottom: 28px;
+            border-radius: 18px;
+            background: linear-gradient(
+                120deg,
+                var(--forte-navy),
+                #102d4c 65%,
+                var(--forte-blue)
+            );
+            box-shadow: 0 10px 25px rgba(7, 24, 39, 0.10);
+        }
 
-        .top-bar {
-            width: 92%;
-            max-width: 1400px;
+        .fehms-cart .cart-hero::after {
+            content: "";
+            position: absolute;
+            top: -100px;
+            right: -50px;
+            width: 250px;
+            height: 250px;
+            border: 35px solid rgba(255, 255, 255, 0.06);
+            border-radius: 50%;
+            pointer-events: none;
+        }
 
-            margin: auto;
+        .fehms-cart .cart-eyebrow {
+            display: inline-block;
+            margin-bottom: 12px;
+            padding: 7px 13px;
+            border: 1px solid rgba(255, 255, 255, 0.17);
+            border-radius: 30px;
+            background: rgba(255, 255, 255, 0.10);
+            color: #c9d9ff;
+            font-size: 11px;
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+        }
 
-            padding: 28px 0;
+        .fehms-cart .cart-hero h1 {
+            margin: 0 0 12px;
+            color: #ffffff;
+            font-family: 'Space Grotesk', 'Inter', Arial, sans-serif;
+            font-size: clamp(30px, 4vw, 42px);
+            font-weight: 800;
+            letter-spacing: -1px;
+        }
 
+        .fehms-cart .cart-hero p {
+            max-width: 650px;
+            margin: 0;
+            color: #dbe6f5;
+            font-size: 14px;
+            line-height: 1.9;
+        }
+
+        .fehms-cart .cart-hero-actions {
+            position: relative;
+            z-index: 1;
             display: flex;
-
-            justify-content: space-between;
-
             align-items: center;
-
+            justify-content: space-between;
             gap: 20px;
-
             flex-wrap: wrap;
         }
 
-
-        .brand {
-            color: white;
-
-            font-size: 26px;
-
-            font-weight: 800;
-        }
-
-
-        .continue-button {
-            border: none;
-
-            background: white;
-
-            color: #16324F;
-
-            padding: 12px 22px;
-
-            border-radius: 40px;
-
-            font-size: 16px;
-
-            font-weight: 700;
-
-            cursor: pointer;
-
-            box-shadow:
-                0 7px 18px
-                rgba(0,0,0,.16);
-        }
-
-
-        .continue-button:hover {
-            background: #f2f5ff;
-
-            color: #2D89EF;
-        }
-
-
-        /* ==========================================
-           HEADING
-        ========================================== */
-
-        .hero {
-            text-align: center;
-
-            color: white;
-
-            padding: 20px 20px 45px;
-        }
-
-
-        .hero h1 {
-            font-size: 52px;
-
-            font-weight: 800;
-
-            margin-bottom: 10px;
-        }
-
-
-        .hero p {
-            font-size: 19px;
-
-            opacity: .9;
-        }
-
-
-        /* ==========================================
-           CART PAGE
-        ========================================== */
-
-        .cart-container {
-            width: 92%;
-
-            max-width: 1400px;
-
-            margin: 0 auto;
-
-            padding-bottom: 80px;
-        }
-
-
-        .cart-card,
-        .summary-card {
-            background: white;
-
-            border-radius: 20px;
-
-            padding: 28px;
-
-            box-shadow:
-                0 12px 30px
-                rgba(0,0,0,.18);
-        }
-
-
-        .cart-card h2,
-        .summary-card h2 {
-            color: #16324F;
-
-            font-weight: 800;
-
-            margin-bottom: 25px;
-        }
-
-
-        /* ==========================================
-           CART ITEM
-        ========================================== */
-
-        .cart-item {
-            display: flex;
-
+        .fehms-cart .continue-button {
+            display: inline-flex;
             align-items: center;
-
-            gap: 20px;
-
-            padding: 20px 0;
-
-            border-bottom:
-                1px solid #ececec;
+            justify-content: center;
+            gap: 9px;
+            min-height: 43px;
+            padding: 11px 17px;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 9px;
+            background: #ffffff;
+            color: var(--forte-navy);
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
 
+        .fehms-cart .continue-button:hover {
+            background: #eaf0ff;
+            color: var(--forte-blue);
+            transform: translateY(-1px);
+        }
 
-        .cart-item:last-child {
+        /* Main grid */
+
+        .fehms-cart .cart-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.8fr) minmax(290px, 0.9fr);
+            align-items: start;
+            gap: 24px;
+        }
+
+        .fehms-cart .cart-card,
+        .fehms-cart .summary-card {
+            min-width: 0;
+            padding: 27px;
+            border: 1px solid var(--forte-border);
+            border-radius: 16px;
+            background: #ffffff;
+            box-shadow: 0 5px 18px rgba(15, 23, 42, 0.035);
+        }
+
+        .fehms-cart .section-heading {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 0 0 24px;
+            color: var(--forte-navy);
+            font-family: 'Space Grotesk', 'Inter', Arial, sans-serif;
+            font-size: 21px;
+            font-weight: 800;
+        }
+
+        .fehms-cart .section-heading-icon {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 42px;
+            height: 42px;
+            flex-shrink: 0;
+            border-radius: 11px;
+            background: #edf3ff;
+            color: var(--forte-blue);
+            font-size: 17px;
+        }
+
+        /* Empty cart */
+
+        .fehms-cart .empty-cart {
+            padding: 45px 20px;
+            border: 1px dashed #cbd5e1;
+            border-radius: 13px;
+            background: #f9fbff;
+            text-align: center;
+        }
+
+        .fehms-cart .empty-cart-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 76px;
+            height: 76px;
+            margin: 0 auto 18px;
+            border-radius: 50%;
+            background: #edf3ff;
+            color: var(--forte-blue);
+            font-size: 32px;
+        }
+
+        .fehms-cart .empty-cart h3 {
+            margin: 0 0 10px;
+            color: var(--forte-navy);
+            font-size: 20px;
+            font-weight: 800;
+        }
+
+        .fehms-cart .empty-cart p {
+            margin: 0;
+            color: var(--forte-muted);
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .fehms-cart .browse-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 43px;
+            margin-top: 20px;
+            padding: 11px 18px;
+            border: 0;
+            border-radius: 9px;
+            background: var(--forte-blue);
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 12px;
+            font-weight: 800;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .fehms-cart .browse-button:hover {
+            background: var(--forte-navy);
+        }
+
+        /* Product item */
+
+        .fehms-cart .cart-item {
+            display: grid;
+            grid-template-columns: 112px minmax(0, 1fr) auto;
+            align-items: center;
+            gap: 20px;
+            padding: 22px 0;
+            border-bottom: 1px solid #edf1f6;
+        }
+
+        .fehms-cart .cart-item:first-child {
+            padding-top: 0;
+        }
+
+        .fehms-cart .cart-item:last-child {
+            padding-bottom: 0;
             border-bottom: none;
         }
 
-
-        .cart-image {
-            width: 120px;
-
-            height: 120px;
-
-            object-fit: contain;
-
-            border-radius: 12px;
-
-            background: #f8f9fa;
-
+        .fehms-cart .cart-image {
+            display: block;
+            width: 112px;
+            height: 112px;
             padding: 8px;
+            border: 1px solid #edf1f6;
+            border-radius: 12px;
+            background: #f8fafc;
+            object-fit: contain;
         }
 
-
-        .cart-info {
-            flex: 1;
+        .fehms-cart .cart-info {
+            min-width: 0;
         }
 
-
-        .cart-info h4 {
-            color: #16324F;
-
-            font-size: 21px;
-
+        .fehms-cart .cart-info h4 {
+            margin: 0 0 10px;
+            color: var(--forte-navy);
+            font-size: 16px;
             font-weight: 800;
-
-            margin-bottom: 8px;
+            line-height: 1.5;
+            overflow-wrap: anywhere;
         }
 
-
-        .cart-info p {
-            margin: 4px 0;
-
-            color: #666;
+        .fehms-cart .cart-info p {
+            margin: 5px 0;
+            color: var(--forte-muted);
+            font-size: 12px;
+            line-height: 1.7;
+            overflow-wrap: anywhere;
         }
 
-
-        .unit-price {
-            color: #2D89EF;
-
-            font-weight: 700;
+        .fehms-cart .cart-info p strong {
+            color: var(--forte-text);
         }
 
-
-        /* ==========================================
-           QUANTITY
-        ========================================== */
-
-        .quantity-controls {
-            display: flex;
-
-            align-items: center;
-
-            gap: 9px;
-
-            margin-top: 12px;
-        }
-
-
-        .quantity-button {
-            width: 38px;
-
-            height: 38px;
-
-            border: none;
-
-            border-radius: 9px;
-
-            background: #2D89EF;
-
-            color: white;
-
-            font-size: 20px;
-
+        .fehms-cart .unit-price {
+            color: var(--forte-blue) !important;
             font-weight: 800;
-
-            cursor: pointer;
         }
 
-
-        .quantity-button:hover {
-            background: #16324F;
-        }
-
-
-        .quantity-value {
-            min-width: 40px;
-
-            text-align: center;
-
+        .fehms-cart .item-total {
+            min-width: 95px;
+            color: var(--forte-blue);
             font-size: 17px;
-
             font-weight: 800;
-
-            color: #16324F;
-        }
-
-
-        /* ==========================================
-           REMOVE
-        ========================================== */
-
-        .remove-button {
-            margin-top: 12px;
-
-            border: none;
-
-            border-radius: 8px;
-
-            background: #fff0f0;
-
-            color: #a22727;
-
-            padding: 8px 13px;
-
-            font-weight: 700;
-
-            cursor: pointer;
-        }
-
-
-        .remove-button:hover {
-            background: #f5dada;
-        }
-
-
-        /* ==========================================
-           SUBTOTAL
-        ========================================== */
-
-        .item-total {
-            min-width: 120px;
-
             text-align: right;
-
-            color: #2D89EF;
-
-            font-size: 21px;
-
-            font-weight: 800;
+            overflow-wrap: anywhere;
         }
 
+        /* Quantity controls */
 
-        /* ==========================================
-           EMPTY CART
-        ========================================== */
+        .fehms-cart .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            margin-top: 13px;
+        }
 
-        .empty-cart {
+        .fehms-cart .quantity-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 33px;
+            height: 33px;
+            padding: 0;
+            border: 1px solid #dce5f5;
+            border-radius: 8px;
+            background: #edf3ff;
+            color: var(--forte-blue);
+            font-family: inherit;
+            font-size: 20px;
+            font-weight: 800;
+            line-height: 1;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .fehms-cart .quantity-button:hover {
+            border-color: var(--forte-blue);
+            background: var(--forte-blue);
+            color: #ffffff;
+        }
+
+        .fehms-cart .quantity-value {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            min-width: 30px;
+            color: var(--forte-navy);
+            font-size: 14px;
+            font-weight: 800;
             text-align: center;
-
-            padding: 55px 20px;
-
-            color: #777;
         }
 
+        /* Remove item */
 
-        .empty-cart-icon {
-            font-size: 50px;
-
-            margin-bottom: 10px;
-        }
-
-
-        .empty-cart h3 {
-            color: #16324F;
-
+        .fehms-cart .remove-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            min-height: 32px;
+            margin-top: 10px;
+            padding: 7px 10px;
+            border: 1px solid #fecaca;
+            border-radius: 8px;
+            background: #fff5f5;
+            color: #b42318;
+            font-family: inherit;
+            font-size: 11px;
             font-weight: 800;
+            cursor: pointer;
+            transition: all 0.2s ease;
         }
 
+        .fehms-cart .remove-button:hover {
+            border-color: #ef4444;
+            background: #fee2e2;
+        }
 
-        /* ==========================================
-           SUMMARY
-        ========================================== */
+        /* Order summary */
 
-        .summary-card {
+        .fehms-cart .summary-card {
             position: sticky;
-
             top: 25px;
         }
 
+        .fehms-cart .summary-card .section-heading {
+            margin-bottom: 20px;
+        }
 
-        .summary-row {
-            display: flex;
+        .fehms-cart .summary-description {
+            margin: 0 0 22px;
+            color: var(--forte-muted);
+            font-size: 12px;
+            line-height: 1.8;
+        }
 
-            justify-content: space-between;
-
-            align-items: center;
-
+        .fehms-cart .summary-divider {
+            height: 1px;
             margin: 18px 0;
-
-            color: #555;
-
-            font-size: 17px;
+            border: 0;
+            background: var(--forte-border);
         }
 
+        .fehms-cart .summary-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 14px;
+            margin: 18px 0;
+            color: var(--forte-muted);
+            font-size: 13px;
+        }
 
-        .summary-value {
-            color: #16324F;
-
+        .fehms-cart .summary-value {
+            color: var(--forte-navy);
             font-weight: 800;
+            text-align: right;
         }
 
-
-        .summary-total {
-            border-top:
-                2px solid #eeeeee;
-
+        .fehms-cart .summary-total {
+            align-items: flex-start;
             padding-top: 20px;
-
             margin-top: 22px;
+            border-top: 1px solid var(--forte-border);
+            color: var(--forte-navy);
+            font-size: 14px;
+            font-weight: 800;
+        }
 
+        .fehms-cart .total-price {
+            color: var(--forte-blue);
             font-size: 21px;
-
             font-weight: 800;
-
-            color: #16324F;
+            text-align: right;
+            overflow-wrap: anywhere;
         }
 
-
-        .total-price {
-            color: #2D89EF;
-
-            font-size: 23px;
-
-            font-weight: 800;
-        }
-
-
-        /* ==========================================
-           CHECKOUT BUTTON
-        ========================================== */
-
-        .checkout-button {
+        .fehms-cart .checkout-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
             width: 100%;
-
-            margin-top: 22px;
-
-            border: none;
-
-            border-radius: 11px;
-
-            background: #2D89EF;
-
-            color: white;
-
-            padding: 15px;
-
-            font-size: 17px;
-
+            min-height: 48px;
+            margin-top: 24px;
+            padding: 13px 16px;
+            border: 0;
+            border-radius: 10px;
+            background: linear-gradient(
+                100deg,
+                var(--forte-blue),
+                var(--forte-blue-light)
+            );
+            color: #ffffff;
+            font-family: inherit;
+            font-size: 13px;
             font-weight: 800;
-
             cursor: pointer;
+            box-shadow: 0 5px 12px rgba(36, 87, 214, 0.15);
+            transition: all 0.2s ease;
         }
 
-
-        .checkout-button:hover {
-            background: #16324F;
+        .fehms-cart .checkout-button:hover {
+            background: var(--forte-navy);
+            box-shadow: 0 7px 16px rgba(7, 24, 39, 0.14);
+            transform: translateY(-1px);
         }
 
-
-        .checkout-button:disabled {
+        .fehms-cart .checkout-button:disabled {
             background: #a8b3bf;
-
+            box-shadow: none;
             cursor: not-allowed;
+            transform: none;
         }
 
+        .fehms-cart .checkout-note {
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            gap: 7px;
+            margin-top: 15px;
+            color: #7b8798;
+            font-size: 10px;
+            line-height: 1.7;
+            text-align: center;
+        }
 
-        /* ==========================================
-           RESPONSIVE
-        ========================================== */
+        .fehms-cart .checkout-note i {
+            margin-top: 2px;
+            color: #16a34a;
+        }
 
-        @media(max-width:768px) {
+        /* Tablet */
 
-            .hero h1 {
-                font-size: 38px;
+        @media (max-width: 1000px) {
+            .fehms-cart .cart-layout {
+                grid-template-columns: minmax(0, 1fr);
             }
 
-
-            .cart-item {
-                flex-direction: column;
-
-                align-items: flex-start;
-            }
-
-
-            .cart-image {
-                width: 100%;
-
-                height: 220px;
-            }
-
-
-            .item-total {
-                text-align: left;
-            }
-
-
-            .summary-card {
+            .fehms-cart .summary-card {
                 position: static;
             }
-
         }
 
+        /* Mobile */
+
+        @media (max-width: 600px) {
+            .fehms-cart {
+                padding: 20px 0 35px;
+            }
+
+            .fehms-cart .cart-container {
+                padding: 0 14px;
+            }
+
+            .fehms-cart .cart-hero {
+                padding: 25px 21px;
+                margin-bottom: 18px;
+                border-radius: 15px;
+            }
+
+            .fehms-cart .cart-hero-actions {
+                align-items: flex-start;
+                flex-direction: column;
+                gap: 18px;
+            }
+
+            .fehms-cart .cart-hero h1 {
+                font-size: 32px;
+            }
+
+            .fehms-cart .cart-hero p {
+                font-size: 13px;
+            }
+
+            .fehms-cart .cart-card,
+            .fehms-cart .summary-card {
+                padding: 20px 16px;
+                border-radius: 14px;
+            }
+
+            .fehms-cart .section-heading {
+                font-size: 19px;
+            }
+
+            .fehms-cart .cart-item {
+                grid-template-columns: 78px minmax(0, 1fr);
+                gap: 13px;
+                padding: 20px 0;
+            }
+
+            .fehms-cart .cart-image {
+                width: 78px;
+                height: 88px;
+            }
+
+            .fehms-cart .cart-info h4 {
+                font-size: 14px;
+            }
+
+            .fehms-cart .item-total {
+                grid-column: 2;
+                min-width: 0;
+                text-align: left;
+                font-size: 16px;
+            }
+
+            .fehms-cart .empty-cart {
+                padding: 35px 15px;
+            }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .fehms-cart *,
+            .fehms-cart *::before,
+            .fehms-cart *::after {
+                transition: none !important;
+                animation: none !important;
+            }
+        }
     </style>
 
-</head>
+</asp:Content>
 
+<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
-<body>
+    <div class="fehms-cart">
+        <div class="cart-container">
 
-<form id="form1" runat="server">
+            <!-- PAGE HEADER -->
 
+            <section class="cart-hero">
 
-    <!-- ==========================================
-         TOP BAR
-    =========================================== -->
+                <div class="cart-hero-actions">
 
-    <div class="top-bar">
+                    <div>
+                        <div class="cart-eyebrow">Forte Events Hire &amp; Decor</div>
 
+                        <h1>Your Cart</h1>
 
-        <div class="brand">
+                        <p>
+                            Review your selected hire items before proceeding
+                            to checkout.
+                        </p>
+                    </div>
 
-            Forte Event Hire
+                    <asp:Button
+                        ID="btnContinueShopping"
+                        runat="server"
+                        Text="&#8592; Continue Shopping"
+                        CssClass="continue-button"
+                        CausesValidation="false"
+                        OnClick="btnContinueShopping_Click" />
 
-        </div>
+                </div>
 
+            </section>
 
-        <asp:Button
-            ID="btnContinueShopping"
-            runat="server"
-            Text="← Continue Shopping"
-            CssClass="continue-button"
-            CausesValidation="false"
-            OnClick="btnContinueShopping_Click" />
+            <!-- CART CONTENT -->
 
+            <div class="cart-layout">
 
-    </div>
-
-
-
-    <!-- ==========================================
-         HERO
-    =========================================== -->
-
-    <section class="hero">
-
-        <h1>
-            Your Cart
-        </h1>
-
-        <p>
-            Review your selected hire items
-            before proceeding to checkout.
-        </p>
-
-    </section>
-
-
-
-    <!-- ==========================================
-         CART CONTENT
-    =========================================== -->
-
-    <div class="cart-container">
-
-
-        <div class="row g-4">
-
-
-            <!-- ==================================
-                 LEFT: CART PRODUCTS
-            =================================== -->
-
-            <div class="col-lg-8">
-
+                <!-- SELECTED PRODUCTS -->
 
                 <div class="cart-card">
 
-
-                    <h2>
+                    <h2 class="section-heading">
+                        <span class="section-heading-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </span>
                         Selected Items
                     </h2>
-
-
 
                     <!-- EMPTY CART -->
 
@@ -592,35 +641,26 @@
                         runat="server"
                         CssClass="empty-cart">
 
-
                         <div class="empty-cart-icon">
-                            🛒
+                            <i class="fas fa-shopping-basket"></i>
                         </div>
 
-
-                        <h3>
-                            Your cart is empty
-                        </h3>
-
+                        <h3>Your cart is empty</h3>
 
                         <p>
-                            You have not added any hire
-                            products yet.
+                            You have not added any hire products yet.
+                            Browse our catalogue to find items for your event.
                         </p>
-
 
                         <asp:Button
                             ID="btnBrowseProducts"
                             runat="server"
                             Text="Browse Products"
-                            CssClass="btn btn-primary mt-3"
+                            CssClass="browse-button"
                             CausesValidation="false"
                             OnClick="btnContinueShopping_Click" />
 
-
                     </asp:Panel>
-
-
 
                     <!-- CART PRODUCTS -->
 
@@ -629,14 +669,11 @@
                         runat="server"
                         OnItemCommand="rptCart_ItemCommand">
 
-
                         <ItemTemplate>
-
 
                             <div class="cart-item">
 
-
-                                <!-- IMAGE -->
+                                <!-- PRODUCT IMAGE -->
 
                                 <asp:Image
                                     ID="imgProduct"
@@ -645,54 +682,29 @@
                                     ImageUrl='<%# Eval("ImageUrl") %>'
                                     AlternateText='<%# Eval("Name") %>' />
 
-
-
-                                <!-- PRODUCT INFO -->
+                                <!-- PRODUCT INFORMATION -->
 
                                 <div class="cart-info">
 
-
                                     <h4>
-
                                         <%# Eval("Name") %>
-
                                     </h4>
 
-
-
                                     <p>
-
                                         Colour / Style:
-
                                         <strong>
-
                                             <%# Eval("Colour") %>
-
                                         </strong>
-
                                     </p>
-
-
 
                                     <p class="unit-price">
-
-                                        R<%#
-                                            Convert
-                                            .ToDecimal(
-                                                Eval("UnitPrice")
-                                            )
-                                            .ToString("N2")
-                                        %>
+                                        R<%# Convert.ToDecimal(Eval("UnitPrice")).ToString("N2") %>
                                         each
-
                                     </p>
 
-
-
-                                    <!-- QUANTITY -->
+                                    <!-- QUANTITY CONTROLS -->
 
                                     <div class="quantity-controls">
-
 
                                         <asp:Button
                                             ID="btnDecrease"
@@ -701,17 +713,12 @@
                                             CssClass="quantity-button"
                                             CausesValidation="false"
                                             CommandName="Decrease"
-                                            CommandArgument='<%# Container.ItemIndex %>' />
-
-
+                                            CommandArgument='<%# Container.ItemIndex %>'
+                                            ToolTip="Decrease quantity" />
 
                                         <span class="quantity-value">
-
                                             <%# Eval("Quantity") %>
-
                                         </span>
-
-
 
                                         <asp:Button
                                             ID="btnIncrease"
@@ -720,14 +727,12 @@
                                             CssClass="quantity-button"
                                             CausesValidation="false"
                                             CommandName="Increase"
-                                            CommandArgument='<%# Container.ItemIndex %>' />
-
+                                            CommandArgument='<%# Container.ItemIndex %>'
+                                            ToolTip="Increase quantity" />
 
                                     </div>
 
-
-
-                                    <!-- REMOVE -->
+                                    <!-- REMOVE PRODUCT -->
 
                                     <asp:Button
                                         ID="btnRemove"
@@ -738,74 +743,47 @@
                                         CommandName="Remove"
                                         CommandArgument='<%# Container.ItemIndex %>' />
 
-
                                 </div>
 
-
-
-                                <!-- SUBTOTAL -->
+                                <!-- ITEM SUBTOTAL -->
 
                                 <div class="item-total">
 
-                                    R<%#
-                                        (
-                                            Convert.ToDecimal(
-                                                Eval("UnitPrice")
-                                            )
-                                            *
-                                            Convert.ToInt32(
-                                                Eval("Quantity")
-                                            )
-                                        )
-                                        .ToString("N2")
-                                    %>
+                                    R<%# (Convert.ToDecimal(Eval("UnitPrice")) * Convert.ToInt32(Eval("Quantity"))).ToString("N2") %>
 
                                 </div>
 
-
                             </div>
-
 
                         </ItemTemplate>
 
-
                     </asp:Repeater>
-
 
                 </div>
 
-
-            </div>
-
-
-
-            <!-- ==================================
-                 RIGHT: ORDER SUMMARY
-            =================================== -->
-
-            <div class="col-lg-4">
-
+                <!-- ORDER SUMMARY -->
 
                 <div class="summary-card">
 
-
-                    <h2>
+                    <h2 class="section-heading">
+                        <span class="section-heading-icon">
+                            <i class="fas fa-receipt"></i>
+                        </span>
                         Order Summary
                     </h2>
 
+                    <p class="summary-description">
+                        Check the number of products and estimated cost
+                        before continuing to checkout.
+                    </p>
 
-                    <hr />
+                    <hr class="summary-divider" />
 
-
-
-                    <!-- DIFFERENT PRODUCTS -->
+                    <!-- PRODUCT COUNT -->
 
                     <div class="summary-row">
 
-                        <span>
-                            Products
-                        </span>
-
+                        <span>Products</span>
 
                         <asp:Label
                             ID="lblProductCount"
@@ -816,16 +794,11 @@
 
                     </div>
 
-
-
                     <!-- TOTAL QUANTITY -->
 
                     <div class="summary-row">
 
-                        <span>
-                            Total Items
-                        </span>
-
+                        <span>Total Items</span>
 
                         <asp:Label
                             ID="lblTotalItems"
@@ -836,16 +809,11 @@
 
                     </div>
 
-
-
-                    <!-- TOTAL PRICE -->
+                    <!-- ESTIMATED TOTAL -->
 
                     <div class="summary-row summary-total">
 
-                        <span>
-                            Estimated Total
-                        </span>
-
+                        <span>Estimated Total</span>
 
                         <asp:Label
                             ID="lblTotalPrice"
@@ -856,8 +824,6 @@
 
                     </div>
 
-
-
                     <!-- CHECKOUT -->
 
                     <asp:Button
@@ -867,22 +833,18 @@
                         CssClass="checkout-button"
                         OnClick="btnCheckout_Click" />
 
+                    <div class="checkout-note">
+                        <i class="fas fa-lock"></i>
+                        <span>
+                            Please review your selected items before proceeding.
+                        </span>
+                    </div>
 
                 </div>
 
-
             </div>
 
-
         </div>
-
-
     </div>
 
-
-</form>
-
-
-</body>
-
-</html>
+</asp:Content>
