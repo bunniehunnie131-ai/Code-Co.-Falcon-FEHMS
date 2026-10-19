@@ -11,7 +11,7 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
 {
 
 
-    public partial class WebForm7
+    public partial class Home
     {
 
         /// <summary>

@@ -1,7 +1,12 @@
-﻿using System;
+﻿using FEHMS_FortEventHireManagementSystem;
+using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Web.SessionState;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -11,54 +16,190 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-
         }
 
         protected void btnLogin_Click(object sender, EventArgs e)
         {
-            // Login details
-            string customerEmail = "yandisathunzana@gmail.com";
-            string customerPassword = "NickHuncho@031212";
+            lblMessage.Text = "";
 
-            string adminEmail = "siphokhumalo@gmail.com";
-            string adminPassword = "SiphoKhumalo@11";
-
-            // Details entered by the user
-            string email = txtEmail.Text.Trim();
+            // Get the information entered by the user.
+            string email = txtEmail.Text.Trim().ToLowerInvariant();
             string password = txtPassword.Text;
 
-            // Admin login
-            if (email.Equals(adminEmail, StringComparison.OrdinalIgnoreCase) &&
-                password == adminPassword)
+            // Check that both fields are completed.
+            if (string.IsNullOrWhiteSpace(email) ||
+                string.IsNullOrWhiteSpace(password))
             {
-                Session["LoggedIn"] = true;
-                Session["UserEmail"] = email;
-                Session["UserRole"] = "Admin";
-
-                // Redirect admin to the Staff Dashboard
-                Response.Redirect("~/Presentation/StaffDashboard.aspx", false);
-                Context.ApplicationInstance.CompleteRequest();
-
+                lblMessage.Text = "Please enter your email and password.";
                 return;
             }
 
-            // Customer login
-            if (email.Equals(customerEmail, StringComparison.OrdinalIgnoreCase) &&
-                password == customerPassword)
+            // Read the database connection from Web.config.
+            var settings =
+                ConfigurationManager.ConnectionStrings["ForteDB"];
+
+            if (settings == null)
             {
-                Session["LoggedIn"] = true;
-                Session["UserEmail"] = email;
-                Session["UserRole"] = "Customer";
-
-                // Redirect customer to the Customer Dashboard
-                Response.Redirect("~/Presentation/CustomerDashboard.aspx", false);
-                Context.ApplicationInstance.CompleteRequest();
-
+                lblMessage.Text = "Database connection is not configured.";
                 return;
             }
 
-            // Incorrect login details
-            lblMessage.Text = "Invalid email or password.";
+            try
+            {
+                using (SqlConnection connection =
+                    new SqlConnection(settings.ConnectionString))
+                {
+                    connection.Open();
+
+                    // Find the account using the email address.
+                    string query =
+                        @"SELECT
+                              UserID,
+                              Email,
+                              FullName,
+                              PasswordHash,
+                              UserRole,
+                              IsActive
+                          FROM dbo.Users
+                          WHERE Email = @Email";
+
+                    using (SqlCommand command =
+                        new SqlCommand(query, connection))
+                    {
+                        command.Parameters.Add(
+                            "@Email",
+                            SqlDbType.NVarChar,
+                            254).Value = email;
+
+                        using (SqlDataReader reader =
+                            command.ExecuteReader())
+                        {
+                            if (!reader.Read())
+                            {
+                                lblMessage.Text =
+                                    "Invalid email or password.";
+                                return;
+                            }
+
+                            int userID =
+                                Convert.ToInt32(reader["UserID"]);
+
+                            string fullName =
+                                reader["FullName"].ToString();
+
+                            string userEmail =
+                                reader["Email"].ToString();
+
+                            string storedPasswordHash =
+                                reader["PasswordHash"].ToString();
+
+                            string userRole =
+                                reader["UserRole"].ToString();
+
+                            bool isActive =
+                                Convert.ToBoolean(reader["IsActive"]);
+
+                            // Verify the account is active.
+                            if (!isActive)
+                            {
+                                lblMessage.Text =
+                                    "This account is currently inactive.";
+                                return;
+                            }
+
+                            // Verify the entered password.
+                            bool validPassword =
+                                RegistrationSecurityService.VerifyPassword(
+                                    password,
+                                    storedPasswordHash);
+
+                            if (!validPassword)
+                            {
+                                lblMessage.Text =
+                                    "Invalid email or password.";
+                                return;
+                            }
+
+                            // Clear any existing session information.
+                            Session.Clear();
+
+                            // Regenerate the session identifier.
+                            SessionIDManager manager =
+                                new SessionIDManager();
+
+                            string newSessionID = manager.CreateSessionID(Context);
+                            bool redirected;
+                            bool cookieAdded;
+
+                            manager.SaveSessionID(
+                                Context,
+                                newSessionID,
+                                out redirected,
+                                out cookieAdded);
+
+                            // Store the authenticated user's information.
+                            Session["LoggedIn"] = true;
+                            Session["UserID"] = userID;
+                            Session["FullName"] = fullName;
+                            Session["UserEmail"] = userEmail;
+                            Session["UserRole"] = userRole;
+
+                            // Redirect according to the user's role.
+                            if (userRole.Equals(
+                                "Admin",
+                                StringComparison.OrdinalIgnoreCase))
+                            {
+                                Response.Redirect(
+                                    "~/Presentation/StaffDashboard.aspx",
+                                    false);
+                            }
+                            else if (userRole.Equals(
+                                "Staff",
+                                StringComparison.OrdinalIgnoreCase))
+                            {
+                                Response.Redirect(
+                                    "~/Presentation/StaffDashboard.aspx",
+                                    false);
+                            }
+                            else if (userRole.Equals(
+                                "Customer",
+                                StringComparison.OrdinalIgnoreCase))
+                            {
+                                Response.Redirect(
+                                    "~/Presentation/CustomerDashboard.aspx",
+                                    false);
+                            }
+                            else
+                            {
+                                Session.Clear();
+
+                                lblMessage.Text =
+                                    "Your account does not have a valid role.";
+
+                                return;
+                            }
+
+                            Context.ApplicationInstance.CompleteRequest();
+                        }
+                    }
+                }
+            }
+            catch (SqlException ex)
+            {
+                System.Diagnostics.Trace.TraceError(
+                    "FEHMS login database error: " + ex);
+
+                lblMessage.Text =
+                    "Unable to sign in right now. Please try again.";
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.TraceError(
+                    "FEHMS login error: " + ex);
+
+                lblMessage.Text =
+                    "An unexpected error occurred. Please try again.";
+            }
         }
     }
 }

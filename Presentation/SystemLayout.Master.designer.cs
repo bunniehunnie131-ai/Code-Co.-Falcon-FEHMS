@@ -42,6 +42,60 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         protected global::System.Web.UI.WebControls.Button btnLogin;
 
         /// <summary>
+        /// mainContentLayout control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl mainContentLayout;
+
+        /// <summary>
+        /// pnlCustomerSidebar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlCustomerSidebar;
+
+        /// <summary>
+        /// lnkCustomerLogout control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkCustomerLogout;
+
+        /// <summary>
+        /// pnlStaffSidebar control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlStaffSidebar;
+
+        /// <summary>
+        /// lnkStaffLogout control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkStaffLogout;
+
+        /// <summary>
+        /// pageContent control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.HtmlControls.HtmlGenericControl pageContent;
+
+        /// <summary>
         /// MainContent control.
         /// </summary>
         /// <remarks>

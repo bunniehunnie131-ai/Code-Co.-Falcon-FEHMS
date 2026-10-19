@@ -266,6 +266,7 @@
     <Content Include="Presentation\CustomerDashboard.aspx" />
     <Content Include="Presentation\DeliveryandExtras.aspx" />
     <Content Include="Presentation\HirePackages.aspx" />
+    <Content Include="Presentation\Home.aspx" />
     <Content Include="Presentation\ManageCollection.aspx" />
     <Content Include="Presentation\ManageDelivery.aspx" />
     <Content Include="Presentation\ManageProfile.aspx" />
@@ -286,7 +287,6 @@
     <Content Include="Presentation\StaffProfile.aspx.designer.cs.txt" />
     <Content Include="Presentation\TermsAndConditions.aspx" />
     <Content Include="Presentation\Reviews.aspx" />
-    <Content Include="Presentation\Home.aspx" />
     <Content Include="Presentation\Registration.aspx" />
     <Content Include="Presentation\Login.aspx" />
     <Content Include="Presentation\TrackOrder.aspx" />
@@ -319,13 +319,6 @@
     <Compile Include="Presentation\Checkout.aspx.designer.cs">
       <DependentUpon>Checkout.aspx</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Customer.master.cs">
-      <DependentUpon>Customer.master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Presentation\Customer.master.designer.cs">
-      <DependentUpon>Customer.master</DependentUpon>
-    </Compile>
     <Compile Include="Presentation\CustomerDashboard.aspx.cs">
       <DependentUpon>CustomerDashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -346,6 +339,13 @@
     </Compile>
     <Compile Include="Presentation\HirePackages.aspx.designer.cs">
       <DependentUpon>HirePackages.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Home.aspx.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\Home.aspx.designer.cs">
+      <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
     <Compile Include="Presentation\ManageCollection.aspx.cs">
       <DependentUpon>ManageCollection.aspx</DependentUpon>
@@ -396,13 +396,6 @@
     <Compile Include="Presentation\Profile.ascx.designer.cs">
       <DependentUpon>Profile.ascx</DependentUpon>
     </Compile>
-    <Compile Include="Presentation\Staff.master.cs">
-      <DependentUpon>Staff.master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Presentation\Staff.master.designer.cs">
-      <DependentUpon>Staff.master</DependentUpon>
-    </Compile>
     <Compile Include="Presentation\StaffDashBoard.aspx.cs">
       <DependentUpon>StaffDashBoard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -416,13 +409,6 @@
     </Compile>
     <Compile Include="Presentation\StaffProfile.aspx.designer.cs">
       <DependentUpon>StaffProfile.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Presentation\SystemLayout.Master.cs">
-      <DependentUpon>SystemLayout.Master</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Presentation\SystemLayout.Master.designer.cs">
-      <DependentUpon>SystemLayout.Master</DependentUpon>
     </Compile>
     <Compile Include="Presentation\About.aspx.cs">
       <DependentUpon>About.aspx</DependentUpon>
@@ -445,6 +431,13 @@
     <Compile Include="Presentation\ForgottenPassword.aspx.designer.cs">
       <DependentUpon>ForgottenPassword.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\SystemLayout.Master.cs">
+      <DependentUpon>SystemLayout.Master</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\SystemLayout.Master.designer.cs">
+      <DependentUpon>SystemLayout.Master</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\TermsAndConditions.aspx.cs">
       <DependentUpon>TermsAndConditions.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -458,13 +451,6 @@
     </Compile>
     <Compile Include="Presentation\Reviews.aspx.designer.cs">
       <DependentUpon>Reviews.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Presentation\Home.aspx.cs">
-      <DependentUpon>Home.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Presentation\Home.aspx.designer.cs">
-      <DependentUpon>Home.aspx</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Registration.aspx.cs">
       <DependentUpon>Registration.aspx</DependentUpon>
@@ -498,10 +484,8 @@
     <Compile Include="Service\RegistrationSecurityService.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Presentation\SystemLayout.Master" />
-    <Content Include="Presentation\Customer.master" />
-    <Content Include="Presentation\Staff.master" />
     <None Include="packages.config" />
+    <Content Include="Presentation\SystemLayout.Master" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
