@@ -265,8 +265,13 @@
     <Content Include="Presentation\Checkout.aspx" />
     <Content Include="Presentation\CustomerDashboard.aspx" />
     <Content Include="Presentation\DeliveryandExtras.aspx" />
+    <Content Include="Presentation\Error403.aspx" />
+    <Content Include="Presentation\Error404.aspx" />
+    <Content Include="Presentation\Error500.aspx" />
+    <Content Include="Presentation\Error503.aspx" />
     <Content Include="Presentation\HirePackages.aspx" />
     <Content Include="Presentation\Home.aspx" />
+    <Content Include="Presentation\HowItWorks.aspx" />
     <Content Include="Presentation\ManageCollection.aspx" />
     <Content Include="Presentation\ManageDelivery.aspx" />
     <Content Include="Presentation\ManageProfile.aspx" />
@@ -333,6 +338,34 @@
     <Compile Include="Presentation\DeliveryandExtras.aspx.designer.cs">
       <DependentUpon>DeliveryandExtras.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Error403.aspx.cs">
+      <DependentUpon>Error403.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\Error403.aspx.designer.cs">
+      <DependentUpon>Error403.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Error404.aspx.cs">
+      <DependentUpon>Error404.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\Error404.aspx.designer.cs">
+      <DependentUpon>Error404.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Error500.aspx.cs">
+      <DependentUpon>Error500.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\Error500.aspx.designer.cs">
+      <DependentUpon>Error500.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\Error503.aspx.cs">
+      <DependentUpon>Error503.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\Error503.aspx.designer.cs">
+      <DependentUpon>Error503.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\HirePackages.aspx.cs">
       <DependentUpon>HirePackages.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -346,6 +379,13 @@
     </Compile>
     <Compile Include="Presentation\Home.aspx.designer.cs">
       <DependentUpon>Home.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\HowItWorks.aspx.cs">
+      <DependentUpon>HowItWorks.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\HowItWorks.aspx.designer.cs">
+      <DependentUpon>HowItWorks.aspx</DependentUpon>
     </Compile>
     <Compile Include="Presentation\ManageCollection.aspx.cs">
       <DependentUpon>ManageCollection.aspx</DependentUpon>
