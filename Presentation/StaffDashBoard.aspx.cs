@@ -9,163 +9,81 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
 {
     public partial class StaffDashBoard : System.Web.UI.Page
     {
-        private class DeliveryModel
+
+        // Demo records have the same simple shape a SQL repository can return later.
+        private sealed class ScheduleItem
         {
-            public int DeliveryID { get; set; }
-            public string CustomerName { get; set; }
             public string Time { get; set; }
-            public string Address { get; set; }
-            public string ItemsSummary { get; set; }
-            public string Status { get; set; } // "Pending", "Out for Delivery", "Delivered"
-            public DateTime DeliveryDate { get; set; }
+            public string Type { get; set; }
+            public string BookingId { get; set; }
+            public string Customer { get; set; }
+            public string Venue { get; set; }
+            public string Status { get; set; }
         }
 
-        private class ActivityModel
+        private sealed class ActivityItem
         {
+            public string Icon { get; set; }
             public string Message { get; set; }
-            public string TimeAgo { get; set; }
-            public string IconClass { get; set; }
+            public string When { get; set; }
         }
-
-        // Static in-memory data standing in for the database while testing
-        private static List<DeliveryModel> staticDeliveries = new List<DeliveryModel>
-        {
-            new DeliveryModel { DeliveryID = 2, CustomerName = "Naledi Mokoena", Time = "08:30", Address = "8 Rose Avenue, Midrand", ItemsSummary = "120 Chairs, 1 Decorations (Gold Theme), 120 Cutlery Sets, Beverage Service", Status = "Out for Delivery", DeliveryDate = new DateTime(2026, 8, 29) },
-            new DeliveryModel { DeliveryID = 3, CustomerName = "Ayanda Dlamini", Time = "13:00", Address = "112 Oak Road, Randburg", ItemsSummary = "12 Tables, 80 Crockery Sets, Catering Package (Standard)", Status = "Pending", DeliveryDate = new DateTime(2026, 8, 29) },
-            new DeliveryModel { DeliveryID = 8, CustomerName = "John Smith", Time = "16:30", Address = "15 Main Street, Sandton", ItemsSummary = "50 Chairs, 5 Tables, 1 Tent (6x12m), Buffet Package", Status = "Delivered", DeliveryDate = new DateTime(2026, 8, 29) },
-            new DeliveryModel { DeliveryID = 1, CustomerName = "Precious Zulu", Time = "07:00", Address = "5 Hill Street, Sandton", ItemsSummary = "Sound System, Lighting Rig", Status = "Delivered", DeliveryDate = new DateTime(2026, 8, 29) },
-            new DeliveryModel { DeliveryID = 4, CustomerName = "Kagiso Molefe", Time = "10:00", Address = "22 Church Street, Roodepoort", ItemsSummary = "Stretch Tent, 40 Chairs", Status = "Pending", DeliveryDate = new DateTime(2026, 8, 29) },
-            new DeliveryModel { DeliveryID = 5, CustomerName = "Lindiwe Nkosi", Time = "11:30", Address = "9 Baker Street, Bryanston", ItemsSummary = "Catering Package (Premium)", Status = "Pending", DeliveryDate = new DateTime(2026, 8, 29) },
-            new DeliveryModel { DeliveryID = 6, CustomerName = "Thabo Mahlangu", Time = "09:00", Address = "40 Bond Street, Fourways", ItemsSummary = "60 Chairs, 6 Tables", Status = "Delivered", DeliveryDate = new DateTime(2026, 8, 29) },
-            new DeliveryModel { DeliveryID = 7, CustomerName = "Zanele Khumalo", Time = "09:00", Address = "3 Long Street, Midrand", ItemsSummary = "VIP Stage, Ambient Lighting", Status = "Pending", DeliveryDate = new DateTime(2026, 8, 30) } // tomorrow -> upcoming, not today
-        };
-
-        private static List<ActivityModel> staticActivity = new List<ActivityModel>
-        {
-            new ActivityModel { Message = "Delivery #D008 marked as Delivered", TimeAgo = "20 minutes ago", IconClass = "bi-check-circle-fill" },
-            new ActivityModel { Message = "Delivery #D002 is now Out for Delivery", TimeAgo = "1 hour ago", IconClass = "bi-truck" },
-            new ActivityModel { Message = "New booking assigned: Ayanda Dlamini", TimeAgo = "3 hours ago", IconClass = "bi-calendar-plus" },
-            new ActivityModel { Message = "Delivery #D001 marked as Delivered", TimeAgo = "5 hours ago", IconClass = "bi-check-circle-fill" }
-        };
-
-        // Stand-in for the logged-in staff member while login/session is disabled
-        private const string staffName = "Sipho Khumalo";
-        private const string staffRole = "Delivery Staff";
-        private const string staffInitials = "SK";
-
-        // Stand-in for "today" so the static data lines up with the sample deliveries above.
-        // Replace with DateTime.Today once you're driving this from a real database.
-        private static readonly DateTime staticToday = new DateTime(2026, 8, 29);
 
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                LoadStaffInfo();
-                LoadStats();
-                LoadTodayDeliveries();
-                LoadUpcomingDeliveries();
-                LoadRecentActivity();
-            }
+            if (!IsPostBack) BindDashboard();
         }
 
-        private void LoadStaffInfo()
+        private void BindDashboard()
         {
-            lblStaffName.Text = staffName;
-            lblStaffRole.Text = staffRole;
-            lblStaffInitials.Text = staffInitials;
+            DateTime today = DateTime.Today;
+            List<ScheduleItem> schedule = GetDemoSchedule();
+            litStaffName.Text = "Thando Ndlovu";
+            litStaffRole.Text = "Delivery Staff";
+            litDeliveryCount.Text = schedule.Count(x => x.Type == "Delivery").ToString();
+            litCollectionCount.Text = schedule.Count(x => x.Type == "Collection").ToString();
+            litReturnsCount.Text = "1";
+            litAssignedCount.Text = schedule.Count.ToString();
+            litScheduleDate.Text = today.ToString("dddd, d MMMM yyyy");
+
+            rptSchedule.DataSource = schedule.OrderBy(x => x.Time).ToList();
+            rptSchedule.DataBind();
+            pnlNoSchedule.Visible = schedule.Count == 0;
+
+            rptActivity.DataSource = GetDemoActivity();
+            rptActivity.DataBind();
         }
 
-        private void LoadStats()
+        // Replace this method with a repository call when the SQL schema is ready.
+        // Keep the returned properties aligned with the ScheduleItem model and the UI stays unchanged.
+        private List<ScheduleItem> GetDemoSchedule()
         {
-            var todayDeliveries = staticDeliveries.Where(d => d.DeliveryDate.Date == staticToday.Date).ToList();
-
-            lblTotalDeliveries.Text = todayDeliveries.Count.ToString();
-            lblPendingDeliveries.Text = todayDeliveries.Count(d => d.Status == "Pending").ToString();
-            lblOutForDelivery.Text = todayDeliveries.Count(d => d.Status == "Out for Delivery").ToString();
-            lblCompletedDeliveries.Text = todayDeliveries.Count(d => d.Status == "Delivered").ToString();
-
-            lblTodayDate.Text = staticToday.ToString("d MMMM yyyy");
+            return new List<ScheduleItem>
+            {
+                new ScheduleItem { Time = "08:00", Type = "Delivery", BookingId = "BK001", Customer = "Sipho Mthembu", Venue = "Montecasino", Status = "Pending" },
+                new ScheduleItem { Time = "11:00", Type = "Delivery", BookingId = "BK004", Customer = "Nandini Pillay", Venue = "Sandton", Status = "Out for Delivery" },
+                new ScheduleItem { Time = "14:00", Type = "Collection", BookingId = "BK002", Customer = "Lerato Tau", Venue = "Midrand", Status = "Pending" },
+                new ScheduleItem { Time = "16:00", Type = "Collection", BookingId = "BK007", Customer = "Grace Chuma", Venue = "Parktown", Status = "Scheduled" }
+            };
         }
 
-        private void LoadTodayDeliveries()
+        private List<ActivityItem> GetDemoActivity()
         {
-            var todayDeliveries = staticDeliveries
-                .Where(d => d.DeliveryDate.Date == staticToday.Date)
-                .OrderBy(d => d.Time)
-                .ToList();
-
-            if (todayDeliveries.Count > 0)
+            return new List<ActivityItem>
             {
-                rptTodayDeliveries.DataSource = todayDeliveries;
-                rptTodayDeliveries.DataBind();
-                pnlNoDeliveries.Visible = false;
-            }
-            else
-            {
-                rptTodayDeliveries.DataSource = null;
-                rptTodayDeliveries.DataBind();
-                pnlNoDeliveries.Visible = true;
-            }
+                new ActivityItem { Icon = "bi-check-circle-fill", Message = "BK006 was marked as collected", When = "20 minutes ago" },
+                new ActivityItem { Icon = "bi-truck", Message = "BK004 is out for delivery", When = "1 hour ago" },
+                new ActivityItem { Icon = "bi-calendar-plus", Message = "A new booking was assigned", When = "3 hours ago" }
+            };
         }
 
-        private void LoadUpcomingDeliveries()
+        protected string StatusBadge(object status)
         {
-            var upcoming = staticDeliveries
-                .Where(d => d.DeliveryDate.Date > staticToday.Date)
-                .OrderBy(d => d.DeliveryDate)
-                .ToList();
-
-            if (upcoming.Count > 0)
-            {
-                rptUpcomingDeliveries.DataSource = upcoming;
-                rptUpcomingDeliveries.DataBind();
-                pnlNoUpcoming.Visible = false;
-            }
-            else
-            {
-                rptUpcomingDeliveries.DataSource = null;
-                rptUpcomingDeliveries.DataBind();
-                pnlNoUpcoming.Visible = true;
-            }
+            string value = Convert.ToString(status);
+            if (value == "Completed" || value == "Delivered" || value == "Collected") return "badge-success";
+            if (value == "Out for Delivery") return "badge-forte";
+            if (value == "Overdue") return "badge-danger";
+            return "badge-warning";
         }
 
-        private void LoadRecentActivity()
-        {
-            if (staticActivity.Count > 0)
-            {
-                rptRecentActivity.DataSource = staticActivity;
-                rptRecentActivity.DataBind();
-                pnlNoActivity.Visible = false;
-            }
-            else
-            {
-                rptRecentActivity.DataSource = null;
-                rptRecentActivity.DataBind();
-                pnlNoActivity.Visible = true;
-            }
-        }
-
-        public string GetStatusBadgeClass(string status)
-        {
-            switch (status)
-            {
-                case "Out for Delivery":
-                    return "bg-info text-dark";
-                case "Pending":
-                    return "bg-light text-dark";
-                case "Delivered":
-                    return "bg-secondary";
-                default:
-                    return "bg-light text-dark";
-            }
-        }
-
-        protected void lnkLogout_Click(object sender, EventArgs e)
-        {
-            Session.Clear();
-            Session.Abandon();
-            Response.Redirect("~/Login.aspx");
-        }
     }
 }

@@ -15,129 +15,93 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
     {
 
         /// <summary>
-        /// lblStaffName control.
+        /// litStaffName control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblStaffName;
+        protected global::System.Web.UI.WebControls.Literal litStaffName;
 
         /// <summary>
-        /// lblStaffRole control.
+        /// litStaffRole control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblStaffRole;
+        protected global::System.Web.UI.WebControls.Literal litStaffRole;
 
         /// <summary>
-        /// lblStaffInitials control.
+        /// litDeliveryCount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblStaffInitials;
+        protected global::System.Web.UI.WebControls.Literal litDeliveryCount;
 
         /// <summary>
-        /// lblTotalDeliveries control.
+        /// litCollectionCount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTotalDeliveries;
+        protected global::System.Web.UI.WebControls.Literal litCollectionCount;
 
         /// <summary>
-        /// lblPendingDeliveries control.
+        /// litReturnsCount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblPendingDeliveries;
+        protected global::System.Web.UI.WebControls.Literal litReturnsCount;
 
         /// <summary>
-        /// lblOutForDelivery control.
+        /// litAssignedCount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblOutForDelivery;
+        protected global::System.Web.UI.WebControls.Literal litAssignedCount;
 
         /// <summary>
-        /// lblCompletedDeliveries control.
+        /// litScheduleDate control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblCompletedDeliveries;
+        protected global::System.Web.UI.WebControls.Literal litScheduleDate;
 
         /// <summary>
-        /// lblTodayDate control.
+        /// rptSchedule control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Label lblTodayDate;
+        protected global::System.Web.UI.WebControls.Repeater rptSchedule;
 
         /// <summary>
-        /// rptTodayDeliveries control.
+        /// pnlNoSchedule control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptTodayDeliveries;
+        protected global::System.Web.UI.WebControls.Panel pnlNoSchedule;
 
         /// <summary>
-        /// pnlNoDeliveries control.
+        /// rptActivity control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlNoDeliveries;
-
-        /// <summary>
-        /// rptUpcomingDeliveries control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptUpcomingDeliveries;
-
-        /// <summary>
-        /// pnlNoUpcoming control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlNoUpcoming;
-
-        /// <summary>
-        /// rptRecentActivity control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptRecentActivity;
-
-        /// <summary>
-        /// pnlNoActivity control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlNoActivity;
+        protected global::System.Web.UI.WebControls.Repeater rptActivity;
     }
 }
