@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Net.Mail;
 using System.Web;
@@ -13,266 +14,151 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
 {
     public partial class ManageCustomers : System.Web.UI.Page
     {
-        private static string ConnectionString
+        private DataTable GetCustomers()
         {
-            get
-            {
-                ConnectionStringSettings settings = ConfigurationManager.ConnectionStrings["CatalogueDatabase"];
-                if (settings == null)
-                    throw new InvalidOperationException("The CatalogueDatabase connection string is missing from Web.config.");
-                return settings.ConnectionString;
-            }
+            DataTable t = Session["ManageCustomersDemo"] as DataTable;
+            if (t != null) return t;
+            t = new DataTable();
+            t.Columns.Add("CustomerID", typeof(string));
+            t.Columns.Add("UserID", typeof(int));
+            t.Columns.Add("FirstName", typeof(string));
+            t.Columns.Add("LastName", typeof(string));
+            t.Columns.Add("FullName", typeof(string));
+            t.Columns.Add("EmailAddress", typeof(string));
+            t.Columns.Add("PhoneNumber", typeof(string));
+            t.Columns.Add("DateOfBirth", typeof(DateTime));
+            t.Columns.Add("IDNumber", typeof(string));
+            t.Columns.Add("BookingCount", typeof(int));
+            t.Columns.Add("IsActive", typeof(bool));
+            t.Columns.Add("Status", typeof(string));
+            AddCustomer(t, 101, "Fortune", "Makhubela", "fortune.makhubela@example.test", "060 896 7709", 3, true);
+            AddCustomer(t, 102, "Sipho", "Mthembu", "sipho.mthembu@example.test", "072 123 4567", 2, true);
+            AddCustomer(t, 103, "Lerato", "Tau", "lerato.tau@example.test", "082 456 7890", 1, true);
+            AddCustomer(t, 104, "Grace", "Chuma", "grace.chuma@example.test", "083 555 1212", 2, true);
+            AddCustomer(t, 105, "Amina", "Jacobs", "amina.jacobs@example.test", "071 555 0184", 1, false);
+            Session["ManageCustomersDemo"] = t;
+            return t;
         }
-
+        private void AddCustomer(DataTable t, int id, string first, string last, string email, string phone, int count, bool active)
+        {
+            t.Rows.Add("CUS" + id.ToString("D3"), id, first, last, first + " " + last, email, phone, new DateTime(1998, 5, 23), "", count, active, active ? "Active" : "Inactive");
+        }
         protected void Page_Load(object sender, EventArgs e)
         {
             if (!IsPostBack) BindCustomers();
         }
-
         protected void btnShowAdd_Click(object sender, EventArgs e)
         {
             ClearForm();
             lblFormHeading.Text = "Add Customer";
             btnSaveCustomer.Text = "Add Customer";
+            customerPasswordRow.Visible = true;
+            customerTermsRow.Visible = true;
             pnlCustomerForm.Visible = true;
             pnlMessage.Visible = false;
         }
-
         protected void btnCancelForm_Click(object sender, EventArgs e)
         {
             pnlCustomerForm.Visible = false;
             ClearForm();
         }
-
         protected void btnSearch_Click(object sender, EventArgs e)
         {
-            pnlMessage.Visible = false;
             BindCustomers();
         }
-
         protected void btnSaveCustomer_Click(object sender, EventArgs e)
         {
             Page.Validate("CustomerForm");
-            if (!Page.IsValid) return;
-
-            if (!IsValidEmail(txtEmailAddress.Text.Trim()))
+            if (!Page.IsValid) return; string email = (txtEmailAddress.Text ?? "").Trim();
+            if (email.IndexOf('@') < 1) { ShowMessage("Enter a valid email address.", false); return; }
+            bool isNew = String.IsNullOrEmpty(hfCustomerUserId.Value);
+            if (isNew)
             {
-                ShowMessage("Enter a valid email address, for example name@example.com.", false);
-                return;
-            }
-
-            int userId;
-            bool isEdit = Int32.TryParse(hfCustomerUserId.Value, out userId);
-
-            try
-            {
-                using (SqlConnection connection = new SqlConnection(ConnectionString))
-                using (SqlCommand command = connection.CreateCommand())
+                if ((txtCustomerPassword.Text ?? "").Length < 12)
                 {
-                    if (isEdit)
-                    {
-                        command.CommandText = @"
-UPDATE dbo.Users
-SET FirstName = @FirstName, LastName = @LastName, EmailAddress = @EmailAddress,
-    PhoneNumber = @PhoneNumber, IsActive = @IsActive, UpdatedAt = SYSUTCDATETIME()
-WHERE UserID = @UserID
-  AND RoleID = (SELECT RoleID FROM dbo.Roles WHERE RoleName = N'Customer' AND IsStaffRole = 0);";
-                        command.Parameters.Add("@UserID", SqlDbType.Int).Value = userId;
-                    }
-                    else
-                    {
-                        command.CommandText = @"
-INSERT INTO dbo.Users (FirstName, LastName, EmailAddress, PhoneNumber, PasswordHash, RoleID, IsActive)
-SELECT @FirstName, @LastName, @EmailAddress, @PhoneNumber, NULL, RoleID, @IsActive
-FROM dbo.Roles
-WHERE RoleName = N'Customer' AND IsStaffRole = 0;";
-                    }
-
-                    command.Parameters.Add("@FirstName", SqlDbType.NVarChar, 80).Value = txtFirstName.Text.Trim();
-                    command.Parameters.Add("@LastName", SqlDbType.NVarChar, 80).Value = txtLastName.Text.Trim();
-                    command.Parameters.Add("@EmailAddress", SqlDbType.NVarChar, 254).Value = txtEmailAddress.Text.Trim();
-                    command.Parameters.Add("@PhoneNumber", SqlDbType.NVarChar, 30).Value = String.IsNullOrWhiteSpace(txtPhoneNumber.Text) ? (object)DBNull.Value : txtPhoneNumber.Text.Trim();
-                    command.Parameters.Add("@IsActive", SqlDbType.Bit).Value = chkActive.Checked;
-
-                    connection.Open();
-                    if (command.ExecuteNonQuery() == 0)
-                        throw new InvalidOperationException("The Customer role is missing from dbo.Roles, or this customer no longer exists.");
+                    ShowMessage("The temporary password must be at least 12 characters.", false); return;
                 }
-
-                pnlCustomerForm.Visible = false;
-                ClearForm();
-                ShowMessage(isEdit ? "Customer details updated." : "Customer added.", true);
-                BindCustomers();
+                if (txtCustomerPassword.Text != txtConfirmPassword.Text)
+                {
+                    ShowMessage("The password and confirmation do not match.", false); return;
+                }
+                if (!chkTermsAccepted.Checked)
+                {
+                    ShowMessage("The customer must accept the Terms and Conditions.", false);
+                    return;
+                }
             }
-            catch (SqlException ex)
+            DataTable t = GetCustomers();
+            int id; DataRow r;
+            if (Int32.TryParse(hfCustomerUserId.Value, out id) && t.Select("UserID=" + id).Length > 0) r = t.Select("UserID=" + id)[0];
+            else
             {
-                if (ex.Number == 2601 || ex.Number == 2627)
-                    ShowMessage("That email address is already used by an account.", false);
-                else
-                    ShowError("Unable to save the customer.", ex);
+                id = 100;
+                foreach (DataRow row in t.Rows) id = Math.Max(id, Convert.ToInt32(row["UserID"]));
+                id++; r = t.NewRow(); r["CustomerID"] = "CUS" + id.ToString("D3");
+                r["UserID"] = id; r["BookingCount"] = 0; t.Rows.Add(r);
             }
-            catch (Exception ex)
-            {
-                ShowError("Unable to save the customer.", ex);
-            }
+            r["FirstName"] = txtFirstName.Text.Trim();
+            r["LastName"] = txtLastName.Text.Trim();
+            r["FullName"] = txtFirstName.Text.Trim() + " " + txtLastName.Text.Trim(); r["EmailAddress"] = email;
+            r["PhoneNumber"] = txtPhoneNumber.Text.Trim(); DateTime dob;
+            r["DateOfBirth"] = DateTime.TryParseExact(txtDateOfBirth.Text, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out dob) ? (object)dob : DBNull.Value;
+            r["IDNumber"] = txtIDNumber.Text.Trim();
+            r["IsActive"] = chkActive.Checked;
+            r["Status"] = chkActive.Checked ? "Active" : "Inactive";
+            pnlCustomerForm.Visible = false; ClearForm();
+            ShowMessage("Customer saved in the session sample data.", true);
+            BindCustomers();
         }
-
         protected void rptCustomers_ItemCommand(object source, RepeaterCommandEventArgs e)
         {
-            int userId;
-            if (!Int32.TryParse(Convert.ToString(e.CommandArgument), out userId)) return;
-
-            if (e.CommandName == "EditCustomer")
+            int id; if (!Int32.TryParse(Convert.ToString(e.CommandArgument), out id)) return; DataRow[] rows = GetCustomers().Select("UserID=" + id);
+            if (rows.Length == 0) return;
+            DataRow r = rows[0];
+            if (e.CommandName == "ToggleStatus")
             {
-                LoadCustomer(userId);
+                bool active = !Convert.ToBoolean(r["IsActive"]);
+                r["IsActive"] = active; r["Status"] = active ? "Active" : "Inactive"; ShowMessage("Customer account status updated.", true);
             }
-            else if (e.CommandName == "ToggleStatus")
+            else if (e.CommandName == "EditCustomer")
             {
-                try
-                {
-                    using (SqlConnection connection = new SqlConnection(ConnectionString))
-                    using (SqlCommand command = new SqlCommand(@"
-UPDATE dbo.Users
-SET IsActive = CASE WHEN IsActive = 1 THEN 0 ELSE 1 END, UpdatedAt = SYSUTCDATETIME()
-WHERE UserID = @UserID
-  AND RoleID = (SELECT RoleID FROM dbo.Roles WHERE RoleName = N'Customer' AND IsStaffRole = 0);", connection))
-                    {
-                        command.Parameters.Add("@UserID", SqlDbType.Int).Value = userId;
-                        connection.Open();
-                        if (command.ExecuteNonQuery() == 1)
-                            ShowMessage("Customer status updated.", true);
-                        else
-                            ShowMessage("Customer not found.", false);
-                    }
-                }
-                catch (Exception ex)
-                {
-                    ShowError("Unable to update the customer status.", ex);
-                }
-
-                BindCustomers();
+                hfCustomerUserId.Value = Convert.ToString(r["UserID"]); txtFirstName.Text = Convert.ToString(r["FirstName"]);
+                txtLastName.Text = Convert.ToString(r["LastName"]);
+                txtEmailAddress.Text = Convert.ToString(r["EmailAddress"]);
+                txtPhoneNumber.Text = Convert.ToString(r["PhoneNumber"]);
+                txtIDNumber.Text = Convert.ToString(r["IDNumber"]);
+                DateTime d; if (DateTime.TryParse(Convert.ToString(r["DateOfBirth"]), out d)) txtDateOfBirth.Text = d.ToString("yyyy-MM-dd");
+                chkActive.Checked = Convert.ToBoolean(r["IsActive"]);
+                lblFormHeading.Text = "Edit Customer"; btnSaveCustomer.Text = "Save Changes";
+                customerPasswordRow.Visible = false; customerTermsRow.Visible = false;
+                pnlCustomerForm.Visible = true;
             }
+            BindCustomers();
         }
-
         private void BindCustomers()
         {
-            try
+            DataTable all = GetCustomers(), rows = all.Clone();
+            string q = (txtSearch.Text ?? "").Trim();
+            foreach (DataRow r in all.Rows)
             {
-                const string query = @"
-SELECT u.UserID AS CustomerID,
-       u.FirstName + N' ' + u.LastName AS FullName,
-       u.EmailAddress,
-       u.PhoneNumber,
-       COUNT(b.BookingID) AS BookingCount,
-       u.IsActive,
-       CASE WHEN u.IsActive = 1 THEN N'Active' ELSE N'Inactive' END AS Status
-FROM dbo.Users AS u
-INNER JOIN dbo.Roles AS r ON r.RoleID = u.RoleID
-LEFT JOIN dbo.Bookings AS b ON b.CustomerUserID = u.UserID
-WHERE r.RoleName = N'Customer'
-  AND r.IsStaffRole = 0
-  AND (@Search = N'' OR u.FirstName LIKE N'%' + @Search + N'%' OR u.LastName LIKE N'%' + @Search + N'%'
-       OR u.EmailAddress LIKE N'%' + @Search + N'%' OR u.PhoneNumber LIKE N'%' + @Search + N'%')
-  AND (@Status = -1 OR u.IsActive = @Status)
-GROUP BY u.UserID, u.FirstName, u.LastName, u.EmailAddress, u.PhoneNumber, u.IsActive
-ORDER BY u.LastName, u.FirstName;";
-
-                using (SqlConnection connection = new SqlConnection(ConnectionString))
-                using (SqlCommand command = new SqlCommand(query, connection))
-                using (SqlDataAdapter adapter = new SqlDataAdapter(command))
-                {
-                    command.Parameters.Add("@Search", SqlDbType.NVarChar, 200).Value = (txtSearch.Text ?? String.Empty).Trim();
-                    command.Parameters.Add("@Status", SqlDbType.Int).Value = ddlStatus.SelectedValue == String.Empty ? -1 : Convert.ToInt32(ddlStatus.SelectedValue);
-
-                    DataTable customers = new DataTable();
-                    adapter.Fill(customers);
-                    rptCustomers.DataSource = customers;
-                    rptCustomers.DataBind();
-                    pnlNoCustomers.Visible = customers.Rows.Count == 0;
-                }
+                if (ddlStatus.SelectedValue != "" && Convert.ToBoolean(r["IsActive"]) != (ddlStatus.SelectedValue == "1")) continue;
+                if (q != "" && Convert.ToString(r["FullName"]).
+                    IndexOf(q, StringComparison.OrdinalIgnoreCase) < 0 && Convert.ToString(r["EmailAddress"]).
+                    IndexOf(q, StringComparison.OrdinalIgnoreCase) < 0 && Convert.ToString(r["PhoneNumber"]).
+                    IndexOf(q, StringComparison.OrdinalIgnoreCase) < 0) continue; rows.ImportRow(r);
             }
-            catch (Exception ex)
-            {
-                rptCustomers.DataSource = null;
-                rptCustomers.DataBind();
-                pnlNoCustomers.Visible = false;
-                ShowError("Unable to load customers.", ex);
-            }
+            rptCustomers.DataSource = rows;
+            rptCustomers.DataBind();
+            pnlNoCustomers.Visible = rows.Rows.Count == 0;
         }
-
-        private void LoadCustomer(int userId)
-        {
-            try
-            {
-                const string query = @"
-SELECT u.UserID, u.FirstName, u.LastName, u.EmailAddress, u.PhoneNumber, u.IsActive
-FROM dbo.Users AS u
-INNER JOIN dbo.Roles AS r ON r.RoleID = u.RoleID
-WHERE u.UserID = @UserID AND r.RoleName = N'Customer' AND r.IsStaffRole = 0;";
-
-                using (SqlConnection connection = new SqlConnection(ConnectionString))
-                using (SqlCommand command = new SqlCommand(query, connection))
-                {
-                    command.Parameters.Add("@UserID", SqlDbType.Int).Value = userId;
-                    connection.Open();
-                    using (SqlDataReader reader = command.ExecuteReader())
-                    {
-                        if (!reader.Read()) { ShowMessage("Customer not found.", false); return; }
-                        hfCustomerUserId.Value = reader["UserID"].ToString();
-                        txtFirstName.Text = reader["FirstName"].ToString();
-                        txtLastName.Text = reader["LastName"].ToString();
-                        txtEmailAddress.Text = reader["EmailAddress"].ToString();
-                        txtPhoneNumber.Text = reader["PhoneNumber"] == DBNull.Value ? String.Empty : reader["PhoneNumber"].ToString();
-                        chkActive.Checked = Convert.ToBoolean(reader["IsActive"]);
-                    }
-                }
-
-                lblFormHeading.Text = "Edit Customer";
-                btnSaveCustomer.Text = "Save Changes";
-                pnlCustomerForm.Visible = true;
-                pnlMessage.Visible = false;
-            }
-            catch (Exception ex)
-            {
-                ShowError("Unable to load this customer.", ex);
-            }
-        }
-
         private void ClearForm()
         {
-            hfCustomerUserId.Value = String.Empty;
-            txtFirstName.Text = String.Empty;
-            txtLastName.Text = String.Empty;
-            txtEmailAddress.Text = String.Empty;
-            txtPhoneNumber.Text = String.Empty;
-            chkActive.Checked = true;
+            hfCustomerUserId.Value = ""; txtFirstName.Text = txtLastName.Text = txtEmailAddress.Text = txtDateOfBirth.Text = txtIDNumber.Text = txtPhoneNumber.Text = txtCustomerPassword.Text = txtConfirmPassword.Text = "";
+            chkTermsAccepted.Checked = false; chkActive.Checked = true;
         }
-
-        private static bool IsValidEmail(string email)
+        private void ShowMessage(string s, bool ok)
         {
-            try
-            {
-                return new MailAddress(email).Address == email;
-            }
-            catch (FormatException)
-            {
-                return false;
-            }
-        }
-
-        private void ShowMessage(string message, bool success)
-        {
-            pnlMessage.CssClass = success ? "alert alert-success" : "alert alert-danger";
-            lblMessage.Text = Server.HtmlEncode(message);
-            pnlMessage.Visible = true;
-        }
-
-        // On your own PC the real reason is added, so a connection problem is easy to find.
-        // Visitors on other machines only see the short message.
-        private void ShowError(string message, Exception ex)
-        {
-            if (Request.IsLocal) message += " (" + ex.Message + ")";
-            ShowMessage(message, false);
+            pnlMessage.Visible = true; pnlMessage.CssClass = ok ? "alert alert-success" : "alert alert-warning"; lblMessage.Text = Server.HtmlEncode(s);
         }
     }
 }

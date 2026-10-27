@@ -1410,4 +1410,477 @@ body:has(.error-page) .footer {
         width: 100%;
     }
 }
+/* ---------- Message ---------- */
+
+.error-code {
+    margin: 0 0 4px;
+    color: var(--secondary-color);
+    font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+    font-size: 6rem;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: -2px;
+}
+
+.error-title {
+    margin: 0 0 14px;
+    color: var(--secondary-color);
+    font-size: 2.1rem;
+    font-weight: 700;
+}
+
+.error-text {
+    max-width: 520px;
+    margin: 0 0 26px;
+    color: var(--text-color);
+    font-size: 1.05rem;
+}
+
+.error-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+    .error-actions .btn-forte,
+    .error-actions .btn-outline-forte {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        width: auto;
+        margin: 0;
+        padding: 12px 26px;
+        font-weight: 600;
+        text-decoration: none;
+        border-radius: var(--radius-medium);
+        transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+    }
+
+    .error-actions .btn-forte {
+        color: var(--white);
+        background: var(--info-color);
+        border: 1px solid var(--info-color);
+    }
+
+        .error-actions .btn-forte:hover {
+            color: var(--white);
+            background: var(--primary-light);
+            border-color: var(--primary-light);
+            box-shadow: var(--blue-shadow);
+            transform: translateY(-2px);
+        }
+
+    .error-actions .btn-outline-forte {
+        color: var(--info-color);
+        background: var(--white);
+        border: 1px solid var(--info-color);
+    }
+
+        .error-actions .btn-outline-forte:hover {
+            color: var(--info-color);
+            background: var(--info-light);
+            transform: translateY(-2px);
+        }
+
+
+/* ---------- Help links ---------- */
+
+.error-help {
+    max-width: 560px;
+    margin-top: 30px;
+    padding-top: 22px;
+    border-top: 1px solid var(--border-color);
+}
+
+.error-help-title {
+    margin: 0 0 14px;
+    color: var(--secondary-color);
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+.error-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px 28px;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+    .error-links a {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--secondary-color);
+        font-size: 0.9rem;
+        font-weight: 500;
+        text-decoration: none;
+    }
+
+        .error-links a i {
+            color: var(--info-color);
+            font-size: 1.25rem;
+        }
+
+        .error-links a:hover {
+            color: var(--info-color);
+        }
+
+
+/* ---------- Downtime notice (503) ---------- */
+
+.error-notice {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    max-width: 560px;
+    margin-top: 28px;
+    padding: 18px 22px;
+    background: var(--info-light);
+    border: 1px solid #bfdbfe;
+    border-radius: var(--radius-medium);
+}
+
+.error-notice-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    width: 40px;
+    height: 40px;
+    color: var(--white);
+    font-size: 1.2rem;
+    background: var(--info-color);
+    border-radius: 50%;
+}
+
+.error-notice strong {
+    display: block;
+    color: var(--secondary-color);
+    font-size: 0.98rem;
+}
+
+.error-notice span {
+    color: var(--muted-text);
+    font-size: 0.88rem;
+}
+
+
+/* ---------- Illustrations ---------- */
+
+.error-art {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.error-svg {
+    display: block;
+    width: 100%;
+    max-width: 400px;
+    height: auto;
+}
+
+.ill-blob {
+    fill: #e3eeff;
+}
+
+.ill-ground {
+    fill: #c9dcf8;
+}
+
+.ill-navy {
+    fill: var(--primary-color);
+}
+
+.ill-navy-dark {
+    fill: var(--primary-dark);
+}
+
+.ill-blue {
+    fill: var(--info-color);
+}
+
+.ill-sky {
+    fill: #93c5fd;
+}
+
+.ill-pale {
+    fill: #bfdbfe;
+}
+
+.ill-steel {
+    fill: #8fa6c9;
+}
+
+.ill-white {
+    fill: var(--white);
+}
+
+.ill-red {
+    fill: var(--danger-color);
+}
+
+.ill-orange {
+    fill: #f97316;
+}
+
+.ill-shackle {
+    fill: none;
+    stroke: var(--primary-color);
+    stroke-width: 22;
+    stroke-linecap: round;
+}
+
+.ill-badge {
+    fill: var(--danger-color);
+    stroke: var(--white);
+    stroke-width: 6;
+}
+
+.ill-warning {
+    fill: var(--danger-color);
+    stroke: var(--danger-color);
+    stroke-width: 16;
+    stroke-linejoin: round;
+}
+
+.ill-outline {
+    stroke: var(--primary-dark);
+    stroke-width: 3;
+}
+
+.ill-text {
+    fill: var(--white);
+    font-family: 'Space Grotesk', 'Segoe UI', sans-serif;
+    font-size: 34px;
+    font-weight: 700;
+    text-anchor: middle;
+}
+
+
+/* ---------- Responsive ---------- */
+
+@media (max-width: 991px) {
+
+    .error-card {
+        grid-template-columns: 1fr;
+        gap: 28px;
+        padding: 36px 28px;
+        text-align: center;
+    }
+
+    .error-svg {
+        max-width: 280px;
+    }
+
+    .error-text,
+    .error-help,
+    .error-notice {
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .error-actions,
+    .error-links {
+        justify-content: center;
+    }
+
+    .error-notice {
+        text-align: left;
+    }
+}
+
+@media (max-width: 576px) {
+
+    .error-code {
+        font-size: 4.5rem;
+    }
+
+    .error-title {
+        font-size: 1.7rem;
+    }
+
+    .error-card {
+        padding: 28px 18px;
+    }
+
+    .error-text br {
+        display: none;
+    }
+
+    .error-actions .btn-forte,
+    .error-actions .btn-outline-forte {
+        width: 100%;
+    }
+}
+/* Admin dashboard — uses the Forte global stylesheet variables */
+.admin-workspace {
+    width: 100%;
+    min-width: 0;
+    color: var(--text-color);
+}
+
+    .admin-workspace .admin-stat-card {
+        display: flex;
+        align-items: center;
+        min-height: 96px;
+        height: 100%;
+        padding: 20px 22px;
+        background: var(--surface-color);
+        border: 1px solid var(--border-light);
+        border-left: 5px solid var(--primary-color);
+        border-radius: var(--radius-medium);
+        box-shadow: var(--shadow-small);
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+        .admin-workspace .admin-stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        .admin-workspace .admin-stat-card > div {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            min-width: 0;
+        }
+
+        .admin-workspace .admin-stat-card strong {
+            color: var(--primary-color);
+            font-size: 1.6rem;
+            font-weight: 700;
+            line-height: 1.2;
+        }
+
+        .admin-workspace .admin-stat-card span {
+            color: var(--muted-text);
+            font-size: 0.88rem;
+        }
+
+    .admin-workspace .admin-dashboard-panel {
+        height: 100%;
+        overflow: hidden;
+        background: var(--surface-color);
+        border: 1px solid var(--border-light);
+        border-radius: var(--radius-medium);
+        box-shadow: var(--shadow-small);
+    }
+
+    .admin-workspace .admin-dashboard-panel-heading {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        min-height: 72px;
+        padding: 16px 20px;
+        border-bottom: 1px solid var(--border-color);
+    }
+
+        .admin-workspace .admin-dashboard-panel-heading h2 {
+            color: var(--secondary-color);
+        }
+
+        .admin-workspace .admin-dashboard-panel-heading .small {
+            display: block;
+            margin-top: 4px;
+            color: var(--muted-text);
+        }
+
+    .admin-workspace .admin-dashboard-panel-body {
+        padding: 18px 20px;
+    }
+
+    .admin-workspace .admin-dashboard-list-head,
+    .admin-workspace .admin-dashboard-list-row {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 1.2fr) minmax(0, 0.85fr);
+        align-items: center;
+        gap: 12px;
+        padding: 12px 18px;
+    }
+
+    .admin-workspace .admin-dashboard-list-head {
+        background: var(--background-color);
+        color: var(--secondary-color);
+        font-size: 0.78rem;
+        font-weight: 700;
+    }
+
+    .admin-workspace .admin-dashboard-list-row {
+        min-height: 52px;
+        border-top: 1px solid var(--border-light);
+        color: var(--text-color);
+        font-size: 0.88rem;
+    }
+
+        .admin-workspace .admin-dashboard-list-row > span {
+            min-width: 0;
+            overflow-wrap: anywhere;
+        }
+
+    .admin-workspace .admin-dashboard-empty {
+        padding: 22px 20px;
+        color: var(--muted-text);
+        text-align: center;
+    }
+
+    .admin-workspace .admin-chart {
+        display: flex;
+        align-items: flex-end;
+        justify-content: space-around;
+        gap: 12px;
+        min-height: 230px;
+        padding: 12px 8px 0;
+    }
+
+    .admin-workspace .admin-chart-column {
+        display: flex;
+        flex: 1 1 0;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 7px;
+        height: 210px;
+        min-width: 0;
+    }
+
+    .admin-workspace .admin-chart-value,
+    .admin-workspace .admin-chart-month {
+        color: var(--muted-text);
+        font-size: 0.75rem;
+        text-align: center;
+    }
+
+    .admin-workspace .admin-chart-track {
+        display: flex;
+        align-items: flex-end;
+        justify-content: center;
+        width: 100%;
+        height: 160px;
+    }
+
+    .admin-workspace .admin-chart-bar {
+        width: min(36px, 75%);
+        min-height: 3px;
+        background: var(--primary-color);
+        border-radius: 5px 5px 0 0;
+    }
+
+@media (max-width: 767px) {
+    .admin-workspace .admin-dashboard-panel-heading {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+
+    .admin-workspace .admin-dashboard-list-head,
+    .admin-workspace .admin-dashboard-list-row {
+        gap: 7px;
+        padding: 10px;
+        font-size: 0.75rem;
+    }
+}
 

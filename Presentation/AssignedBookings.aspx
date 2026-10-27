@@ -19,8 +19,10 @@
 
             <div class="row g-2 align-items-center mb-3">
                 <div class="col-md-6"><asp:TextBox ID="txtSearch" runat="server" CssClass="form-control" placeholder="Search by booking ID, customer or venue..." aria-label="Search assigned bookings" /></div>
-                <div class="col-sm-6 col-md-3"><asp:TextBox ID="txtDate" runat="server" TextMode="Date" CssClass="form-control" aria-label="Filter by event date" /></div>
-                <div class="col-sm-6 col-md-3"><asp:DropDownList ID="ddlStatus" runat="server" CssClass="form-select" aria-label="Filter by booking status"><asp:ListItem Text="All Statuses" Value="" /><asp:ListItem Text="Pending" Value="Pending" /><asp:ListItem Text="Out for Delivery" Value="Out for Delivery" /><asp:ListItem Text="Scheduled" Value="Scheduled" /><asp:ListItem Text="Completed" Value="Completed" /><asp:ListItem Text="Collected" Value="Collected" /></asp:DropDownList></div>
+                <div class="col-sm-6 col-md-3">
+                    <asp:TextBox ID="txtDate" runat="server" TextMode="Date" CssClass="form-control" aria-label="Filter by event date" /></div>
+                <div class="col-sm-6 col-md-3">
+                    <asp:DropDownList ID="ddlStatus" runat="server" CssClass="form-select" aria-label="Filter by booking status"><asp:ListItem Text="All Statuses" Value="" /><asp:ListItem Text="Pending" Value="Pending" /><asp:ListItem Text="Out for Delivery" Value="Out for Delivery" /><asp:ListItem Text="Scheduled" Value="Scheduled" /><asp:ListItem Text="Completed" Value="Completed" /><asp:ListItem Text="Collected" Value="Collected" /></asp:DropDownList></div>
             </div>
 
             <div id="allBookings" class="table-responsive">

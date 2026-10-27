@@ -260,7 +260,10 @@
     <Content Include="Images\Xhosa traditional attire.png" />
     <Content Include="Images\Yellow generator.png" />
     <Content Include="Images\Zulu traditional attire.png" />
+    <Content Include="Presentation\AdminAssignBookings.aspx" />
+    <Content Include="Presentation\AdminDashBoard.aspx" />
     <Content Include="Presentation\AssignedBookings.aspx" />
+    <Content Include="Presentation\BookingCalender.aspx" />
     <Content Include="Presentation\Cart.aspx" />
     <Content Include="Presentation\Catalogue.aspx" />
     <Content Include="Presentation\Checkout.aspx" />
@@ -272,11 +275,15 @@
     <Content Include="Presentation\Error503.aspx" />
     <Content Include="Presentation\HirePackages.aspx" />
     <Content Include="Presentation\HowItWorks.aspx" />
+    <Content Include="Presentation\ManageBookings.aspx" />
     <Content Include="Presentation\ManageCollections.aspx" />
     <Content Include="Presentation\ManageCustomers.aspx" />
     <Content Include="Presentation\ManageDelivery.aspx" />
+    <Content Include="Presentation\ManageInventory.aspx" />
+    <Content Include="Presentation\ManagePackages.aspx" />
     <Content Include="Presentation\ManageProfile.aspx" />
     <Content Include="Presentation\ManageReturns.aspx" />
+    <Content Include="Presentation\ManageStaff.aspx" />
     <Content Include="Presentation\OrderConfirmation.aspx" />
     <Content Include="Presentation\OrderSummary.aspx" />
     <Content Include="Presentation\About.aspx" />
@@ -296,18 +303,40 @@
     <Content Include="Presentation\TrackOrder.aspx" />
     <Content Include="Presentation\WebForm1.aspx" />
     <Content Include="Presentation\ReviewSummary.aspx" />
+    <Content Include="Stylesheet\AdminStyle.css" />
     <Content Include="Stylesheet\Forte.css" />
     <Content Include="Stylesheet\TrackOrderIntegration.css" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Content\BookingHistory.cs" />
+    <Compile Include="Presentation\AdminAssignBookings.aspx.cs">
+      <DependentUpon>AdminAssignBookings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\AdminAssignBookings.aspx.designer.cs">
+      <DependentUpon>AdminAssignBookings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\AdminDashBoard.aspx.cs">
+      <DependentUpon>AdminDashBoard.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\AdminDashBoard.aspx.designer.cs">
+      <DependentUpon>AdminDashBoard.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\AssignedBookings.aspx.cs">
       <DependentUpon>AssignedBookings.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
     </Compile>
     <Compile Include="Presentation\AssignedBookings.aspx.designer.cs">
       <DependentUpon>AssignedBookings.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\BookingCalender.aspx.cs">
+      <DependentUpon>BookingCalender.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\BookingCalender.aspx.designer.cs">
+      <DependentUpon>BookingCalender.aspx</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Cart.aspx.cs">
       <DependentUpon>Cart.aspx</DependentUpon>
@@ -386,6 +415,13 @@
     <Compile Include="Presentation\HowItWorks.aspx.designer.cs">
       <DependentUpon>HowItWorks.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\ManageBookings.aspx.cs">
+      <DependentUpon>ManageBookings.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\ManageBookings.aspx.designer.cs">
+      <DependentUpon>ManageBookings.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\ManageCollections.aspx.cs">
       <DependentUpon>ManageCollections.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -407,6 +443,20 @@
     <Compile Include="Presentation\ManageDelivery.aspx.designer.cs">
       <DependentUpon>ManageDelivery.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\ManageInventory.aspx.cs">
+      <DependentUpon>ManageInventory.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\ManageInventory.aspx.designer.cs">
+      <DependentUpon>ManageInventory.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\ManagePackages.aspx.cs">
+      <DependentUpon>ManagePackages.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\ManagePackages.aspx.designer.cs">
+      <DependentUpon>ManagePackages.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\ManageProfile.aspx.cs">
       <DependentUpon>ManageProfile.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -420,6 +470,13 @@
     </Compile>
     <Compile Include="Presentation\ManageReturns.aspx.designer.cs">
       <DependentUpon>ManageReturns.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\ManageStaff.aspx.cs">
+      <DependentUpon>ManageStaff.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\ManageStaff.aspx.designer.cs">
+      <DependentUpon>ManageStaff.aspx</DependentUpon>
     </Compile>
     <Compile Include="Presentation\OrderConfirmation.aspx.cs">
       <DependentUpon>OrderConfirmation.aspx</DependentUpon>
