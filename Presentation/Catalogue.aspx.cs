@@ -17,12 +17,42 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         // =========================================================
 
         protected void Page_Load(
-            object sender,
-            EventArgs e)
+    object sender,
+    EventArgs e)
         {
             if (!IsPostBack)
             {
-                LoadProducts();
+                string category = Request.QueryString["category"];
+
+                if (string.IsNullOrEmpty(category))
+                {
+                    LoadProducts();
+                }
+                else
+                {
+                    switch (category.ToLower())
+                    {
+                        case "chairs":
+                            LoadProductsByCategory("Chairs");
+                            break;
+
+                        case "tables":
+                            LoadProductsByCategory("Tables");
+                            break;
+
+                        case "lighting":
+                            LoadProductsByCategory("Lighting");
+                            break;
+
+                        case "packages":
+                            LoadProductsByCategory("Packages");
+                            break;
+
+                        default:
+                            LoadProducts();
+                            break;
+                    }
+                }
 
                 UpdateCartCount();
             }
@@ -38,7 +68,7 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         {
             return
                 ConfigurationManager
-                .ConnectionStrings["ForteDB"]
+                .ConnectionStrings["FortEventHireDB"]
                 .ConnectionString;
         }
 
