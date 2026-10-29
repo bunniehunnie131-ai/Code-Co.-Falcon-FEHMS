@@ -282,6 +282,7 @@
     <Content Include="Presentation\ForgottenPassword.aspx" />
     <Content Include="Presentation\Payment.aspx" />
     <Content Include="Presentation\Profile.ascx" />
+    <Content Include="Presentation\ResetPassword.aspx" />
     <Content Include="Presentation\Staff.master.cs.txt" />
     <Content Include="Presentation\Staff.master.designer.cs.txt" />
     <Content Include="Presentation\StaffDashBoard.aspx" />
@@ -436,6 +437,13 @@
     <Compile Include="Presentation\Profile.ascx.designer.cs">
       <DependentUpon>Profile.ascx</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\ResetPassword.aspx.cs">
+      <DependentUpon>ResetPassword.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\ResetPassword.aspx.designer.cs">
+      <DependentUpon>ResetPassword.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\StaffDashBoard.aspx.cs">
       <DependentUpon>StaffDashBoard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -521,6 +529,7 @@
     <Compile Include="Presentation\ReviewSummary.aspx.designer.cs">
       <DependentUpon>ReviewSummary.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Service\EmailService.cs" />
     <Compile Include="Service\RegistrationSecurityService.cs" />
   </ItemGroup>
   <ItemGroup>

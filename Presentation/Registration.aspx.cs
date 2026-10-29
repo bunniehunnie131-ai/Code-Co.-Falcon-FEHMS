@@ -246,7 +246,7 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
                                 @"INSERT INTO dbo.Customer
                                   (
                                       UserID,
-                                      Phone,
+                                      PhoneNumber,
                                       Address
                                   )
                                   VALUES
