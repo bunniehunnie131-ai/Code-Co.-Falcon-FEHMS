@@ -1,34 +1,32 @@
-﻿using System;
+using System;
 using System.IO;
 using System.Web;
 using System.Web.UI;
 
 namespace FEHMS_FortEventHireManagementSystem.Presentation
 {
-    public partial class SystemLayout : System.Web.UI.MasterPage
+    public partial class SystemLayout : MasterPage
     {
         protected void Page_Load(object sender, EventArgs e)
         {
-            // Get the current page name and convert it to lowercase.
             string currentPage = Path.GetFileName(
-                Request.AppRelativeCurrentExecutionFilePath
-            );
+                Request.AppRelativeCurrentExecutionFilePath);
 
             currentPage = (currentPage ?? "").ToLowerInvariant();
 
-            // CUSTOMER PAGES
+            string userRole = Convert.ToString(Session["UserRole"]);
+            userRole = (userRole ?? "").Trim();
+
             bool isCustomerPage =
                 currentPage == "customerdashboard.aspx" ||
                 currentPage == "trackorder.aspx" ||
                 currentPage == "ordersummary.aspx" ||
                 currentPage == "manageprofile.aspx" ||
                 currentPage == "reviews.aspx" ||
-                currentPage == "reviewsummary.aspx" ||
                 currentPage == "about.aspx" ||
                 currentPage == "contact.aspx" ||
                 currentPage == "viewtermsandconditions.aspx";
 
-            // STAFF PAGES
             bool isStaffPage =
                 currentPage == "staffdashboard.aspx" ||
                 currentPage == "staffdashbord.aspx" ||
@@ -38,11 +36,35 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
                 currentPage == "assignedbookings.aspx" ||
                 currentPage == "managereturns.aspx";
 
-            // DISPLAY THE CORRECT SIDEBAR
+            bool isAdminPage =
+                currentPage == "admindashboard.aspx" ||
+                currentPage == "managebookings.aspx" ||
+                currentPage == "manageinventory.aspx" ||
+                currentPage == "managecustomers.aspx" ||
+                currentPage == "managestaff.aspx" ||
+                currentPage == "managepayments.aspx" ||
+                currentPage == "managepackage.aspx" ||
+                currentPage == "bookingcalander.aspx" ||
+                currentPage == "reports.aspx" ||
+                currentPage == "manageevents.aspx" ||
+                currentPage == "assignbookings.aspx";
+
+            // ManageReturns is used by staff and administrators.
+            if (currentPage == "managereturns.aspx")
+            {
+                if (string.Equals(
+                    userRole, "Admin",
+                    StringComparison.OrdinalIgnoreCase))
+                {
+                    isAdminPage = true;
+                    isStaffPage = false;
+                }
+            }
+
             pnlCustomerSidebar.Visible = isCustomerPage;
             pnlStaffSidebar.Visible = isStaffPage;
+            pnlAdminSidebar.Visible = isAdminPage;
 
-            // APPLY THE CORRECT PAGE LAYOUT
             if (isCustomerPage)
             {
                 mainContentLayout.Attributes["class"] =
@@ -59,6 +81,14 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
                 pageContent.Attributes["class"] =
                     "staff-page-content";
             }
+            else if (isAdminPage)
+            {
+                mainContentLayout.Attributes["class"] =
+                    "main-content admin-layout";
+
+                pageContent.Attributes["class"] =
+                    "admin-page-content";
+            }
             else
             {
                 mainContentLayout.Attributes["class"] =
@@ -69,23 +99,24 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
             }
         }
 
-        // CUSTOMER LOGOUT
         protected void lnkCustomerLogout_Click(
-            object sender,
-            EventArgs e)
+            object sender, EventArgs e)
         {
             LogOutUser();
         }
 
-        // STAFF LOGOUT
         protected void lnkStaffLogout_Click(
-            object sender,
-            EventArgs e)
+            object sender, EventArgs e)
         {
             LogOutUser();
         }
 
-        // SHARED LOGOUT FUNCTION
+        protected void lnkAdminLogout_Click(
+            object sender, EventArgs e)
+        {
+            LogOutUser();
+        }
+
         private void LogOutUser()
         {
             Session.Clear();
@@ -93,8 +124,7 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
 
             Response.Redirect(
                 ResolveUrl("~/Presentation/Login.aspx"),
-                false
-            );
+                false);
 
             Context.ApplicationInstance.CompleteRequest();
         }
