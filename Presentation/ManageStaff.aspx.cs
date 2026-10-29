@@ -1,5 +1,9 @@
 using System;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
+using System.Net.Mail;
+using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
 
@@ -7,30 +11,13 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
 {
     public partial class ManageStaff : Page
     {
-        private DataTable GetStaff()
+        private string ConnectionString
         {
-            DataTable t=Session["ManageStaffDemo"] as DataTable;
-            if(t!=null)return t;
-            t=new DataTable();
-            t.Columns.Add("UserID",typeof(int));
-            t.Columns.Add("StaffNumber",typeof(string));
-            t.Columns.Add("FullName",typeof(string));
-            t.Columns.Add("EmailAddress",typeof(string));
-            t.Columns.Add("PhoneNumber",typeof(string));
-            t.Columns.Add("JobTitle",typeof(string));
-            t.Columns.Add("RoleName",typeof(string));
-            t.Columns.Add("IsActive",typeof(bool));
-            t.Columns.Add("Status",typeof(string));
-            t.Rows.Add(201,"ST201","Thandi Nkomo","thandi.nkomo@forte.co.za","071 111 1001","Operations Manager","Manager",true,"Active");
-            t.Rows.Add(202,"ST202","James Dlamini","james.dlamini@forte.co.za","071 111 1002","Delivery Coordinator","Delivery Staff",true,"Active");
-            t.Rows.Add(203,"ST203","Priya Singh","priya.singh@forte.co.za","071 111 1003","Administrator","Admin Staff",true,"Active");
-            t.Rows.Add(204,"ST204","Mike Adams","mike.adams@forte.co.za","071 111 1004","Collection Coordinator","Collection Staff",true,"Active");
-            t.Rows.Add(205,"ST205","Sarah White","sarah.white@forte.co.za","071 111 1005","Event Hire Assistant","Staff",true,"Active");
-            Session["ManageStaffDemo"]=t;return t;
+            get { return ConfigurationManager.ConnectionStrings["ForteDB"].ConnectionString; }
         }
-        protected void Page_Load(object sender,EventArgs e)
+        protected void Page_Load(object sender, EventArgs e)
         {
-            if(!IsPostBack)
+            if (!IsPostBack)
             {
                 BindRoles();
                 BindStaff();
@@ -38,62 +25,126 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         }
         private void BindRoles()
         {
-            ddlRole.Items.Clear();
-            ddlRole.Items.Add(new ListItem("Select role",""));
-            ddlRole.Items.Add(new ListItem("Delivery Staff","Delivery Staff"));
-            ddlRole.Items.Add(new ListItem("Collection Staff","Collection Staff"));
-            ddlRole.Items.Add(new ListItem("Admin Staff","Admin Staff"));
-            ddlRole.Items.Add(new ListItem("Staff","Staff"));
+            using (SqlConnection c = new SqlConnection(ConnectionString))
+            using (SqlDataAdapter a = new SqlDataAdapter("SELECT RoleName,RoleName AS Value FROM dbo.Roles WHERE IsStaffRole=1 AND IsActive=1 AND RoleName NOT IN (N'Administrator',N'Admin',N'Manager')" +
+                " ORDER BY RoleName;", c))
+            {
+                DataTable d = new DataTable(); a.Fill(d); ddlRole.DataSource = d; ddlRole.DataTextField = "RoleName";
+                ddlRole.DataValueField = "Value"; ddlRole.DataBind();
+            }
         }
         private void BindStaff()
         {
-            gvStaff.DataSource=GetStaff();
-            gvStaff.DataBind();
-        }
-        protected void btnShowAdd_Click(object sender,EventArgs e)
-        {
-            pnlForm.Visible=true;pnlMessage.Visible=false;
-        }
-        protected void btnCancel_Click(object sender,EventArgs e)
-        {
-            pnlForm.Visible=false;
-        }
-        protected void btnSave_Click(object sender,EventArgs e)
-        {
-            if(String.IsNullOrWhiteSpace(txtFirstName.Text)||String.IsNullOrWhiteSpace(txtLastName.Text)||String.IsNullOrWhiteSpace(txtEmail.Text)||String.IsNullOrWhiteSpace(ddlRole.SelectedValue))
+            using (SqlConnection c = new SqlConnection(ConnectionString))
+            using (SqlDataAdapter a = new SqlDataAdapter(@"SELECT s.UserID,s.StaffNumber,u.FirstName+N' '+u.LastName AS FullName,u.EmailAddress,s.JobTitle,r.RoleName,u.IsActive,CASE WHEN u.IsActive=1 THEN N'Active' ELSE N'Inactive' END AS Status FROM dbo.Staff s JOIN dbo.Users u ON u.UserID=s.UserID JOIN dbo.Roles r ON r.RoleID=u.RoleID ORDER BY u.LastName,u.FirstName;", c))
             {
-                Show("Complete the staff name, email and role fields.",false);
+                DataTable d = new DataTable(); a.Fill(d); gvStaff.DataSource = d; gvStaff.DataBind();
+            }
+        }
+        protected void btnShowAdd_Click(object sender, EventArgs e)
+        {
+            pnlForm.Visible = true;
+            pnlMessage.Visible = false;
+        }
+        protected void btnCancel_Click(object sender, EventArgs e)
+        {
+            pnlForm.Visible = false;
+        }
+        protected void btnSave_Click(object sender, EventArgs e)
+        {
+            string first = txtFirstName.Text.Trim(), last = txtLastName.Text.Trim(), email = txtEmail.Text.Trim();
+            if (first.Length == 0 || last.Length == 0 || txtPassword.Text.Length < 10)
+            {
+                Show("Enter a first name, last name and a temporary password of at least 10 characters.", false);
                 return;
             }
-            DataTable t=GetStaff();
-            int id=200;
-            foreach(DataRow r in t.Rows)id=Math.Max(id,Convert.ToInt32(r["UserID"]));
-            id++;
-            DataRow n=t.NewRow();
-            n["UserID"]=id;
-            n["StaffNumber"]="ST"+id.ToString("D3");
-            n["FullName"]=txtFirstName.Text.Trim()+" "+txtLastName.Text.Trim();
-            n["EmailAddress"]=txtEmail.Text.Trim();
-            n["PhoneNumber"]=txtPhone.Text.Trim();
-            n["JobTitle"]=txtJobTitle.Text.Trim();
-            n["RoleName"]=ddlRole.SelectedValue;
-            n["IsActive"]=true;n["Status"]="Active";t.Rows.Add(n);
-            txtFirstName.Text=txtLastName.Text=txtEmail.Text=txtPhone.Text=txtJobTitle.Text=txtPassword.Text="";
-            pnlForm.Visible=false;Show("Sample staff account added for this session.",true);BindStaff();
+            try
+            {
+                if (new MailAddress(email).Address != email)
+                {
+                    Show("Enter a valid email address.", false); return;
+                }
+            }
+            catch
+            {
+                Show("Enter a valid email address.", false);
+                return;
+            }
+            if (String.IsNullOrWhiteSpace(ddlRole.SelectedValue))
+            {
+                Show("Choose a staff role.", false);
+                return;
+            }
+            using (SqlConnection c = new SqlConnection(ConnectionString))
+            {
+                c.Open();
+                using (SqlTransaction tx = c.BeginTransaction())
+                {
+                    try
+                    {
+                        int userId;
+                        using (SqlCommand q = new SqlCommand(@"INSERT dbo.Users(FullName,FirstName,LastName,Email,EmailAddress,PhoneNumber,PasswordHash,UserRole,RoleID,IsActive) SELECT @FullName,@First,@Last,@Email,@Email,@Phone,@Hash,r.RoleName,r.RoleID,1 FROM dbo.Roles r WHERE r.RoleName=@Role AND r.IsStaffRole=1 AND r.IsActive=1; SELECT CONVERT(int,SCOPE_IDENTITY());", c, tx))
+                        {
+                            q.Parameters.AddWithValue("@FullName", first + " " + last);
+                            q.Parameters.AddWithValue("@First", first);
+                            q.Parameters.AddWithValue("@Last", last);
+                            q.Parameters.AddWithValue("@Email", email);
+                            q.Parameters.AddWithValue("@Phone", String.IsNullOrWhiteSpace(txtPhone.Text) ? (object)DBNull.Value : txtPhone.Text.Trim());
+                            q.Parameters.AddWithValue("@Hash", FEHMS_FortEventHireManagementSystem.RegistrationSecurityService.HashPassword(txtPassword.Text));
+                            q.Parameters.AddWithValue("@Role", ddlRole.SelectedValue);
+                            userId = Convert.ToInt32(q.ExecuteScalar());
+                        }
+                        if (userId <= 0) throw new InvalidOperationException("The selected staff role is unavailable.");
+                        string staffNo = "STF" + userId.ToString("D6");
+                        using (SqlCommand q = new SqlCommand("INSERT dbo.Staff(UserID,StaffNumber,JobTitle,HireDate,IsActive) VALUES(@ID,@No,@Title,CONVERT(date,SYSUTCDATETIME()),1);", c, tx))
+                        {
+                            q.Parameters.AddWithValue("@ID", userId);
+                            q.Parameters.AddWithValue("@No", staffNo);
+                            q.Parameters.AddWithValue("@Title", String.IsNullOrWhiteSpace(txtJobTitle.Text) ? (object)DBNull.Value : txtJobTitle.Text.Trim());
+                            q.ExecuteNonQuery();
+                        }
+                        tx.Commit();
+                        pnlForm.Visible = false;
+                        txtPassword.Text = String.Empty;
+                        Show("Staff account created. Give the temporary password to the staff member securely and ask them to change it.", true);
+                        BindStaff();
+                    }
+                    catch (Exception ex)
+                    {
+                        try
+                        {
+                            tx.Rollback();
+                        }
+                        catch
+                        {
+                        }
+                        System.Diagnostics.Trace.TraceError("Manage staff create error: " + ex);
+                        Show(ex is SqlException && (((SqlException)ex).Number == 2601 || ((SqlException)ex).Number == 2627) ? "That email is already registered." : "The staff account could not be created.", false);
+                    }
+                }
+            }
         }
-        protected void gvStaff_RowCommand(object sender,GridViewCommandEventArgs e)
+        protected void gvStaff_RowCommand(object sender, GridViewCommandEventArgs e)
         {
-            if(e.CommandName!="Toggle")return;
-            int id;if(!Int32.TryParse(Convert.ToString(e.CommandArgument),out id))return;DataRow[] rows=GetStaff().Select("UserID="+id);
-            if(rows.Length==0)return;bool active=!Convert.ToBoolean(rows[0]["IsActive"]);rows[0]["IsActive"]=active;rows[0]["Status"]=active?"Active":"Inactive";
-            Show("Staff access updated in the session sample data.",true);
+            if (e.CommandName != "Toggle") return; int id;
+            if (!Int32.TryParse(Convert.ToString(e.CommandArgument), out id)) return;
+            using (SqlConnection c = new SqlConnection(ConnectionString))
+            using (SqlCommand q = new SqlCommand("UPDATE dbo.Users SET IsActive=1-IsActive,UpdatedAt=SYSUTCDATETIME()" +
+                " WHERE UserID=@ID AND RoleID IN(SELECT RoleID FROM dbo.Roles WHERE IsStaffRole=1 AND RoleName NOT IN(N'Administrator',N'Admin',N'Manager'));" +
+                " UPDATE dbo.Staff SET IsActive=(SELECT IsActive FROM dbo.Users WHERE UserID=@ID) WHERE UserID=@ID;", c))
+            {
+                q.Parameters.AddWithValue("@ID", id); c.Open();
+                q.ExecuteNonQuery();
+            }
+            Show("Staff access updated.", true);
             BindStaff();
         }
-        private void Show(string s,bool ok)
+        private void Show(string text, bool ok)
         {
-            pnlMessage.Visible=true;pnlMessage.CssClass=ok?"alert alert-success":"alert alert-warning";
-            lblMessage.Text=Server.HtmlEncode(s);
+            lblMessage.Text = HttpUtility.HtmlEncode(text);
+            pnlMessage.CssClass = ok ? "alert alert-success" : "alert alert-danger"; pnlMessage.Visible = true;
         }
+
     }
 }
 
