@@ -1,4 +1,4 @@
-﻿<%@ Master Language="C#"
+<%@ Master Language="C#"
     AutoEventWireup="true"
     CodeBehind="SystemLayout.master.cs"
     Inherits="FEHMS_FortEventHireManagementSystem.Presentation.SystemLayout" %>
@@ -10,12 +10,9 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-          rel="stylesheet" />
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css"
-          rel="stylesheet" />
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap"
-          rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
 
     <style>
         :root {
@@ -27,13 +24,7 @@
             --shadow-soft: 0 8px 30px rgba(7,24,39,.08);
         }
 
-        * {
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
+        * { box-sizing: border-box; }
 
         body {
             margin: 0;
@@ -48,8 +39,6 @@
             font-weight: 600;
         }
 
-        /* MAIN NAVIGATION */
-
         .navbar {
             position: relative;
             z-index: 1000;
@@ -60,408 +49,221 @@
             box-shadow: 0 4px 20px rgba(0,0,0,.12);
         }
 
-        .navbar-brand {
-            display: flex;
-            align-items: center;
-            margin-right: 35px;
-        }
-
-        .navbar-brand img {
-            height: 68px;
-            width: auto;
-            object-fit: contain;
-        }
-
-        .navbar-nav {
-            gap: 5px;
-        }
+        .navbar-brand { display:flex; align-items:center; margin-right:25px; }
+        .navbar-brand img { height:68px; width:auto; object-fit:contain; }
+        .navbar-nav { gap:5px; }
 
         .navbar .nav-link {
-            color: #e8edf5 !important;
-            font-size: 14px;
-            font-weight: 500;
-            padding: 10px 12px !important;
-            border-radius: 8px;
+            color:#e8edf5 !important;
+            font-size:14px;
+            font-weight:500;
+            padding:10px 12px !important;
+            border-radius:8px;
         }
 
-        .navbar .nav-link:hover {
-            color: #fff !important;
-            background: rgba(36,87,214,.2);
-        }
+        .navbar .nav-link:hover { color:#fff !important; background:rgba(36,87,214,.2); }
 
-        .nav-icons {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
+        .nav-icons { display:flex; align-items:center; gap:10px; }
 
         .cart-button {
-            width: 42px;
-            height: 42px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            background: rgba(255,255,255,.06);
-            border: 1px solid rgba(255,255,255,.12);
-            border-radius: 9px;
-            text-decoration: none;
+            width:42px; height:42px; display:flex;
+            align-items:center; justify-content:center;
+            color:#fff; background:rgba(255,255,255,.06);
+            border:1px solid rgba(255,255,255,.12);
+            border-radius:9px; text-decoration:none;
         }
 
-        .cart-button:hover {
-            color: white;
-            background: var(--forte-blue);
-        }
+        .cart-button:hover { color:#fff; background:var(--forte-blue); }
 
         .btn-login, .btn-forte {
-            background: var(--forte-blue);
-            border: 1px solid var(--forte-blue);
-            color: white;
-            font-weight: 600;
-            border-radius: 9px;
-            padding: 10px 20px;
+            background:var(--forte-blue); border:1px solid var(--forte-blue);
+            color:#fff; font-weight:600; border-radius:9px; padding:10px 20px;
         }
 
-        .btn-login {
-            height: 42px;
-            padding: 0 20px;
-        }
+        .btn-login { height:42px; padding:0 20px; }
+        .btn-login:hover, .btn-forte:hover { color:#fff; background:var(--forte-blue-light); }
 
-        .btn-login:hover, .btn-forte:hover {
-            color: white;
-            background: var(--forte-blue-light);
-            border-color: var(--forte-blue-light);
-        }
+        .navbar-toggler { border-color:rgba(255,255,255,.25); }
+        .navbar-toggler-icon { filter:invert(1); }
 
-        .navbar-toggler {
-            border-color: rgba(255,255,255,.25);
-        }
-
-        .navbar-toggler-icon {
-            filter: invert(1);
-        }
-
-        /* GENERAL PAGE CONTENT */
-
-        .main-content {
-            min-height: 500px;
-            padding-top: 35px;
-            padding-bottom: 35px;
-        }
+        .main-content { min-height:500px; padding-top:35px; padding-bottom:35px; }
 
         .card {
-            border: 1px solid #e7ebf1;
-            border-radius: 14px;
-            box-shadow: var(--shadow-soft);
+            border:1px solid #e7ebf1;
+            border-radius:14px;
+            box-shadow:var(--shadow-soft);
         }
 
-        .text-forte {
-            color: var(--forte-blue) !important;
-        }
-
-        .text-navy {
-            color: var(--forte-navy) !important;
-        }
+        .text-forte { color:var(--forte-blue) !important; }
+        .text-navy { color:var(--forte-navy) !important; }
 
         .form-control, .form-select {
-            border-radius: 9px;
-            border: 1px solid #dce2ea;
-            padding: 10px 13px;
+            border-radius:9px;
+            border:1px solid #dce2ea;
+            padding:10px 13px;
         }
 
         .form-control:focus, .form-select:focus {
-            border-color: var(--forte-blue);
-            box-shadow: 0 0 0 3px rgba(36,87,214,.12);
+            border-color:var(--forte-blue);
+            box-shadow:0 0 0 3px rgba(36,87,214,.12);
         }
 
-        /* SHARED CUSTOMER AND STAFF PORTAL LAYOUT */
+        /* PORTAL LAYOUTS */
 
         .main-content.customer-layout,
-        .main-content.staff-layout {
-            display: flex;
-            flex-direction: row;
-            align-items: stretch;
-            gap: 24px;
-            width: 100%;
-            max-width: 1320px;
-            min-width: 0;
-            min-height: 500px;
-            margin: 0 auto;
-            padding: 30px 15px 35px;
+        .main-content.staff-layout,
+        .main-content.admin-layout {
+            display:flex;
+            flex-direction:row;
+            align-items:stretch;
+            gap:24px;
+            width:100%;
+            max-width:1450px;
+            min-width:0;
+            min-height:500px;
+            margin:0 auto;
+            padding:30px 15px 35px;
         }
 
-        .customer-sidebar,
-        .staff-sidebar {
-            flex: 0 0 250px;
-            width: 250px;
-            min-width: 250px;
-            align-self: stretch;
-            background: #0f172a;
-            color: #fff;
-            border-radius: 12px;
-            padding: 22px 16px;
+        .customer-sidebar, .staff-sidebar, .admin-sidebar {
+            flex:0 0 250px;
+            width:250px;
+            min-width:250px;
+            align-self:stretch;
+            background:#0f172a;
+            color:#fff;
+            border-radius:12px;
+            padding:22px 16px;
         }
 
-        .customer-sidebar-inner,
-        .staff-sidebar-inner {
-            display: flex;
-            flex-direction: column;
-            min-height: 100%;
+        .customer-sidebar-inner, .staff-sidebar-inner, .admin-sidebar-inner {
+            display:flex;
+            flex-direction:column;
+            min-height:100%;
         }
-
-        /* PORTAL BRANDING */
 
         .portal-brand {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 30px;
+            display:flex; align-items:center; gap:12px; margin-bottom:28px;
         }
 
-        .portal-brand-icon {
-            font-size: 25px;
-            color: #fff;
-            flex-shrink: 0;
-        }
-
-        .portal-brand-title {
-            font-size: 16px;
-            font-weight: 600;
-            color: #fff;
-        }
-
-        .portal-brand-sub {
-            font-size: 12px;
-            color: #cbd5e1;
-        }
+        .portal-brand-icon { font-size:25px; color:#fff; flex-shrink:0; }
+        .portal-brand-title { font-size:16px; font-weight:600; color:#fff; }
+        .portal-brand-sub { font-size:12px; color:#cbd5e1; }
 
         .portal-nav-label {
-            margin-bottom: 12px;
-            color: #94a3b8;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 1px;
-            text-transform: uppercase;
+            margin:14px 0 12px;
+            color:#94a3b8;
+            font-size:11px;
+            font-weight:700;
+            letter-spacing:1px;
+            text-transform:uppercase;
         }
 
-        .sidebar-nav {
-            list-style: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .sidebar-nav-item {
-            margin-bottom: 6px;
-        }
+        .sidebar-nav { list-style:none; padding:0; margin:0; }
+        .sidebar-nav-item { margin-bottom:6px; }
 
         .sidebar-nav-link {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px;
-            border-radius: 8px;
-            color: #cbd5e1;
-            text-decoration: none;
-            font-size: 13px;
-            transition: background-color .2s ease, color .2s ease;
+            display:flex; align-items:center; gap:12px;
+            padding:11px 10px; border-radius:8px;
+            color:#cbd5e1; text-decoration:none; font-size:13px;
+            transition:background-color .2s ease, color .2s ease;
         }
 
         .sidebar-nav-link i {
-            width: 20px;
-            font-size: 18px;
-            text-align: center;
-            flex-shrink: 0;
+            width:20px; font-size:17px; text-align:center; flex-shrink:0;
         }
 
         .customer-sidebar .sidebar-nav-link:hover,
         .customer-sidebar .sidebar-nav-link.active,
         .staff-sidebar .sidebar-nav-link:hover,
-        .staff-sidebar .sidebar-nav-link.active {
-            color: #fff !important;
-            background: #1e3a8a;
+        .staff-sidebar .sidebar-nav-link.active,
+        .admin-sidebar .sidebar-nav-link:hover,
+        .admin-sidebar .sidebar-nav-link.active {
+            color:#fff !important;
+            background:#1e3a8a;
         }
 
-        /* CUSTOMER SIDEBAR ADDITIONS */
-
-        .customer-sidebar {
-            height: auto;
-            min-height: 100%;
-        }
-
-        .customer-sidebar .portal-nav-label {
-            margin-top: 8px;
-        }
-
-        .customer-sidebar .sidebar-nav-link {
-            padding: 11px 10px;
-        }
-
-        .customer-sidebar .sidebar-nav-link span {
-            min-width: 0;
-        }
-
-        .portal-sidebar-footer {
-            margin-top: auto;
-            padding-top: 25px;
-        }
+        .portal-sidebar-footer { margin-top:auto; padding-top:25px; }
 
         .btn-sidebar-logout {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            width: 100%;
-            padding: 12px;
-            border: 0;
-            background: transparent;
-            color: #fca5a5;
-            text-align: left;
-            text-decoration: none;
-            border-radius: 8px;
+            display:flex; align-items:center; gap:10px;
+            width:100%; padding:12px; border:0;
+            background:transparent; color:#fca5a5;
+            text-align:left; text-decoration:none; border-radius:8px;
         }
 
-        .btn-sidebar-logout:hover {
-            background: #7f1d1d;
-            color: #fff;
-        }
+        .btn-sidebar-logout:hover { background:#7f1d1d; color:#fff; }
 
-        .customer-page-content,
-        .staff-page-content,
-        .public-page-content {
-            flex: 1 1 0;
-            min-width: 0;
+        .customer-page-content, .staff-page-content,
+        .admin-page-content, .public-page-content {
+            flex:1 1 0;
+            min-width:0;
         }
 
         .customer-page-content .table-responsive,
-        .staff-page-content .table-responsive {
-            width: 100%;
-            overflow-x: auto;
+        .staff-page-content .table-responsive,
+        .admin-page-content .table-responsive {
+            width:100%;
+            overflow-x:auto;
         }
 
         /* FOOTER */
 
         .footer {
-            margin-top: 60px;
-            padding: 50px 0 20px;
-            background: linear-gradient(135deg, var(--forte-navy), #091521);
-            color: #d7dee8;
+            margin-top:60px; padding:50px 0 20px;
+            background:linear-gradient(135deg, var(--forte-navy), #091521);
+            color:#d7dee8;
         }
 
-        .footer-logo {
-            height: 85px;
-            width: auto;
-            object-fit: contain;
-            margin-bottom: 8px;
-        }
+        .footer-logo { height:85px; width:auto; object-fit:contain; margin-bottom:8px; }
+        .footer-description, .footer-contact { color:#aeb9c8; font-size:14px; }
+        .footer h5 { color:#fff; font-size:16px; margin-bottom:18px; }
+        .footer a { display:block; color:#aeb9c8; text-decoration:none; margin-bottom:9px; font-size:14px; }
+        .footer a:hover { color:#fff; }
+        .footer-contact i { color:var(--forte-blue-light); margin-right:8px; }
 
-        .footer-description, .footer-contact {
-            color: #aeb9c8;
-            font-size: 14px;
-        }
-
-        .footer h5 {
-            color: #fff;
-            font-size: 16px;
-            margin-bottom: 18px;
-        }
-
-        .footer a {
-            display: block;
-            color: #aeb9c8;
-            text-decoration: none;
-            margin-bottom: 9px;
-            font-size: 14px;
-        }
-
-        .footer a:hover {
-            color: #fff;
-        }
-
-        .footer-contact i {
-            color: var(--forte-blue-light);
-            margin-right: 8px;
-        }
-
-        .social-icons {
-            display: flex;
-            gap: 9px;
-        }
+        .social-icons { display:flex; gap:9px; }
 
         .social-icons a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 38px;
-            height: 38px;
-            margin: 0;
-            border: 1px solid rgba(255,255,255,.1);
-            border-radius: 8px;
-            background: rgba(255,255,255,.06);
+            display:flex; align-items:center; justify-content:center;
+            width:38px; height:38px; margin:0;
+            border:1px solid rgba(255,255,255,.1);
+            border-radius:8px; background:rgba(255,255,255,.06);
         }
 
         .footer-bottom {
-            margin-top: 35px;
-            padding-top: 20px;
-            border-top: 1px solid rgba(255,255,255,.08);
-            text-align: center;
-            color: #7f8da0;
-            font-size: 13px;
+            margin-top:35px; padding-top:20px;
+            border-top:1px solid rgba(255,255,255,.08);
+            text-align:center; color:#7f8da0; font-size:13px;
         }
 
-        /* TABLET NAVIGATION */
-
-        @media (max-width: 991px) {
-            .navbar-brand {
-                margin-right: 0;
-            }
-
-            .navbar-brand img {
-                height: 58px;
-            }
-
+        @media (max-width:991px) {
+            .navbar-brand { margin-right:0; }
+            .navbar-brand img { height:58px; }
             .navbar-nav {
-                margin-top: 15px;
-                padding: 10px;
-                background: rgba(255,255,255,.03);
-                border-radius: 10px;
+                margin-top:15px; padding:10px;
+                background:rgba(255,255,255,.03); border-radius:10px;
             }
-
-            .nav-icons {
-                margin-top: 15px;
-                padding-bottom: 8px;
-            }
+            .nav-icons { margin-top:15px; padding-bottom:8px; }
         }
 
-        /* MOBILE LAYOUT */
-
-        @media (max-width: 767.98px) {
+        @media (max-width:767.98px) {
             .main-content.customer-layout,
-            .main-content.staff-layout {
-                flex-direction: column;
-                gap: 18px;
-                min-height: auto;
-                padding: 20px 15px;
+            .main-content.staff-layout,
+            .main-content.admin-layout {
+                flex-direction:column; gap:18px; min-height:auto; padding:20px 15px;
             }
 
-            .customer-sidebar,
-            .staff-sidebar {
-                flex: 0 0 auto;
-                width: 100%;
-                min-width: 0;
+            .customer-sidebar, .staff-sidebar, .admin-sidebar {
+                flex:0 0 auto; width:100%; min-width:0;
             }
 
-            .customer-sidebar-inner,
-            .staff-sidebar-inner {
-                min-height: auto;
+            .customer-sidebar-inner, .staff-sidebar-inner, .admin-sidebar-inner {
+                min-height:auto;
             }
 
-            .portal-sidebar-footer {
-                margin-top: 15px;
-                padding-top: 10px;
-            }
-
-            .footer {
-                padding-top: 40px;
-            }
+            .portal-sidebar-footer { margin-top:15px; padding-top:10px; }
+            .footer { padding-top:40px; }
         }
     </style>
 
@@ -475,333 +277,188 @@
 
     <nav class="navbar navbar-expand-lg">
         <div class="container">
-
             <a class="navbar-brand" href="Home.aspx">
-                <img src="../Images/FEHMS_Logo.jpeg"
-                     alt="Forte Events Logo" />
+                <img src="../Images/FEHMS_Logo.jpeg" alt="Forte Events Logo" />
             </a>
 
-            <button class="navbar-toggler"
-                    type="button"
-                    data-bs-toggle="collapse"
-                    data-bs-target="#navMenu"
-                    aria-controls="navMenu"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button"
+                data-bs-toggle="collapse" data-bs-target="#navMenu"
+                aria-controls="navMenu" aria-expanded="false"
+                aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navMenu">
-
                 <ul class="navbar-nav mx-auto">
-                    <li class="nav-item">
-                        <a class="nav-link" href="Home.aspx">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Catalogue.aspx">Catalogue</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="About.aspx">About Us</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="HowItWorks.aspx">How It Works</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="ReviewSummary.aspx">Reviews</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Contact.aspx">Contact Us</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="Home.aspx">Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="Catalogue.aspx">Catalogue</a></li>
+                    <li class="nav-item"><a class="nav-link" href="AboutUs.aspx">About Us</a></li>
+                    <li class="nav-item"><a class="nav-link" href="HowItWorks.aspx">How It Works</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ReviewSummary.aspx">Reviews</a></li>
+                    <li class="nav-item"><a class="nav-link" href="ContactUs.aspx">Contact Us</a></li>
                 </ul>
 
                 <div class="nav-icons">
-                    <a href="Cart.aspx"
-                       class="cart-button"
-                       title="Shopping Cart">
+                    <a href="Cart.aspx" class="cart-button" title="Shopping Cart">
                         <i class="bi bi-cart3"></i>
                     </a>
-
-                    <asp:Button ID="btnLogin"
-                        runat="server"
-                        Text="Login"
-                        CssClass="btn btn-login"
-                        PostBackUrl="Login.aspx" />
+                    <asp:Button ID="btnLogin" runat="server" Text="Login"
+                        CssClass="btn btn-login" PostBackUrl="Login.aspx" />
                 </div>
-
             </div>
         </div>
     </nav>
 
-    <!-- MAIN PAGE AREA -->
+    <!-- PAGE LAYOUT -->
 
-    <main id="mainContentLayout" runat="server"
-          class="main-content container">
+    <main id="mainContentLayout" runat="server" class="main-content container">
 
         <!-- CUSTOMER SIDEBAR -->
 
         <asp:Panel ID="pnlCustomerSidebar" runat="server"
-                   Visible="false" CssClass="customer-sidebar">
-
+            Visible="false" CssClass="customer-sidebar">
             <div class="customer-sidebar-inner">
-
                 <div class="portal-brand">
-                    <span class="portal-brand-icon">
-                        <i class="bi bi-person-circle"></i>
-                    </span>
-
+                    <span class="portal-brand-icon"><i class="bi bi-person-circle"></i></span>
                     <div>
                         <div class="portal-brand-title">Customer Portal</div>
-                        <div class="portal-brand-sub">
-                            Manage your event hire
-                        </div>
+                        <div class="portal-brand-sub">Manage your event hire</div>
                     </div>
                 </div>
 
-                <!-- CUSTOMER ACCOUNT -->
-
                 <div class="portal-nav-label">My Account</div>
-
                 <ul class="sidebar-nav">
-
-                    <li class="sidebar-nav-item">
-                        <a href="CustomerDashboard.aspx"
-                           class="sidebar-nav-link">
-                            <i class="bi bi-speedometer2"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-nav-item">
-                        <a href="TrackOrder.aspx"
-                           class="sidebar-nav-link">
-                            <i class="bi bi-calendar-event"></i>
-                            <span>Track Order</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-nav-item">
-                        <a href="OrderSummary.aspx"
-                           class="sidebar-nav-link">
-                            <i class="bi bi-receipt"></i>
-                            <span>Order Summary</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-nav-item">
-                        <a href="ManageProfile.aspx"
-                           class="sidebar-nav-link">
-                            <i class="bi bi-person-gear"></i>
-                            <span>Profile Settings</span>
-                        </a>
-                    </li>
-
+                    <li class="sidebar-nav-item"><a href="CustomerDashboard.aspx" class="sidebar-nav-link"><i class="bi bi-speedometer2"></i><span>Dashboard</span></a></li>
+                    <li class="sidebar-nav-item"><a href="TrackOrder.aspx" class="sidebar-nav-link"><i class="bi bi-calendar-event"></i><span>Track Order</span></a></li>
+                    <li class="sidebar-nav-item"><a href="OrderSummary.aspx" class="sidebar-nav-link"><i class="bi bi-receipt"></i><span>Order Summary</span></a></li>
+                    <li class="sidebar-nav-item"><a href="ManageProfile.aspx" class="sidebar-nav-link"><i class="bi bi-person-gear"></i><span>Profile Settings</span></a></li>
                 </ul>
 
-                <!-- SHOPPING AND SERVICES -->
-
-                <div class="portal-nav-label mt-4">
-                    Explore Forte Events
-                </div>
-
+                <div class="portal-nav-label">Explore Forte Events</div>
                 <ul class="sidebar-nav">
-
-                    <li class="sidebar-nav-item">
-                        <a href="Catalogue.aspx"
-                           class="sidebar-nav-link">
-                            <i class="bi bi-grid"></i>
-                            <span>Browse Catalogue</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-nav-item">
-                        <a href="HirePackages.aspx"
-                           class="sidebar-nav-link">
-                            <i class="bi bi-box-seam"></i>
-                            <span>Hire Packages</span>
-                        </a>
-                    </li>
-
+                    <li class="sidebar-nav-item"><a href="Catalogue.aspx" class="sidebar-nav-link"><i class="bi bi-grid"></i><span>Browse Catalogue</span></a></li>
+                    <li class="sidebar-nav-item"><a href="HirePackages.aspx" class="sidebar-nav-link"><i class="bi bi-box-seam"></i><span>Hire Packages</span></a></li>
                 </ul>
 
-                <!-- INFORMATION AND SUPPORT -->
-
-                <div class="portal-nav-label mt-4">
-                    Information &amp; Support
-                </div>
-
+                <div class="portal-nav-label">Information &amp; Support</div>
                 <ul class="sidebar-nav">
-
-                    <li class="sidebar-nav-item">
-                        <a href="Reviews.aspx"
-                           class="sidebar-nav-link">
-                            <i class="bi bi-star"></i>
-                            <span>Reviews</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-nav-item">
-                        <a href="About.aspx"
-                           class="sidebar-nav-link">
-                            <i class="bi bi-info-circle"></i>
-                            <span>About Us</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-nav-item">
-                        <a href="Contact.aspx"
-                           class="sidebar-nav-link">
-                            <i class="bi bi-headset"></i>
-                            <span>Contact Us</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-nav-item">
-                        <a href="TermsAndConditions.aspx"
-                           class="sidebar-nav-link">
-                            <i class="bi bi-file-earmark-text"></i>
-                            <span>Terms &amp; Conditions</span>
-                        </a>
-                    </li>
-
+                    <li class="sidebar-nav-item"><a href="Reviews.aspx" class="sidebar-nav-link"><i class="bi bi-star"></i><span>Write a Review</span></a></li>
+                    <li class="sidebar-nav-item"><a href="About.aspx" class="sidebar-nav-link"><i class="bi bi-info-circle"></i><span>About Us</span></a></li>
+                    <li class="sidebar-nav-item"><a href="Contact.aspx" class="sidebar-nav-link"><i class="bi bi-headset"></i><span>Contact Us</span></a></li>
+                    <li class="sidebar-nav-item"><a href="ViewTermsAndConditions.aspx" class="sidebar-nav-link"><i class="bi bi-file-earmark-text"></i><span>Terms &amp; Conditions</span></a></li>
                 </ul>
-
-                <!-- CUSTOMER LOGOUT -->
 
                 <div class="portal-sidebar-footer">
-
-                    <asp:LinkButton ID="lnkCustomerLogout"
-                        runat="server"
-                        CssClass="btn-sidebar-logout"
-                        OnClick="lnkCustomerLogout_Click">
-
-                        <i class="bi bi-box-arrow-right"></i>
-                        <span>Log Out</span>
-
+                    <asp:LinkButton ID="lnkCustomerLogout" runat="server"
+                        CssClass="btn-sidebar-logout" OnClick="lnkCustomerLogout_Click">
+                        <i class="bi bi-box-arrow-right"></i><span>Log Out</span>
                     </asp:LinkButton>
-
                 </div>
-
             </div>
         </asp:Panel>
 
         <!-- STAFF SIDEBAR -->
 
         <asp:Panel ID="pnlStaffSidebar" runat="server"
-                   Visible="false" CssClass="staff-sidebar">
-
+            Visible="false" CssClass="staff-sidebar">
             <div class="staff-sidebar-inner">
-
                 <div class="portal-brand">
-                    <span class="portal-brand-icon">
-                        <i class="bi bi-briefcase-fill"></i>
-                    </span>
-
+                    <span class="portal-brand-icon"><i class="bi bi-briefcase-fill"></i></span>
                     <div>
                         <div class="portal-brand-title">Staff Portal</div>
-                        <div class="portal-brand-sub">
-                            Operations &amp; logistics
-                        </div>
+                        <div class="portal-brand-sub">Operations &amp; logistics</div>
                     </div>
                 </div>
 
                 <div class="portal-nav-label">Operations</div>
-
                 <ul class="sidebar-nav">
-
-                    <li class="sidebar-nav-item">
-                        <a href="StaffDashBoard.aspx"
-                           class="sidebar-nav-link">
-                            <i class="bi bi-house-door-fill"></i>
-                            <span>Dashboard</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-nav-item">
-                      <a href="AssignedBookings.aspx"
-                        class="sidebar-nav-link">
-                      <i class="bi bi-calendar-check"></i>
-                         <span>Assigned Bookings</span>
-                        </a>
-                     </li>
-
-                    <li class="sidebar-nav-item">
-                        <a href="ManageDelivery.aspx"
-                           class="sidebar-nav-link">
-                            <i class="bi bi-truck"></i>
-                            <span>Manage Deliveries</span>
-                        </a>
-                    </li>
-
-                    
-                      <li class="sidebar-nav-item">
-                        <a href="ManageReturns.aspx"
-                         class="sidebar-nav-link">
-                         <i class="bi bi-arrow-return-left"></i>
-                           <span>Manage Returns</span>
-                        </a>
-                     </li>
-
-                    <li class="sidebar-nav-item">
-                        <a href="ManageCollection.aspx"
-                           class="sidebar-nav-link">
-                            <i class="bi bi-box-arrow-in-down"></i>
-                            <span>Manage Collections</span>
-                        </a>
-                    </li>
-
-                    <li class="sidebar-nav-item">
-                        <a href="StaffProfile.aspx"
-                           class="sidebar-nav-link">
-                            <i class="bi bi-person-gear"></i>
-                            <span>Profile Settings</span>
-                        </a>
-                    </li>
-
+                    <li class="sidebar-nav-item"><a href="StaffDashBoard.aspx" class="sidebar-nav-link"><i class="bi bi-house-door-fill"></i><span>Dashboard</span></a></li>
+                    <li class="sidebar-nav-item"><a href="AssignedBookings.aspx" class="sidebar-nav-link"><i class="bi bi-calendar-check"></i><span>Assigned Bookings</span></a></li>
+                    <li class="sidebar-nav-item"><a href="ManageDelivery.aspx" class="sidebar-nav-link"><i class="bi bi-truck"></i><span>Manage Deliveries</span></a></li>
+                    <li class="sidebar-nav-item"><a href="ManageReturns.aspx" class="sidebar-nav-link"><i class="bi bi-arrow-return-left"></i><span>Manage Returns</span></a></li>
+                    <li class="sidebar-nav-item"><a href="ManageCollection.aspx" class="sidebar-nav-link"><i class="bi bi-box-arrow-in-down"></i><span>Manage Collections</span></a></li>
+                    <li class="sidebar-nav-item"><a href="StaffProfile.aspx" class="sidebar-nav-link"><i class="bi bi-person-gear"></i><span>Profile Settings</span></a></li>
                 </ul>
 
                 <div class="portal-sidebar-footer">
-
-                    <asp:LinkButton ID="lnkStaffLogout"
-                        runat="server"
-                        CssClass="btn-sidebar-logout"
-                        OnClick="lnkStaffLogout_Click">
-
-                        <i class="bi bi-box-arrow-right"></i>
-                        <span>Log Out</span>
-
+                    <asp:LinkButton ID="lnkStaffLogout" runat="server"
+                        CssClass="btn-sidebar-logout" OnClick="lnkStaffLogout_Click">
+                        <i class="bi bi-box-arrow-right"></i><span>Log Out</span>
                     </asp:LinkButton>
-
                 </div>
-
             </div>
         </asp:Panel>
 
-        <!-- CONTENT FOR ALL PAGES -->
+        <!-- ADMIN SIDEBAR -->
 
-        <div id="pageContent" runat="server"
-             class="public-page-content">
+        <asp:Panel ID="pnlAdminSidebar" runat="server"
+            Visible="false" CssClass="admin-sidebar">
+            <div class="admin-sidebar-inner">
+                <div class="portal-brand">
+                    <span class="portal-brand-icon"><i class="bi bi-shield-lock-fill"></i></span>
+                    <div>
+                        <div class="portal-brand-title">Admin Portal</div>
+                        <div class="portal-brand-sub">System management</div>
+                    </div>
+                </div>
 
+                <div class="portal-nav-label">Dashboard</div>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-nav-item"><a href="AdminDashboard.aspx" class="sidebar-nav-link"><i class="bi bi-speedometer2"></i><span>Admin Dashboard</span></a></li>
+                </ul>
+
+                <div class="portal-nav-label">Bookings &amp; Events</div>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-nav-item"><a href="ManageBookings.aspx" class="sidebar-nav-link"><i class="bi bi-journal-check"></i><span>Manage Bookings</span></a></li>
+                    <li class="sidebar-nav-item"><a href="BookingCalander.aspx" class="sidebar-nav-link"><i class="bi bi-calendar3"></i><span>Booking Calendar</span></a></li>
+                    <li class="sidebar-nav-item"><a href="AssignBookings.aspx" class="sidebar-nav-link"><i class="bi bi-person-check"></i><span>Assign Bookings</span></a></li>
+                    <li class="sidebar-nav-item"><a href="ManageEvents.aspx" class="sidebar-nav-link"><i class="bi bi-calendar-event"></i><span>Manage Events</span></a></li>
+                    <li class="sidebar-nav-item"><a href="ManageReturns.aspx" class="sidebar-nav-link"><i class="bi bi-arrow-return-left"></i><span>Manage Returns</span></a></li>
+                </ul>
+
+                <div class="portal-nav-label">People</div>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-nav-item"><a href="ManageCustomers.aspx" class="sidebar-nav-link"><i class="bi bi-people"></i><span>Manage Customers</span></a></li>
+                    <li class="sidebar-nav-item"><a href="ManageStaff.aspx" class="sidebar-nav-link"><i class="bi bi-person-badge"></i><span>Manage Staff</span></a></li>
+                </ul>
+
+                <div class="portal-nav-label">Inventory</div>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-nav-item"><a href="ManageInventory.aspx" class="sidebar-nav-link"><i class="bi bi-boxes"></i><span>Manage Inventory</span></a></li>
+                    <li class="sidebar-nav-item"><a href="ManagePackage.aspx" class="sidebar-nav-link"><i class="bi bi-gift"></i><span>Manage Packages</span></a></li>
+                </ul>
+
+                <div class="portal-nav-label">Finance &amp; Reports</div>
+                <ul class="sidebar-nav">
+                    <li class="sidebar-nav-item"><a href="ManagePayments.aspx" class="sidebar-nav-link"><i class="bi bi-credit-card"></i><span>Manage Payments</span></a></li>
+                    <li class="sidebar-nav-item"><a href="Reports.aspx" class="sidebar-nav-link"><i class="bi bi-bar-chart-line"></i><span>Reports</span></a></li>
+                </ul>
+
+                <div class="portal-sidebar-footer">
+                    <asp:LinkButton ID="lnkAdminLogout" runat="server"
+                        CssClass="btn-sidebar-logout" OnClick="lnkAdminLogout_Click">
+                        <i class="bi bi-box-arrow-right"></i><span>Log Out</span>
+                    </asp:LinkButton>
+                </div>
+            </div>
+        </asp:Panel>
+
+        <!-- PAGE CONTENT -->
+
+        <div id="pageContent" runat="server" class="public-page-content">
             <asp:ContentPlaceHolder ID="MainContent" runat="server" />
-
         </div>
-
     </main>
 
     <!-- FOOTER -->
 
     <footer class="footer">
         <div class="container">
-
             <div class="row g-4">
-
                 <div class="col-lg-3 col-md-6">
-                    <img src="../Images/FEHMS_Logo.jpeg"
-                         alt="Forte Events Logo"
-                         class="footer-logo" />
-
+                    <img src="../Images/FEHMS_Logo.jpeg" alt="Forte Events Logo" class="footer-logo" />
                     <p class="footer-description">
-                        Premium event hire equipment, catering solutions
-                        and décor for memorable occasions.
+                        Premium event hire equipment, catering solutions and décor for memorable occasions.
                     </p>
                 </div>
 
@@ -828,78 +485,43 @@
 
                 <div class="col-lg-2 col-md-6">
                     <h5>Contact</h5>
-
-                    <p class="footer-contact">
-                        <i class="bi bi-telephone-fill"></i>
-                        +27 73 244 0364
-                    </p>
-
-                    <p class="footer-contact">
-                        <i class="bi bi-envelope-fill"></i>
-                        info@codeandcofalcon.co.za
-                    </p>
-
-                    <p class="footer-contact">
-                        <i class="bi bi-geo-alt-fill"></i>
-                        East London, Eastern Cape
-                    </p>
+                    <p class="footer-contact"><i class="bi bi-telephone-fill"></i>+27 73 244 0364</p>
+                    <p class="footer-contact"><i class="bi bi-envelope-fill"></i>info@codeandcofalcon.co.za</p>
+                    <p class="footer-contact"><i class="bi bi-geo-alt-fill"></i>East London, Eastern Cape</p>
                 </div>
 
                 <div class="col-lg-2 col-md-6">
                     <h5>Follow Us</h5>
-
                     <div class="social-icons">
-                        <a href="#" title="Facebook">
-                            <i class="bi bi-facebook"></i>
-                        </a>
-
-                        <a href="#" title="Instagram">
-                            <i class="bi bi-instagram"></i>
-                        </a>
-
-                        <a href="#" title="WhatsApp">
-                            <i class="bi bi-whatsapp"></i>
-                        </a>
+                        <a href="#" title="Facebook"><i class="bi bi-facebook"></i></a>
+                        <a href="#" title="Instagram"><i class="bi bi-instagram"></i></a>
+                        <a href="#" title="WhatsApp"><i class="bi bi-whatsapp"></i></a>
                     </div>
                 </div>
-
             </div>
 
             <div class="footer-bottom">
-                © <%: DateTime.Now.Year %>
-                Forte Events Catering and Décor Hire |
-                All Rights Reserved
+                © <%: DateTime.Now.Year %> Forte Events Catering and Décor Hire | All Rights Reserved
             </div>
-
         </div>
     </footer>
-
-    <!-- ACTIVE SIDEBAR LINK -->
-
-    <script>
-        (function () {
-            var currentPage =
-                window.location.pathname.split('/').pop().toLowerCase();
-
-            var links = document.querySelectorAll(
-                '.customer-sidebar .sidebar-nav-link, ' +
-                '.staff-sidebar .sidebar-nav-link'
-            );
-
-            for (var i = 0; i < links.length; i++) {
-                var target = links[i].getAttribute('href')
-                    .split('?')[0].toLowerCase();
-
-                if (target === currentPage) {
-                    links[i].classList.add('active');
-                }
-            }
-        })();
-    </script>
-
 </form>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    (function () {
+        var currentPage = window.location.pathname.split('/').pop().toLowerCase();
+        var links = document.querySelectorAll('.sidebar-nav-link');
 
+        for (var i = 0; i < links.length; i++) {
+            var target = links[i].getAttribute('href').split('?')[0].toLowerCase();
+
+            if (target === currentPage) {
+                links[i].classList.add('active');
+            }
+        }
+    })();
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
