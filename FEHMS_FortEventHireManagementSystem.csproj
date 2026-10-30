@@ -269,7 +269,6 @@
     <Content Include="Presentation\Error404.aspx" />
     <Content Include="Presentation\Error500.aspx" />
     <Content Include="Presentation\Error503.aspx" />
-    <Content Include="Presentation\HirePackages.aspx" />
     <Content Include="Presentation\Home.aspx" />
     <Content Include="Presentation\HowItWorks.aspx" />
     <Content Include="Presentation\ManageCollection.aspx" />
@@ -366,13 +365,6 @@
     </Compile>
     <Compile Include="Presentation\Error503.aspx.designer.cs">
       <DependentUpon>Error503.aspx</DependentUpon>
-    </Compile>
-    <Compile Include="Presentation\HirePackages.aspx.cs">
-      <DependentUpon>HirePackages.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="Presentation\HirePackages.aspx.designer.cs">
-      <DependentUpon>HirePackages.aspx</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Home.aspx.cs">
       <DependentUpon>Home.aspx</DependentUpon>
