@@ -11,70 +11,23 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
 {
     public partial class ManageStaff : Page
     {
-        private string ConnectionString
-        {
-            get { return ConfigurationManager.ConnectionStrings["ForteDB"].ConnectionString; }
-        }
+        private string ConnectionString { get { return ConfigurationManager.ConnectionStrings["ForteDB"].ConnectionString; } }
         protected void Page_Load(object sender, EventArgs e)
         {
-            if (!IsPostBack)
-            {
-                BindRoles();
-                BindStaff();
-            }
+           // string role = Convert.ToString(Session["UserRole"]);
+          //  if (Session["UserID"] == null || !(String.Equals(role, "Administrator", StringComparison.OrdinalIgnoreCase) || String.Equals(role, "Admin", StringComparison.OrdinalIgnoreCase) || String.Equals(role, "Manager", StringComparison.OrdinalIgnoreCase))) { Response.Redirect("Login.aspx?returnUrl=" + Server.UrlEncode(Request.RawUrl), false); Context.ApplicationInstance.CompleteRequest(); return; }
+            if (!IsPostBack) { BindRoles(); BindStaff(); }
         }
-        private void BindRoles()
-        {
-            using (SqlConnection c = new SqlConnection(ConnectionString))
-            using (SqlDataAdapter a = new SqlDataAdapter("SELECT RoleName,RoleName AS Value FROM dbo.Roles WHERE IsStaffRole=1 AND IsActive=1 AND RoleName NOT IN (N'Administrator',N'Admin',N'Manager')" +
-                " ORDER BY RoleName;", c))
-            {
-                DataTable d = new DataTable(); a.Fill(d); ddlRole.DataSource = d; ddlRole.DataTextField = "RoleName";
-                ddlRole.DataValueField = "Value"; ddlRole.DataBind();
-            }
-        }
-        private void BindStaff()
-        {
-            using (SqlConnection c = new SqlConnection(ConnectionString))
-            using (SqlDataAdapter a = new SqlDataAdapter(@"SELECT s.UserID,s.StaffNumber,u.FirstName+N' '+u.LastName AS FullName,u.EmailAddress,s.JobTitle,r.RoleName,u.IsActive,CASE WHEN u.IsActive=1 THEN N'Active' ELSE N'Inactive' END AS Status FROM dbo.Staff s JOIN dbo.Users u ON u.UserID=s.UserID JOIN dbo.Roles r ON r.RoleID=u.RoleID ORDER BY u.LastName,u.FirstName;", c))
-            {
-                DataTable d = new DataTable(); a.Fill(d); gvStaff.DataSource = d; gvStaff.DataBind();
-            }
-        }
-        protected void btnShowAdd_Click(object sender, EventArgs e)
-        {
-            pnlForm.Visible = true;
-            pnlMessage.Visible = false;
-        }
-        protected void btnCancel_Click(object sender, EventArgs e)
-        {
-            pnlForm.Visible = false;
-        }
+        private void BindRoles() { using (SqlConnection c = new SqlConnection(ConnectionString)) using (SqlDataAdapter a = new SqlDataAdapter("SELECT RoleName,RoleName AS Value FROM dbo.Roles WHERE IsStaffRole=1 AND IsActive=1 AND RoleName NOT IN (N'Administrator',N'Admin',N'Manager') ORDER BY RoleName;", c)) { DataTable d = new DataTable(); a.Fill(d); ddlRole.DataSource = d; ddlRole.DataTextField = "RoleName"; ddlRole.DataValueField = "Value"; ddlRole.DataBind(); } }
+        private void BindStaff() { using (SqlConnection c = new SqlConnection(ConnectionString)) using (SqlDataAdapter a = new SqlDataAdapter(@"SELECT s.UserID,s.StaffNumber,u.FirstName+N' '+u.LastName AS FullName,u.Email,s.JobTitle,r.RoleName,u.IsActive,CASE WHEN u.IsActive=1 THEN N'Active' ELSE N'Inactive' END AS Status FROM dbo.Staff s JOIN dbo.Users u ON u.UserID=s.UserID JOIN dbo.Roles r ON r.RoleID=u.RoleID ORDER BY u.LastName,u.FirstName;", c)) { DataTable d = new DataTable(); a.Fill(d); gvStaff.DataSource = d; gvStaff.DataBind(); } }
+        protected void btnShowAdd_Click(object sender, EventArgs e) { pnlForm.Visible = true; pnlMessage.Visible = false; }
+        protected void btnCancel_Click(object sender, EventArgs e) { pnlForm.Visible = false; }
         protected void btnSave_Click(object sender, EventArgs e)
         {
             string first = txtFirstName.Text.Trim(), last = txtLastName.Text.Trim(), email = txtEmail.Text.Trim();
-            if (first.Length == 0 || last.Length == 0 || txtPassword.Text.Length < 10)
-            {
-                Show("Enter a first name, last name and a temporary password of at least 10 characters.", false);
-                return;
-            }
-            try
-            {
-                if (new MailAddress(email).Address != email)
-                {
-                    Show("Enter a valid email address.", false); return;
-                }
-            }
-            catch
-            {
-                Show("Enter a valid email address.", false);
-                return;
-            }
-            if (String.IsNullOrWhiteSpace(ddlRole.SelectedValue))
-            {
-                Show("Choose a staff role.", false);
-                return;
-            }
+            if (first.Length == 0 || last.Length == 0 || txtPassword.Text.Length < 10) { Show("Enter a first name, last name and a temporary password of at least 10 characters.", false); return; }
+            try { if (new MailAddress(email).Address != email) { Show("Enter a valid email address.", false); return; } } catch { Show("Enter a valid email address.", false); return; }
+            if (String.IsNullOrWhiteSpace(ddlRole.SelectedValue)) { Show("Choose a staff role.", false); return; }
             using (SqlConnection c = new SqlConnection(ConnectionString))
             {
                 c.Open();
@@ -83,7 +36,7 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
                     try
                     {
                         int userId;
-                        using (SqlCommand q = new SqlCommand(@"INSERT dbo.Users(FullName,FirstName,LastName,Email,EmailAddress,PhoneNumber,PasswordHash,UserRole,RoleID,IsActive) SELECT @FullName,@First,@Last,@Email,@Email,@Phone,@Hash,r.RoleName,r.RoleID,1 FROM dbo.Roles r WHERE r.RoleName=@Role AND r.IsStaffRole=1 AND r.IsActive=1; SELECT CONVERT(int,SCOPE_IDENTITY());", c, tx))
+                        using (SqlCommand q = new SqlCommand(@"INSERT dbo.Users(FullName,FirstName,LastName,Email,PhoneNumber,PasswordHash,UserRole,RoleID,IsActive) SELECT @FullName,@First,@Last,@Email,@Phone,@Hash,r.RoleName,r.RoleID,1 FROM dbo.Roles r WHERE r.RoleName=@Role AND r.IsStaffRole=1 AND r.IsActive=1; SELECT CONVERT(int,SCOPE_IDENTITY());", c, tx))
                         {
                             q.Parameters.AddWithValue("@FullName", first + " " + last);
                             q.Parameters.AddWithValue("@First", first);
@@ -111,39 +64,15 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
                     }
                     catch (Exception ex)
                     {
-                        try
-                        {
-                            tx.Rollback();
-                        }
-                        catch
-                        {
-                        }
+                        try { tx.Rollback(); } catch { }
                         System.Diagnostics.Trace.TraceError("Manage staff create error: " + ex);
                         Show(ex is SqlException && (((SqlException)ex).Number == 2601 || ((SqlException)ex).Number == 2627) ? "That email is already registered." : "The staff account could not be created.", false);
                     }
                 }
             }
         }
-        protected void gvStaff_RowCommand(object sender, GridViewCommandEventArgs e)
-        {
-            if (e.CommandName != "Toggle") return; int id;
-            if (!Int32.TryParse(Convert.ToString(e.CommandArgument), out id)) return;
-            using (SqlConnection c = new SqlConnection(ConnectionString))
-            using (SqlCommand q = new SqlCommand("UPDATE dbo.Users SET IsActive=1-IsActive,UpdatedAt=SYSUTCDATETIME()" +
-                " WHERE UserID=@ID AND RoleID IN(SELECT RoleID FROM dbo.Roles WHERE IsStaffRole=1 AND RoleName NOT IN(N'Administrator',N'Admin',N'Manager'));" +
-                " UPDATE dbo.Staff SET IsActive=(SELECT IsActive FROM dbo.Users WHERE UserID=@ID) WHERE UserID=@ID;", c))
-            {
-                q.Parameters.AddWithValue("@ID", id); c.Open();
-                q.ExecuteNonQuery();
-            }
-            Show("Staff access updated.", true);
-            BindStaff();
-        }
-        private void Show(string text, bool ok)
-        {
-            lblMessage.Text = HttpUtility.HtmlEncode(text);
-            pnlMessage.CssClass = ok ? "alert alert-success" : "alert alert-danger"; pnlMessage.Visible = true;
-        }
+        protected void gvStaff_RowCommand(object sender, GridViewCommandEventArgs e) { if (e.CommandName != "Toggle") return; int id; if (!Int32.TryParse(Convert.ToString(e.CommandArgument), out id)) return; using (SqlConnection c = new SqlConnection(ConnectionString)) using (SqlCommand q = new SqlCommand("UPDATE dbo.Users SET IsActive=1-IsActive,UpdatedAt=SYSUTCDATETIME() WHERE UserID=@ID AND RoleID IN(SELECT RoleID FROM dbo.Roles WHERE IsStaffRole=1 AND RoleName NOT IN(N'Administrator',N'Admin',N'Manager')); UPDATE dbo.Staff SET IsActive=(SELECT IsActive FROM dbo.Users WHERE UserID=@ID) WHERE UserID=@ID;", c)) { q.Parameters.AddWithValue("@ID", id); c.Open(); q.ExecuteNonQuery(); } Show("Staff access updated.", true); BindStaff(); }
+        private void Show(string text, bool ok) { lblMessage.Text = HttpUtility.HtmlEncode(text); pnlMessage.CssClass = ok ? "alert alert-success" : "alert alert-danger"; pnlMessage.Visible = true; }
 
     }
 }

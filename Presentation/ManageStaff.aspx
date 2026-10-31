@@ -21,7 +21,8 @@
                 <h3 class="h5">New staff account</h3>
                 <div class="row g-3">
                     <div class="col-md-6">
-                        <label class="form-label">First name</label><asp:TextBox ID="txtFirstName" runat="server" CssClass="form-control" MaxLength="80" /></div>
+                        <label class="form-label">First name</label>
+                        <asp:TextBox ID="txtFirstName" runat="server" CssClass="form-control" MaxLength="80" /></div>
                     <div class="col-md-6">
                         <label class="form-label">Last name</label><asp:TextBox ID="txtLastName" runat="server" CssClass="form-control" MaxLength="80" /></div>
                     <div class="col-md-6">
@@ -44,7 +45,7 @@
                 <Columns>
                     <asp:BoundField DataField="StaffNumber" HeaderText="Staff ID" />
                     <asp:BoundField DataField="FullName" HeaderText="Name" />
-                    <asp:BoundField DataField="EmailAddress" HeaderText="Email" />
+                    <asp:BoundField DataField="Email" HeaderText="Email" />
                     <asp:BoundField DataField="JobTitle" HeaderText="Job title" />
                     <asp:BoundField DataField="RoleName" HeaderText="Role" />
                     <asp:BoundField DataField="Status" HeaderText="Status" />

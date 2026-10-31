@@ -1,145 +1,153 @@
 ﻿<%@ Page Title="" Language="C#" MasterPageFile="~/Presentation/SystemLayout.Master" AutoEventWireup="true" CodeBehind="ManageCollections.aspx.cs" Inherits="FEHMS_FortEventHireManagementSystem.Presentation.ManageCollections" %>
-<asp:Content ID="Content1" ContentPlaceHolderID="head" runat="server">
-</asp:Content>
-<asp:Content ID="Content2" ContentPlaceHolderID="MainContent" runat="server">
 
+<asp:Content ID="HeadContent" ContentPlaceHolderID="head" runat="server">
     <style>
-        .nav-tabs .nav-link {
+        .collection-workspace .collection-card {
+            border: 1px solid var(--border-color);
+            box-shadow: var(--shadow-small);
+        }
+
+        .collection-workspace .collection-thumb {
+            display: block;
+            width: 128px;
+            height: 96px;
+            object-fit: cover;
+            border-radius: 8px;
+        }
+
+        .collection-workspace .collection-status {
+            color: #172033;
+            white-space: nowrap;
+        }
+
+        .collection-workspace .nav-tabs .nav-link {
             color: #17365d;
             font-weight: 600;
         }
-        .nav-tabs .nav-link.active {
-            color: #0d6efd;
-            font-weight: 700;
-            border-bottom: 3px solid #0d6efd;
-        }
-        .collection-status-badge{
-            color: #111 !important;
-        }
-        .collection-detail-thumb {
-    display: block;
-    width: 100px;
-    height: 75px;
-    object-fit: cover;
-}
 
-.collection-package-image {
-    display: block;
-    width: 100%;
-    max-width: 220px;
-    height: 140px;
-    object-fit: cover;
-}.collection-thumb{
-            display:block;
-            width:200px;
-            height:150px;
-            object-fit:cover;
+        .collection-workspace .nav-tabs .nav-link.active {
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--primary-color);
         }
-        .delivery-detail-thumb .collection-detail-thumb {
-            display: block;
-            width: 100px;
-            height: 75px;
-            object-fit: cover;
-            border-radius: 6px;
 
+        @media (max-width: 575.98px) {
+            .collection-workspace .collection-thumb {
+                width: 88px;
+                height: 72px;
+            }
         }
     </style>
+</asp:Content>
 
-      <div class="staff-page-content container-fluid px-3 px-xl-4 py-3">
-     <div class="page-header d-flex flex-wrap justify-content-between align-items-center gap-3">
-         <div><h1 class="page-title">My Collections</h1><p class="page-subtitle mb-0">View and update your assigned collections.</p></div>
-     </div>
+<asp:Content ID="MainContent" ContentPlaceHolderID="MainContent" runat="server">
+    <div class="staff-page-content container-fluid px-3 px-xl-4 py-3 collection-workspace">
 
-     <div class="card mb-3">
-         <div class="card-body">
-             <ul class="nav nav-tabs mb-3">
-                 <li class="nav-item"><asp:LinkButton ID="lnkAll" runat="server" CssClass="nav-link active" OnClick="FilterAll_Click">All Collections</asp:LinkButton></li>
-                 <li class="nav-item"><asp:LinkButton ID="lnkPending" runat="server" CssClass="nav-link" OnClick="FilterPending_Click">Pending</asp:LinkButton></li>
-                 <li class="nav-item"><asp:LinkButton ID="lnkCompleted" runat="server" CssClass="nav-link" OnClick="FilterCompleted_Click">Completed</asp:LinkButton></li>
-             </ul>
-             <div class="row g-2 align-items-end">
-                 <div class="col-lg-5"><label class="form-label" for="<%= txtSearch.ClientID %>">Search collections</label><asp:TextBox ID="txtSearch" runat="server" CssClass="form-control" placeholder="Booking ID, customer or event" /></div>
-                 <div class="col-sm-6 col-lg-3"><label class="form-label" for="<%= txtDate.ClientID %>">Collection date</label><asp:TextBox ID="txtDate" runat="server" TextMode="Date" CssClass="form-control" /></div>
-                 <div class="col-sm-6 col-lg-4 d-flex gap-2"><asp:Button ID="btnSearch" runat="server" Text="Search" CssClass="btn btn-forte" OnClick="Search_Click" /><asp:Button ID="btnClear" runat="server" Text="Clear" CssClass="btn btn-outline-secondary" CausesValidation="false" OnClick="Clear_Click" /></div>
-             </div>
-         </div>
-     </div>
+        <div class="page-header">
+            <h1 class="page-title">My Collections</h1>
+            <p class="page-subtitle mb-0">
+                View collection tasks assigned to you and record equipment after the event.
+            </p>
+        </div>
 
-     <asp:Panel ID="pnlCollectionMessage" runat="server" Visible="false" CssClass="alert alert-info" role="status">
-         <asp:Literal ID="litCollectionMessage" runat="server" />
-     </asp:Panel>
+        <asp:Panel ID="pnlMessage" runat="server" Visible="false"
+            CssClass="alert alert-warning" role="alert">
+            <asp:Literal ID="litMessage" runat="server" />
+        </asp:Panel>
 
-     <asp:Repeater ID="rptCollections" runat="server" OnItemCommand="rptCollections_ItemCommand">
-         <ItemTemplate>
-             <div class="card mb-3">
-                 <div class="row g-0 align-items-center">
-                     <div class="col-auto p-3"><img src='<%#: Eval("ImageUrl") %>' alt="Event hire setup" class="img-fluid rounded collection-thumb" /></div>
-                     <div class="col"><div class="card-body ps-0">
-                         <div class="d-flex flex-wrap justify-content-between align-items-start gap-2">
-                             <div><span class="fw-bold"><%#: Eval("BookingId") %> – <%#: Eval("EventType") %></span><div><%#: Eval("Customer") %></div></div>
-                             <span class='badge collection-status-badge <%# StatusBadge(Eval("Status")) %>'><%#: Eval("Status") %></span>
-                         </div>
-                         <div class="row mt-2 g-2 small text-muted">
-                             <div class="col-sm-6"><i class="bi bi-calendar3 me-1"></i>Collection: <%#: Eval("CollectionDate", "{0:dd MMM yyyy}") %> | <%#: Eval("CollectionTime") %></div>
-                             <div class="col-sm-6"><i class="bi bi-clock me-1"></i>Event ends: <%#: Eval("EventEndAt", "{0:dd MMM yyyy, HH:mm}") %></div>
-                             <div class="col-12"><i class="bi bi-geo-alt me-1"></i><%#: Eval("Venue") %></div>
-                         </div>
-                         <p class="small mt-2 mb-0"><%#: Eval("Items") %></p>
-                     </div></div>
-                     <div class="col-12 col-md-auto px-3 pb-3 pt-md-3">
-                         <div class="d-flex flex-row flex-md-column gap-2">
-                             <asp:LinkButton ID="lnkCollectionDetails" runat="server" CssClass="btn btn-sm btn-outline-primary" CausesValidation="false" CommandName="ViewDetails" CommandArgument='<%#: Eval("BookingId") %>'>View</asp:LinkButton>
-                             <asp:LinkButton ID="lnkMarkCollected" runat="server" CssClass="btn btn-sm btn-forte" CausesValidation="false" CommandName="MarkCollected" CommandArgument='<%#: Eval("BookingId") %>' Visible='<%# CanMarkCollected(Eval("Status"), Eval("EventEndAt")) %>' OnClientClick="return confirm('Confirm that these hire items have been collected?');">Mark as Collected</asp:LinkButton>
-                             <asp:PlaceHolder ID="phAwaitingEventEnd" runat="server" Visible='<%# IsAwaitingEventEnd(Eval("Status"), Eval("EventEndAt")) %>'><span class="small text-muted align-self-center">Available after event ends</span></asp:PlaceHolder>
-                         </div>
-                     </div>
-                 </div>
-             </div>
-         </ItemTemplate>
-     </asp:Repeater>
-     <asp:Panel ID="pnlCollectionDetailsModal" runat="server" ClientIDMode="Static" CssClass="modal fade" TabIndex="-1" role="dialog" aria-labelledby="collectionDetailsTitle" aria-hidden="true">
-         <div class="modal-dialog modal-xl modal-dialog-scrollable">
-             <div class="modal-content">
-                 <div class="modal-header">
-                     <div><h2 class="modal-title h5" id="collectionDetailsTitle">Collection details</h2><div class="small text-muted"><asp:Literal ID="litCollectionDetailBooking" runat="server" /></div></div>
-                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                 </div>
-                 <div class="modal-body">
-                     <div class="card mb-4">
-                         <div class="card-header fw-semibold">Customer and collection information</div>
-                         <div class="card-body"><div class="row g-3">
-                             <div class="col-sm-6 col-lg-3"><div class="small text-muted">Customer</div><strong><asp:Literal ID="litCollectionDetailCustomer" runat="server" /></strong><div><asp:Literal ID="litCollectionDetailPhone" runat="server" /></div></div>
-                             <div class="col-sm-6 col-lg-3"><div class="small text-muted">Event</div><strong><asp:Literal ID="litCollectionDetailEvent" runat="server" /></strong><div><asp:Literal ID="litCollectionDetailEnd" runat="server" /></div></div>
-                             <div class="col-sm-6 col-lg-3"><div class="small text-muted">Collection time</div><strong><asp:Literal ID="litCollectionDetailPickup" runat="server" /></strong></div>
-                             <div class="col-sm-6 col-lg-3"><div class="small text-muted">Status</div><strong><asp:Literal ID="litCollectionDetailStatus" runat="server" /></strong></div>
-                             <div class="col-md-6"><div class="small text-muted">Collection location</div><strong><asp:Literal ID="litCollectionDetailAddress" runat="server" /></strong></div>
-                             <div class="col-md-6"><div class="small text-muted">Collection instructions</div><asp:Literal ID="litCollectionDetailInstructions" runat="server" /></div>
-                         </div></div>
-                     </div>
-                     <h3 class="h6 mb-3">Equipment to collect</h3>
-                     <asp:Panel ID="pnlCollectionPackageDetail" runat="server" Visible="false" CssClass="card">
-                         <div class="row g-0 align-items-center">
-                             <div class="col-md-4 p-3"><asp:Image ID="imgCollectionPackage" runat="server" CssClass="img-fluid rounded" /></div>
-                             <div class="col-md-8 p-3"><div class="fw-semibold mb-2"><asp:Literal ID="litCollectionPackageName" runat="server" /></div>
-                                 <asp:Repeater ID="rptCollectionPackageItems" runat="server"><ItemTemplate><div class="d-flex justify-content-between border-bottom py-2"><span><%#: Eval("Name") %></span><strong>Qty <%#: Eval("Quantity") %></strong></div></ItemTemplate></asp:Repeater>
-                             </div>
-                         </div>
-                     </asp:Panel>
-                     <asp:Repeater ID="rptCollectionDetailItems" runat="server">
-                         <ItemTemplate>
-                             <div class="card mb-2"><div class="row g-0 align-items-center">
-                                 <div class="col-auto p-3"><img src='<%#: Eval("ImageUrl") %>' alt='<%#: Eval("Name") %>' class="img-fluid rounded collection-detail-thumb" /></div>
-                                 <div class="col px-2"><strong><%#: Eval("Name") %></strong><div class="small text-muted">Booking item</div></div>
-                                 <div class="col-auto px-4"><span class="small text-muted">Quantity</span><div class="fw-semibold text-center"><%#: Eval("Quantity") %></div></div>
-                             </div></div>
-                         </ItemTemplate>
-                     </asp:Repeater>
-                 </div>
-                 <div class="modal-footer"><button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Close</button></div>
-             </div>
-         </div>
-     </asp:Panel>
-     <asp:Panel ID="pnlNoCollections" runat="server" Visible="false" CssClass="card p-4 text-center text-muted">No collections match your search.</asp:Panel>
- </div>
+        <section class="card mb-3">
+            <div class="card-body">
+                <ul class="nav nav-tabs mb-3" aria-label="Collection status filters">
+                    <li class="nav-item">
+                        <asp:LinkButton ID="lnkAll" runat="server"
+                            CssClass="nav-link active" OnClick="FilterAll_Click"
+                            CausesValidation="false">
+                            All collections (<asp:Literal ID="litAllCount" runat="server" />)
+                        </asp:LinkButton></li><li class="nav-item">
+                        <asp:LinkButton ID="lnkPending" runat="server"
+                            CssClass="nav-link" OnClick="FilterPending_Click"
+                            CausesValidation="false">
+                            Awaiting collection (<asp:Literal ID="litPendingCount" runat="server" />)
+                        </asp:LinkButton></li><li class="nav-item">
+                        <asp:LinkButton ID="lnkCollected" runat="server"
+                            CssClass="nav-link" OnClick="FilterCollected_Click"
+                            CausesValidation="false">
+                            Collected (<asp:Literal ID="litCollectedCount" runat="server" />)
+                        </asp:LinkButton></li></ul><div class="row g-2 align-items-end">
+                    <div class="col-lg-6">
+                        <asp:Label ID="lblSearch" runat="server"
+                            AssociatedControlID="txtSearch"
+                            CssClass="form-label" Text="Search collections" />
+                        <asp:TextBox ID="txtSearch" runat="server"
+                            CssClass="form-control"
+                            placeholder="Booking reference, customer or event" />
+                    </div>
 
+                    <div class="col-sm-6 col-lg-3">
+                        <asp:Label ID="lblDate" runat="server"
+                            AssociatedControlID="txtDate"
+                            CssClass="form-label" Text="Collection date" />
+                        <asp:TextBox ID="txtDate" runat="server"
+                            TextMode="Date" CssClass="form-control" />
+                    </div>
+
+                    <div class="col-sm-6 col-lg-3 d-flex gap-2">
+                        <asp:Button ID="btnSearch" runat="server" Text="Search"
+                            CssClass="btn btn-forte flex-fill"
+                            OnClick="Search_Click" CausesValidation="false" />
+                        <asp:Button ID="btnClear" runat="server" Text="Clear"
+                            CssClass="btn btn-outline-secondary"
+                            OnClick="Clear_Click" CausesValidation="false" />
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <asp:Repeater ID="rptCollections" runat="server"
+            OnItemDataBound="rptCollections_ItemDataBound">
+            <ItemTemplate>
+                <article class="card collection-card mb-3">
+                    <div class="row g-0 align-items-center">
+                        <div class="col-auto p-3">
+                            <img src='<%#: Eval("ImageUrl") %>'
+                                alt="Equipment for <%#: Eval("EventType") %>"
+                                class="img-fluid collection-thumb" />
+                        </div>
+
+                        <div class="col">
+                            <div class="card-body ps-0">
+                                <div class="d-flex flex-wrap justify-content-between align-items-start gap-2">
+                                    <div>
+                                        <strong>
+                                            <%#: Eval("BookingReference") %> · <%#: Eval("EventType") %></strong><div><%#: Eval("Customer") %></div>
+                                        <div class="small text-muted"><%#: Eval("Phone") %></div>
+                                    </div>
+
+                                    <span class='badge collection-status <%# Eval("StatusCss") %>'>
+                                        <%#: Eval("TaskStatus") %>
+                                    </span>
+                                </div>
+
+                                <div class="row g-2 small text-muted mt-1">
+                                    <div class="col-sm-6">
+                                        Collection: <%#: Eval("CollectionAt", "{0:dd MMM yyyy, HH:mm}") %></div><div class="col-sm-6">
+                                        Event ends: <%#: Eval("EventEndAt", "{0:dd MMM yyyy, HH:mm}") %></div><div class="col-12">
+                                        Location: <%#: Eval("Location") %></div></div><p class="small mt-2 mb-0"><%#: Eval("ItemsSummary") %></p>
+                            </div>
+                        </div>
+
+                        <div class="col-12 col-md-auto px-3 pb-3 pt-md-3">
+                            <asp:HyperLink ID="lnkOpenCollectionForm" runat="server"
+                                CssClass="btn btn-sm btn-forte">
+                                Open collection form
+                            </asp:HyperLink><asp:PlaceHolder ID="phWaitingForEventEnd" runat="server"
+                                Visible="false">
+                                <span class="small text-muted d-block mt-2">
+                                    Available after the event ends </span></asp:PlaceHolder><asp:PlaceHolder ID="phAlreadyCollected" runat="server"
+                                Visible="false">
+                                <span class="small text-success d-block mt-2">
+                                    Collection recorded </span></asp:PlaceHolder></div></div></article></ItemTemplate></asp:Repeater><asp:Panel ID="pnlEmpty" runat="server" Visible="false"
+            CssClass="card p-4 text-center text-muted">
+            <strong class="d-block mb-1">No collection tasks found</strong> <asp:Literal ID="litEmptyMessage" runat="server" />
+        </asp:Panel>
+    </div>
 </asp:Content>

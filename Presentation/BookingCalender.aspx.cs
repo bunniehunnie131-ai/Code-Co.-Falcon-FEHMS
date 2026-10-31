@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -10,92 +12,216 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
 {
     public partial class BookingCalender : System.Web.UI.Page
     {
-        private readonly Dictionary<DateTime, List<CalendarEvent>> _events = new Dictionary<DateTime, List<CalendarEvent>>();
-        private DataTable GetBookings() 
-        { 
-            DataTable t = Session["BookingCalendarDemo"] as DataTable;
-            if (t != null) return t;
-            t = new DataTable();
-            t.Columns.Add("BookingID", typeof(int));
-            t.Columns.Add("BookingReference", typeof(string));
-            t.Columns.Add("CustomerFullName", typeof(string));
-            t.Columns.Add("CustomerEmail", typeof(string));
-            t.Columns.Add("EventType", typeof(string));
-            t.Columns.Add("EventDate", typeof(DateTime));
-            t.Columns.Add("GrandTotal", typeof(decimal));
-            t.Columns.Add("BookingStatus", typeof(string));
-            t.Columns.Add("StatusCss", typeof(string)); 
-            Add(t, 1, "FEH-20261031-WED01", "Fortune Makhubela", "Wedding", new DateTime(2026, 10, 31), "Confirmed");
-            Add(t, 2, "FEH-20261103-BDY02", "Amina Jacobs", "Birthday", new DateTime(2026, 11, 3), "Pending");
-            Add(t, 3, "FEH-20261108-COR03", "Lwazi Mbeki", "Corporate Event", new DateTime(2026, 11, 8), "Confirmed");
-            Add(t, 4, "FEH-20261114-GAL04", "Thandi Nkomo", "School Gala", new DateTime(2026, 11, 14), "Pending"); 
-            Add(t, 5, "FEH-20261120-ENG05", "Priya Singh", "Engagement", new DateTime(2026, 11, 20), "Cancelled");
-            Add(t, 6, "FEH-20261205-WED06", "James Dlamini", "Wedding", new DateTime(2026, 12, 5), "Confirmed"); 
-            Session["BookingCalendarDemo"] = t; 
-            return t;
-        }
+        private readonly Dictionary<DateTime, List<CalendarEvent>> eventsByDate =
+            new Dictionary<DateTime, List<CalendarEvent>>();
 
-        private void Add(DataTable t, int id, string reference, string customer, string type, DateTime date, string status)
+        private string ConnectionString
         {
-            t.Rows.Add(id, reference, customer, "", type, date, 0m, status, StatusCss(status));
-        }
-
-        private string StatusCss(string s)
-        { 
-            return s == "Confirmed" ? "badge text-bg-success" : s == "Pending" ? "badge text-bg-warning" : s == "Cancelled" ? "badge text-bg-secondary" : "badge text-bg-primary"; 
+            get
+            {
+                return ConfigurationManager
+                    .ConnectionStrings["ForteDB"]
+                    .ConnectionString;
+            }
         }
 
         protected void Page_Load(object sender, EventArgs e)
-        { BindMonth(calBookings.VisibleDate == DateTime.MinValue ? DateTime.Today : calBookings.VisibleDate); 
+        {
+            DateTime month = calBookings.VisibleDate == DateTime.MinValue
+                ? DateTime.Today
+                : calBookings.VisibleDate;
+
+            BindMonth(month);
         }
 
-        protected void calBookings_VisibleMonthChanged(object sender, MonthChangedEventArgs e) 
+        protected void calBookings_VisibleMonthChanged(
+            object sender,
+            MonthChangedEventArgs e)
         {
-            BindMonth(e.NewDate); 
+            BindMonth(e.NewDate);
         }
 
         private void BindMonth(DateTime month)
         {
-            DateTime first = new DateTime(month.Year, month.Month, 1); 
-            litMonthTitle.Text = first.ToString("MMMM yyyy"); _events.Clear();
-            DataTable bookings = GetBookings(), events = bookings.Clone(); 
-            foreach (DataRow b in bookings.Rows) 
-            { 
-                DateTime d = Convert.ToDateTime(b["EventDate"]).Date; string status = Convert.ToString(b["BookingStatus"]); 
-                if (d.Year != first.Year || d.Month != first.Month || status == "Completed") continue; events.ImportRow(b);
-                List<CalendarEvent> list; if (!_events.TryGetValue(d, out list))
-                { 
-                    list = new List<CalendarEvent>(); _events[d] = list;
-                } 
-                list.Add(new CalendarEvent { BookingReference = Convert.ToString(b["BookingReference"]), EventType = Convert.ToString(b["EventType"]), Customer = Convert.ToString(b["CustomerFullName"]), Status = status }
-                ); } 
-            if (!events.Columns.Contains("DeliveryCity")) events.Columns.Add("DeliveryCity", typeof(string)); if (!events.Columns.Contains("StatusCss")) events.Columns.Add("StatusCss", typeof(string)); 
-            foreach (DataRow r in events.Rows)
+            DateTime monthStart = new DateTime(month.Year, month.Month, 1);
+            DateTime nextMonth = monthStart.AddMonths(1);
+
+            eventsByDate.Clear();
+            litMonthTitle.Text = monthStart.ToString("MMMM yyyy");
+            pnlMessage.Visible = false;
+
+            const string sql = @"
+                SELECT BookingReference,
+                       EventType,
+                       CustomerFullName,
+                       DeliveryCity,
+                       EventDate,
+                       BookingStatus
+                FROM dbo.Bookings
+                WHERE EventDate >= @MonthStart
+                  AND EventDate < @NextMonth
+                  AND BookingStatus IN
+                      (N'Pending', N'Confirmed', N'Cancelled')
+                ORDER BY EventDate, BookingReference;";
+
+            try
             {
-                r["DeliveryCity"] = CityFor(Convert.ToString(r["BookingReference"]));
-                r["StatusCss"] = StatusCss(Convert.ToString(r["BookingStatus"]));
+                DataTable bookings = new DataTable();
+
+                using (SqlConnection connection =
+                    new SqlConnection(ConnectionString))
+                using (SqlCommand command =
+                    new SqlCommand(sql, connection))
+                using (SqlDataAdapter adapter =
+                    new SqlDataAdapter(command))
+                {
+                    command.Parameters.Add("@MonthStart", SqlDbType.Date)
+                        .Value = monthStart.Date;
+
+                    command.Parameters.Add("@NextMonth", SqlDbType.Date)
+                        .Value = nextMonth.Date;
+
+                    connection.Open();
+                    adapter.Fill(bookings);
+                }
+
+                foreach (DataRow row in bookings.Rows)
+                {
+                    DateTime eventDate =
+                        Convert.ToDateTime(row["EventDate"]).Date;
+
+                    CalendarEvent calendarEvent = new CalendarEvent
+                    {
+                        BookingReference =
+                            Convert.ToString(row["BookingReference"]),
+                        EventType =
+                            Convert.ToString(row["EventType"]),
+                        CustomerFullName =
+                            Convert.ToString(row["CustomerFullName"]),
+                        BookingStatus =
+                            Convert.ToString(row["BookingStatus"])
+                    };
+
+                    if (!eventsByDate.ContainsKey(eventDate))
+                    {
+                        eventsByDate[eventDate] =
+                            new List<CalendarEvent>();
+                    }
+
+                    eventsByDate[eventDate].Add(calendarEvent);
+                }
+
+                bookings.Columns.Add("StatusCss", typeof(string));
+
+                foreach (DataRow row in bookings.Rows)
+                {
+                    row["StatusCss"] =
+                        GetStatusCss(Convert.ToString(row["BookingStatus"]));
+                }
+
+                rptMonthEvents.DataSource = bookings;
+                rptMonthEvents.DataBind();
+
+                pnlNoEvents.Visible = bookings.Rows.Count == 0;
             }
-            rptMonthEvents.DataSource = events; rptMonthEvents.DataBind();
-            pnlNoEvents.Visible = events.Rows.Count == 0; pnlMessage.Visible = false;
-        }
-        protected void calBookings_DayRender(object sender, DayRenderEventArgs e)
-        {
-            List<CalendarEvent> list; if (!_events.TryGetValue(e.Day.Date.Date, out list)) return; 
-            e.Cell.CssClass = (e.Cell.CssClass + " admin-calendar-booked").Trim();
-            foreach (CalendarEvent item in list)
+            catch (Exception ex)
             {
-                string css = item.Status == "Confirmed" ? "confirmed" : item.Status == "Pending" ? "pending" : item.Status == "Cancelled" ? "cancelled" : "other"; Literal l = new Literal();
-                l.Text = "<div class=\"calendar-event " + css + "\" title=\"" + Server.HtmlEncode(item.BookingReference + " - " + item.Customer) + "\">" + Server.HtmlEncode(item.EventType) + "</div>";
-                e.Cell.Controls.Add(l); 
+                System.Diagnostics.Trace.TraceError(
+                    "Booking calendar load failed: " + ex);
+
+                pnlMessage.Visible = true;
+                lblMessage.Text =
+                    "Calendar information could not be loaded from ForteDB.";
+
+                if (Request.IsLocal)
+                {
+                    lblMessage.Text += " " +
+                        Server.HtmlEncode(ex.Message);
+                }
+
+                rptMonthEvents.DataSource = null;
+                rptMonthEvents.DataBind();
+                pnlNoEvents.Visible = true;
             }
         }
-        private string CityFor(string reference) 
+
+        protected void calBookings_DayRender(
+            object sender,
+            DayRenderEventArgs e)
         {
-            return reference.IndexOf("WED", StringComparison.Ordinal) >= 0 ? "Berea" : reference.IndexOf("BDY", StringComparison.Ordinal) >= 0 ? "East London" : reference.IndexOf("COR", StringComparison.Ordinal) >= 0 ? "Mthatha" : "Gqeberha";
+            List<CalendarEvent> dayEvents;
+
+            if (!eventsByDate.TryGetValue(e.Day.Date.Date, out dayEvents))
+            {
+                return;
+            }
+
+            e.Cell.CssClass =
+                (e.Cell.CssClass + " admin-calendar-booked").Trim();
+
+            foreach (CalendarEvent calendarEvent in dayEvents)
+            {
+                string statusClass =
+                    GetCalendarStatusClass(calendarEvent.BookingStatus);
+
+                Literal eventLabel = new Literal();
+
+                eventLabel.Text =
+                    "<div class=\"calendar-event " + statusClass + "\"" +
+                    " title=\"" +
+                    Server.HtmlEncode(
+                        calendarEvent.BookingReference + " · " +
+                        calendarEvent.CustomerFullName) +
+                    "\">" +
+                    Server.HtmlEncode(calendarEvent.EventType) +
+                    "</div>";
+
+                e.Cell.Controls.Add(eventLabel);
+            }
         }
+
+        private static string GetStatusCss(string status)
+        {
+            switch ((status ?? String.Empty).Trim().ToLowerInvariant())
+            {
+                case "confirmed":
+                    return "badge text-bg-success";
+
+                case "pending":
+                    return "badge text-bg-warning";
+
+                case "cancelled":
+                    return "badge text-bg-danger";
+
+                default:
+                    return "badge text-bg-secondary";
+            }
+        }
+
+        private static string GetCalendarStatusClass(string status)
+        {
+            switch ((status ?? String.Empty).Trim().ToLowerInvariant())
+            {
+                case "confirmed":
+                    return "confirmed";
+
+                case "pending":
+                    return "pending";
+
+                case "cancelled":
+                    return "cancelled";
+
+                default:
+                    return "other";
+            }
+        }
+
         private sealed class CalendarEvent
         {
-            public string BookingReference, EventType, Customer, Status;
+            public string BookingReference { get; set; }
+            public string EventType { get; set; }
+            public string CustomerFullName { get; set; }
+            public string BookingStatus { get; set; }
         }
 
     }

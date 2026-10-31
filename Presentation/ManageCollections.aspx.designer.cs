@@ -15,6 +15,24 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
     {
 
         /// <summary>
+        /// pnlMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlMessage;
+
+        /// <summary>
+        /// litMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litMessage;
+
+        /// <summary>
         /// lnkAll control.
         /// </summary>
         /// <remarks>
@@ -22,6 +40,15 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.LinkButton lnkAll;
+
+        /// <summary>
+        /// litAllCount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litAllCount;
 
         /// <summary>
         /// lnkPending control.
@@ -33,13 +60,40 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         protected global::System.Web.UI.WebControls.LinkButton lnkPending;
 
         /// <summary>
-        /// lnkCompleted control.
+        /// litPendingCount control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.LinkButton lnkCompleted;
+        protected global::System.Web.UI.WebControls.Literal litPendingCount;
+
+        /// <summary>
+        /// lnkCollected control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.LinkButton lnkCollected;
+
+        /// <summary>
+        /// litCollectedCount control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litCollectedCount;
+
+        /// <summary>
+        /// lblSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSearch;
 
         /// <summary>
         /// txtSearch control.
@@ -49,6 +103,15 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.TextBox txtSearch;
+
+        /// <summary>
+        /// lblDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDate;
 
         /// <summary>
         /// txtDate control.
@@ -78,24 +141,6 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         protected global::System.Web.UI.WebControls.Button btnClear;
 
         /// <summary>
-        /// pnlCollectionMessage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlCollectionMessage;
-
-        /// <summary>
-        /// litCollectionMessage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litCollectionMessage;
-
-        /// <summary>
         /// rptCollections control.
         /// </summary>
         /// <remarks>
@@ -105,147 +150,21 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         protected global::System.Web.UI.WebControls.Repeater rptCollections;
 
         /// <summary>
-        /// pnlCollectionDetailsModal control.
+        /// pnlEmpty control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlCollectionDetailsModal;
+        protected global::System.Web.UI.WebControls.Panel pnlEmpty;
 
         /// <summary>
-        /// litCollectionDetailBooking control.
+        /// litEmptyMessage control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litCollectionDetailBooking;
-
-        /// <summary>
-        /// litCollectionDetailCustomer control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litCollectionDetailCustomer;
-
-        /// <summary>
-        /// litCollectionDetailPhone control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litCollectionDetailPhone;
-
-        /// <summary>
-        /// litCollectionDetailEvent control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litCollectionDetailEvent;
-
-        /// <summary>
-        /// litCollectionDetailEnd control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litCollectionDetailEnd;
-
-        /// <summary>
-        /// litCollectionDetailPickup control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litCollectionDetailPickup;
-
-        /// <summary>
-        /// litCollectionDetailStatus control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litCollectionDetailStatus;
-
-        /// <summary>
-        /// litCollectionDetailAddress control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litCollectionDetailAddress;
-
-        /// <summary>
-        /// litCollectionDetailInstructions control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litCollectionDetailInstructions;
-
-        /// <summary>
-        /// pnlCollectionPackageDetail control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlCollectionPackageDetail;
-
-        /// <summary>
-        /// imgCollectionPackage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Image imgCollectionPackage;
-
-        /// <summary>
-        /// litCollectionPackageName control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litCollectionPackageName;
-
-        /// <summary>
-        /// rptCollectionPackageItems control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptCollectionPackageItems;
-
-        /// <summary>
-        /// rptCollectionDetailItems control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Repeater rptCollectionDetailItems;
-
-        /// <summary>
-        /// pnlNoCollections control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlNoCollections;
+        protected global::System.Web.UI.WebControls.Literal litEmptyMessage;
     }
 }

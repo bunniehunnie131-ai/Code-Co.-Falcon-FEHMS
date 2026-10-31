@@ -1,5 +1,7 @@
 using System;
+using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Globalization;
 using System.Web.UI;
 using System.Web.UI.WebControls;
@@ -8,125 +10,414 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
 {
     public partial class ManagePackages : Page
     {
-        private DataTable GetPackages() 
+        private string ConnectionString
         {
-            DataTable t = Session["ManagePackagesDemo"] as DataTable;
-            if (t != null) return t;
-            t = new DataTable();
-            t.Columns.Add("ProductID", typeof(int));
-            t.Columns.Add("ProductName", typeof(string)); 
-            t.Columns.Add("Category", typeof(string)); 
-            t.Columns.Add("Colour", typeof(string));
-            t.Columns.Add("Price", typeof(decimal));
-            t.Columns.Add("QuantityAvailable", typeof(int));
-            t.Columns.Add("ImageUrl", typeof(string));
-            t.Columns.Add("IsAvailable", typeof(bool));
-            t.Columns.Add("Description", typeof(string));
-            t.Rows.Add(1, "Basic Décor Package", "Packages", "White", 2500m, 12, "../Images/package-basic.jpg", true, "Table runners, centrepieces and matching décor.");
-            t.Rows.Add(2, "Premium Décor Package", "Packages", "Gold", 5200m, 8, "../Images/package-premium.jpg", true, "Premium styling and ceremony décor."); 
-            t.Rows.Add(3, "Catering Pack 1", "Combined", "Various", 4500m, 10, "../Images/package-catering.jpg", true, "Catering setup for up to 50 guests.");
-            t.Rows.Add(4, "Full Event Package", "Combined", "Various", 12000m, 5, "../Images/package-event.jpg", true, "Décor, tables and seating for an event."); 
-            Session["ManagePackagesDemo"] = t;
-            return t; }
-        protected void Page_Load(object sender, EventArgs e) 
-        {
-            txtPrice.Attributes["step"] = "0.01"; 
-            if (!IsPostBack) BindPackages();
+            get
+            {
+                return ConfigurationManager
+                    .ConnectionStrings["ForteDB"]
+                    .ConnectionString;
+            }
         }
+
+        protected void Page_Load(object sender, EventArgs e)
+        {
+            txtPrice.Attributes["step"] = "0.01";
+
+            if (!IsPostBack)
+            {
+                BindPackages();
+            }
+        }
+
         protected void btnAddPackage_Click(object sender, EventArgs e)
         {
             ClearForm();
-            pnlForm.Visible = true; 
+            pnlForm.Visible = true;
             pnlMessage.Visible = false;
         }
-        protected void btnCancel_Click(object sender, EventArgs e) 
+
+        protected void btnCancel_Click(object sender, EventArgs e)
         {
             pnlForm.Visible = false;
-            ClearForm(); 
+            ClearForm();
         }
-        protected void btnSearch_Click(object sender, EventArgs e) 
+
+        protected void btnSearch_Click(object sender, EventArgs e)
         {
             BindPackages();
         }
-        private void BindPackages() 
+
+        private void BindPackages()
         {
-            DataTable all = GetPackages(), rows = all.Clone();
-            string q = (txtSearch.Text ?? "").Trim(); 
-            foreach (DataRow r in all.Rows) 
+            const string sql = @"
+                SELECT ProductID,
+                       ProductName,
+                       Description,
+                       Price,
+                       Category,
+                       ImageUrl,
+                       QuantityAvailable,
+                       Colour,
+                       IsAvailable
+                FROM dbo.Product
+                WHERE
+                    (
+                        Category LIKE N'%Package%'
+                        OR ProductName LIKE N'%Package%'
+                        OR Category = N'Combined'
+                    )
+                    AND
+                    (
+                        @Search = N''
+                        OR ProductName LIKE N'%' + @Search + N'%'
+                        OR Category LIKE N'%' + @Search + N'%'
+                    )
+                ORDER BY ProductName;";
+
+            try
             {
-                string cat = Convert.ToString(r["Category"]), name = Convert.ToString(r["ProductName"]);
-                if (cat.IndexOf("Package", StringComparison.OrdinalIgnoreCase) < 0 && name.IndexOf("Package", StringComparison.OrdinalIgnoreCase) < 0 && cat != "Combined") continue;
-                if (q != "" && name.IndexOf(q, StringComparison.OrdinalIgnoreCase) < 0 && cat.IndexOf(q, StringComparison.OrdinalIgnoreCase) < 0) continue; rows.ImportRow(r);
+                using (SqlConnection connection =
+                    new SqlConnection(ConnectionString))
+                using (SqlCommand command =
+                    new SqlCommand(sql, connection))
+                {
+                    command.Parameters.Add(
+                        "@Search",
+                        SqlDbType.NVarChar,
+                        150
+                    ).Value = (txtSearch.Text ?? String.Empty).Trim();
+
+                    DataTable table = new DataTable();
+
+                    using (SqlDataAdapter adapter =
+                        new SqlDataAdapter(command))
+                    {
+                        adapter.Fill(table);
+                    }
+
+                    rptPackages.DataSource = table;
+                    rptPackages.DataBind();
+                    pnlEmpty.Visible = table.Rows.Count == 0;
+                }
             }
-            rptPackages.DataSource = rows;
-            rptPackages.DataBind();
-            pnlEmpty.Visible = rows.Rows.Count == 0;
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.TraceError(
+                    "Manage packages load failed: " + ex);
+
+                Show(
+                    "Packages could not be loaded from ForteDB." +
+                    (Request.IsLocal ? " " + ex.Message : String.Empty),
+                    false
+                );
+            }
         }
+
         protected void btnSave_Click(object sender, EventArgs e)
         {
-            decimal price; int qty;
-            if (String.IsNullOrWhiteSpace(txtName.Text) || !Decimal.TryParse(txtPrice.Text, NumberStyles.Number, CultureInfo.InvariantCulture, out price) || price < 0 || !Int32.TryParse(txtQuantity.Text, out qty) || qty < 0) 
+            decimal price;
+            int quantity;
+            int productId;
+
+            bool editing = Int32.TryParse(
+                hfProductID.Value,
+                out productId
+            );
+
+            if (String.IsNullOrWhiteSpace(txtName.Text) ||
+                !Decimal.TryParse(
+                    txtPrice.Text,
+                    NumberStyles.Number,
+                    CultureInfo.InvariantCulture,
+                    out price
+                ) ||
+                price < 0 ||
+                !Int32.TryParse(txtQuantity.Text, out quantity) ||
+                quantity < 0)
             {
-                Show("Enter a package name, valid price and non-negative quantity.", false); return;
+                Show(
+                    "Enter a package name, valid non-negative price and quantity.",
+                    false
+                );
+                return;
             }
-            DataTable t = GetPackages(); 
-            int id; 
-            DataRow r;
-            if (Int32.TryParse(hfProductID.Value, out id) && t.Select("ProductID=" + id).Length > 0) r = t.Select("ProductID=" + id)[0];
-            else 
+
+            string sql = editing
+                ? @"
+                    UPDATE dbo.Product
+                    SET ProductName = @Name,
+                        Description = @Description,
+                        Category = @Category,
+                        Colour = @Colour,
+                        Price = @Price,
+                        QuantityAvailable = @Quantity,
+                        ImageUrl = @Image,
+                        UpdatedAt = SYSUTCDATETIME()
+                    WHERE ProductID = @ID;"
+                : @"
+                    INSERT dbo.Product
+                        (ProductName, Description, Category, Colour,
+                         Price, QuantityAvailable, ImageUrl, IsAvailable)
+                    VALUES
+                        (@Name, @Description, @Category, @Colour,
+                         @Price, @Quantity, @Image, 1);";
+
+            try
             {
-                id = 1; foreach (DataRow row in t.Rows) id = Math.Max(id, Convert.ToInt32(row["ProductID"]) + 1);
-                r = t.NewRow(); r["ProductID"] = id; t.Rows.Add(r);
+                using (SqlConnection connection =
+                    new SqlConnection(ConnectionString))
+                using (SqlCommand command =
+                    new SqlCommand(sql, connection))
+                {
+                    command.Parameters.Add(
+                        "@Name",
+                        SqlDbType.NVarChar,
+                        150
+                    ).Value = txtName.Text.Trim();
+
+                    command.Parameters.Add(
+                        "@Description",
+                        SqlDbType.NVarChar,
+                        1000
+                    ).Value = (txtDescription.Text ?? String.Empty).Trim();
+
+                    command.Parameters.Add(
+                        "@Category",
+                        SqlDbType.NVarChar,
+                        80
+                    ).Value = String.IsNullOrWhiteSpace(txtCategory.Text)
+                        ? "Packages"
+                        : txtCategory.Text.Trim();
+
+                    command.Parameters.Add(
+                        "@Colour",
+                        SqlDbType.NVarChar,
+                        200
+                    ).Value = String.IsNullOrWhiteSpace(txtColour.Text)
+                        ? "Various"
+                        : txtColour.Text.Trim();
+
+                    SqlParameter priceParameter =
+                        command.Parameters.Add("@Price", SqlDbType.Decimal);
+
+                    priceParameter.Precision = 12;
+                    priceParameter.Scale = 2;
+                    priceParameter.Value = price;
+
+                    command.Parameters.Add(
+                        "@Quantity",
+                        SqlDbType.Int
+                    ).Value = quantity;
+
+                    command.Parameters.Add(
+                        "@Image",
+                        SqlDbType.NVarChar,
+                        500
+                    ).Value = String.IsNullOrWhiteSpace(txtImage.Text)
+                        ? "../Images/birthday-package.jpg?package=" +
+                          Guid.NewGuid().ToString("N")
+                        : txtImage.Text.Trim();
+
+                    if (editing)
+                    {
+                        command.Parameters.Add(
+                            "@ID",
+                            SqlDbType.Int
+                        ).Value = productId;
+                    }
+
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                }
+
+                pnlForm.Visible = false;
+                ClearForm();
+                BindPackages();
+
+                Show(
+                    editing ? "Package updated." : "Package added.",
+                    true
+                );
             }
-            r["ProductName"] = txtName.Text.Trim(); 
-            r["Category"] = String.IsNullOrWhiteSpace(txtCategory.Text) ? "Packages" : txtCategory.Text.Trim(); 
-            r["Description"] = txtDescription.Text.Trim();
-            r["Price"] = price; r["QuantityAvailable"] = qty;
-            r["Colour"] = txtColour.Text.Trim();
-            r["ImageUrl"] = String.IsNullOrWhiteSpace(txtImage.Text) ? "../Images/package.jpg" : txtImage.Text.Trim();
-            r["IsAvailable"] = true; pnlForm.Visible = false; 
-            Show("Package saved in the session sample data.", true); 
-            ClearForm();
-            BindPackages();
-        }
-        protected void rptPackages_ItemCommand(object sender, RepeaterCommandEventArgs e) 
-        {
-            int id; 
-            if (!Int32.TryParse(Convert.ToString(e.CommandArgument), out id)) return; DataRow[] rows = GetPackages().Select("ProductID=" + id);
-            if (rows.Length == 0) return; DataRow r = rows[0];
-            if (e.CommandName == "TogglePackage") { r["IsAvailable"] = !Convert.ToBoolean(r["IsAvailable"]); 
-                Show("Package availability updated in the session sample data.", true);
-            } 
-            else if (e.CommandName == "EditPackage") 
+            catch (Exception ex)
             {
-                hfProductID.Value = id.ToString();
-                txtName.Text = Convert.ToString(r["ProductName"]);
-                txtCategory.Text = Convert.ToString(r["Category"]);
-                txtDescription.Text = Convert.ToString(r["Description"]); 
-                txtPrice.Text = Convert.ToDecimal(r["Price"]).ToString(CultureInfo.InvariantCulture); 
-                txtQuantity.Text = Convert.ToString(r["QuantityAvailable"]);
-                txtColour.Text = Convert.ToString(r["Colour"]); 
-                txtImage.Text = Convert.ToString(r["ImageUrl"]); 
-                litFormTitle.Text = "Edit package"; pnlForm.Visible = true;
+                System.Diagnostics.Trace.TraceError(
+                    "Package save failed: " + ex);
+
+                Show(
+                    "Package could not be saved." +
+                    (Request.IsLocal ? " " + ex.Message : String.Empty),
+                    false
+                );
             }
-            BindPackages(); 
         }
-        public string FormatDollars(object v) 
+
+        protected void rptPackages_ItemCommand(
+            object source,
+            RepeaterCommandEventArgs e)
         {
-            decimal n = v == null || v == DBNull.Value ? 0m : Convert.ToDecimal(v); return "R " + n.ToString("N2", CultureInfo.GetCultureInfo("en-ZA")); 
+            int productId;
+
+            if (!Int32.TryParse(
+                Convert.ToString(e.CommandArgument),
+                out productId))
+            {
+                return;
+            }
+
+            try
+            {
+                using (SqlConnection connection =
+                    new SqlConnection(ConnectionString))
+                {
+                    connection.Open();
+
+                    if (e.CommandName == "TogglePackage")
+                    {
+                        const string sql = @"
+                            UPDATE dbo.Product
+                            SET IsAvailable =
+                                    CASE WHEN IsAvailable = 1 THEN 0 ELSE 1 END,
+                                UpdatedAt = SYSUTCDATETIME()
+                            WHERE ProductID = @ID;";
+
+                        using (SqlCommand command =
+                            new SqlCommand(sql, connection))
+                        {
+                            command.Parameters.Add(
+                                "@ID",
+                                SqlDbType.Int
+                            ).Value = productId;
+
+                            command.ExecuteNonQuery();
+                        }
+                    }
+                    else if (e.CommandName == "EditPackage")
+                    {
+                        const string sql = @"
+                            SELECT ProductName,
+                                   Description,
+                                   Category,
+                                   Colour,
+                                   Price,
+                                   QuantityAvailable,
+                                   ImageUrl
+                            FROM dbo.Product
+                            WHERE ProductID = @ID;";
+
+                        using (SqlCommand command =
+                            new SqlCommand(sql, connection))
+                        {
+                            command.Parameters.Add(
+                                "@ID",
+                                SqlDbType.Int
+                            ).Value = productId;
+
+                            using (SqlDataReader reader =
+                                command.ExecuteReader())
+                            {
+                                if (!reader.Read())
+                                {
+                                    return;
+                                }
+
+                                hfProductID.Value =
+                                    productId.ToString(
+                                        CultureInfo.InvariantCulture
+                                    );
+
+                                txtName.Text =
+                                    Convert.ToString(reader["ProductName"]);
+
+                                txtDescription.Text =
+                                    Convert.ToString(reader["Description"]);
+
+                                txtCategory.Text =
+                                    Convert.ToString(reader["Category"]);
+
+                                txtColour.Text =
+                                    Convert.ToString(reader["Colour"]);
+
+                                txtPrice.Text =
+                                    Convert.ToDecimal(reader["Price"])
+                                        .ToString(
+                                            CultureInfo.InvariantCulture
+                                        );
+
+                                txtQuantity.Text =
+                                    Convert.ToString(
+                                        reader["QuantityAvailable"]
+                                    );
+
+                                txtImage.Text =
+                                    Convert.ToString(reader["ImageUrl"]);
+
+                                litFormTitle.Text = "Edit Package";
+                                btnSave.Text = "Save Changes";
+                                pnlForm.Visible = true;
+                            }
+                        }
+                    }
+                }
+
+                BindPackages();
+
+                if (e.CommandName == "TogglePackage")
+                {
+                    Show("Package availability updated.", true);
+                }
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.TraceError(
+                    "Package update failed: " + ex);
+
+                Show(
+                    "Package could not be updated." +
+                    (Request.IsLocal ? " " + ex.Message : String.Empty),
+                    false
+                );
+            }
         }
-        private void ClearForm() 
+
+        public string FormatRands(object value)
         {
-            hfProductID.Value = "";
-            txtName.Text = txtDescription.Text = txtPrice.Text = txtQuantity.Text = txtColour.Text = txtImage.Text = "";
-            txtCategory.Text = "Packages"; 
-            litFormTitle.Text = "Add package";
+            decimal amount;
+
+            return Decimal.TryParse(Convert.ToString(value), out amount)
+                ? "R" + amount.ToString(
+                    "N2",
+                    CultureInfo.GetCultureInfo("en-ZA")
+                  )
+                : "R0.00";
         }
-        private void Show(string s, bool ok) 
+
+        private void ClearForm()
+        {
+            hfProductID.Value = String.Empty;
+
+            txtName.Text = String.Empty;
+            txtDescription.Text = String.Empty;
+            txtPrice.Text = String.Empty;
+            txtQuantity.Text = String.Empty;
+            txtImage.Text = String.Empty;
+
+            txtCategory.Text = "Packages";
+            txtColour.Text = "Various";
+
+            litFormTitle.Text = "Add Package";
+            btnSave.Text = "Save Package";
+        }
+
+        private void Show(string message, bool success)
         {
             pnlMessage.Visible = true;
-            pnlMessage.CssClass = ok ? "alert alert-success" : "alert alert-warning"; 
-            lblMessage.Text = Server.HtmlEncode(s);
+            pnlMessage.CssClass = success
+                ? "alert alert-success"
+                : "alert alert-danger";
+
+            lblMessage.Text = Server.HtmlEncode(message);
         }
     }
 }

@@ -107,7 +107,7 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
                     {
                         command.CommandText = @"
 UPDATE dbo.Users
-SET FirstName = @FirstName, LastName = @LastName, FullName=@FirstName + N' ' + @LastName, Email=@EmailAddress, EmailAddress = @EmailAddress,
+SET FirstName = @FirstName, LastName = @LastName, FullName=@FirstName + N' ' + @LastName, Email=@Email,
     DateOfBirth=@DateOfBirth, IDNumberEncrypted=COALESCE(@IDNumberEncrypted,IDNumberEncrypted),
     PhoneNumber = @PhoneNumber, IsActive = @IsActive, UpdatedAt = SYSUTCDATETIME()
 WHERE UserID = @UserID
@@ -120,9 +120,9 @@ UPDATE dbo.Customer SET Phone=@PhoneNumber,UpdatedAt=SYSUTCDATETIME() WHERE User
                         command.CommandText = @"
 DECLARE @NewUsers TABLE (UserID INT);
 
-INSERT INTO dbo.Users (FullName,FirstName,LastName,Email,EmailAddress,DateOfBirth,IDNumberEncrypted,PhoneNumber,PasswordHash,UserRole,RoleID,IsActive,TermsAcceptedAt)
+INSERT INTO dbo.Users (FullName,FirstName,LastName,Email,DateOfBirth,IDNumberEncrypted,PhoneNumber,PasswordHash,UserRole,RoleID,IsActive,TermsAcceptedAt)
 OUTPUT INSERTED.UserID INTO @NewUsers (UserID)
-SELECT @FirstName + N' ' + @LastName,@FirstName, @LastName, @EmailAddress, @EmailAddress, @DateOfBirth, @IDNumberEncrypted, @PhoneNumber, @PasswordHash, RoleName, RoleID, @IsActive, SYSUTCDATETIME()
+SELECT @FirstName + N' ' + @LastName,@FirstName, @LastName, @Email, @DateOfBirth, @IDNumberEncrypted, @PhoneNumber, @PasswordHash, RoleName, RoleID, @IsActive, SYSUTCDATETIME()
 FROM dbo.Roles
 WHERE RoleName = N'Customer' AND IsStaffRole = 0;
 
@@ -131,7 +131,7 @@ SELECT ISNULL((SELECT TOP (1) UserID FROM @NewUsers), 0);";
 
                     command.Parameters.Add("@FirstName", SqlDbType.NVarChar, 80).Value = txtFirstName.Text.Trim();
                     command.Parameters.Add("@LastName", SqlDbType.NVarChar, 80).Value = txtLastName.Text.Trim();
-                    command.Parameters.Add("@EmailAddress", SqlDbType.NVarChar, 254).Value = txtEmailAddress.Text.Trim();
+                    command.Parameters.Add("@Email", SqlDbType.NVarChar, 254).Value = txtEmailAddress.Text.Trim();
                     command.Parameters.Add("@PhoneNumber", SqlDbType.NVarChar, 30).Value = String.IsNullOrWhiteSpace(txtPhoneNumber.Text) ? (object)DBNull.Value : txtPhoneNumber.Text.Trim();
                     command.Parameters.Add("@DateOfBirth", SqlDbType.Date).Value = dateOfBirth.Date;
                     command.Parameters.Add("@IDNumberEncrypted", SqlDbType.VarBinary, -1).Value = encryptedId == null ? (object)DBNull.Value : encryptedId;
@@ -222,7 +222,7 @@ WHERE UserID = @UserID
                 const string query = @"
 SELECT u.UserID AS CustomerID,
        u.FirstName + N' ' + u.LastName AS FullName,
-       u.EmailAddress,
+       u.Email,
        u.PhoneNumber,
        COUNT(b.BookingID) AS BookingCount,
        u.IsActive,
@@ -233,9 +233,9 @@ LEFT JOIN dbo.Bookings AS b ON b.CustomerUserID = u.UserID
 WHERE r.RoleName = N'Customer'
   AND r.IsStaffRole = 0
   AND (@Search = N'' OR u.FirstName LIKE N'%' + @Search + N'%' OR u.LastName LIKE N'%' + @Search + N'%'
-       OR u.EmailAddress LIKE N'%' + @Search + N'%' OR u.PhoneNumber LIKE N'%' + @Search + N'%')
+       OR u.Email LIKE N'%' + @Search + N'%' OR u.PhoneNumber LIKE N'%' + @Search + N'%')
   AND (@Status = -1 OR u.IsActive = @Status)
-GROUP BY u.UserID, u.FirstName, u.LastName, u.EmailAddress, u.PhoneNumber, u.IsActive
+GROUP BY u.UserID, u.FirstName, u.LastName, u.Email, u.PhoneNumber, u.IsActive
 ORDER BY u.LastName, u.FirstName;";
 
                 using (SqlConnection connection = new SqlConnection(ConnectionString))
@@ -266,7 +266,7 @@ ORDER BY u.LastName, u.FirstName;";
             try
             {
                 const string query = @"
-SELECT u.UserID, u.FirstName, u.LastName, u.EmailAddress, u.PhoneNumber, u.DateOfBirth, u.IsActive
+SELECT u.UserID, u.FirstName, u.LastName, u.Email, u.PhoneNumber, u.DateOfBirth, u.IsActive
 FROM dbo.Users AS u
 INNER JOIN dbo.Roles AS r ON r.RoleID = u.RoleID
 WHERE u.UserID = @UserID AND r.RoleName = N'Customer' AND r.IsStaffRole = 0;";
@@ -282,7 +282,7 @@ WHERE u.UserID = @UserID AND r.RoleName = N'Customer' AND r.IsStaffRole = 0;";
                         hfCustomerUserId.Value = reader["UserID"].ToString();
                         txtFirstName.Text = reader["FirstName"].ToString();
                         txtLastName.Text = reader["LastName"].ToString();
-                        txtEmailAddress.Text = reader["EmailAddress"].ToString();
+                        txtEmailAddress.Text = reader["Email"].ToString();
                         txtPhoneNumber.Text = reader["PhoneNumber"] == DBNull.Value ? String.Empty : reader["PhoneNumber"].ToString();
                         txtDateOfBirth.Text = reader["DateOfBirth"] == DBNull.Value ? String.Empty : Convert.ToDateTime(reader["DateOfBirth"]).ToString("yyyy-MM-dd", CultureInfo.InvariantCulture);
                         txtIDNumber.Text = String.Empty;

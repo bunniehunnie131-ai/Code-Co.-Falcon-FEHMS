@@ -4,6 +4,7 @@
 
     <link href="../Stylesheet/Forte.css" rel="stylesheet" />
     <link href="../Stylesheet/AdminStyle.css" rel="stylesheet" />
+    
 
 </asp:Content>
 <asp:Content ID="MainContent" ContentPlaceHolderID="MainContent" runat="server">
@@ -67,7 +68,7 @@
             <asp:LinkButton ID="lnkTables" runat="server" CssClass="admin-filter-tab" CommandArgument="Tables" OnClick="Category_Click" CausesValidation="false">Tables</asp:LinkButton>
             <asp:LinkButton ID="lnkChairs" runat="server" CssClass="admin-filter-tab" CommandArgument="Chairs" OnClick="Category_Click" CausesValidation="false">Chairs</asp:LinkButton>
             <asp:LinkButton ID="lnkTents" runat="server" CssClass="admin-filter-tab" CommandArgument="Tents" OnClick="Category_Click" CausesValidation="false">Tents</asp:LinkButton>
-            <asp:LinkButton ID="lnkDecor" runat="server" CssClass="admin-filter-tab" CommandArgument="Décor" OnClick="Category_Click" CausesValidation="false">Décor</asp:LinkButton>
+            <asp:LinkButton ID="lnkDecor" runat="server" CssClass="admin-filter-tab" CommandArgument="Décor" OnClick="Category_Click" CausesValidation="false">Decor</asp:LinkButton>
             <asp:LinkButton ID="lnkCatering" runat="server" CssClass="admin-filter-tab" CommandArgument="Catering" OnClick="Category_Click" CausesValidation="false">Catering</asp:LinkButton>
         </div>
         <div class="row g-2 mb-3">

@@ -267,8 +267,10 @@
     <Content Include="Presentation\Cart.aspx" />
     <Content Include="Presentation\Catalogue.aspx" />
     <Content Include="Presentation\Checkout.aspx" />
+    <Content Include="Presentation\CollectionHandover.aspx" />
     <Content Include="Presentation\CustomerDashboard.aspx" />
     <Content Include="Presentation\DeliveryandExtras.aspx" />
+    <Content Include="Presentation\DeliveryHandover.aspx" />
     <Content Include="Presentation\Error403.aspx" />
     <Content Include="Presentation\Error404.aspx" />
     <Content Include="Presentation\Error500.aspx" />
@@ -359,6 +361,13 @@
     <Compile Include="Presentation\Checkout.aspx.designer.cs">
       <DependentUpon>Checkout.aspx</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\CollectionHandover.aspx.cs">
+      <DependentUpon>CollectionHandover.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\CollectionHandover.aspx.designer.cs">
+      <DependentUpon>CollectionHandover.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\CustomerDashboard.aspx.cs">
       <DependentUpon>CustomerDashboard.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>
@@ -372,6 +381,13 @@
     </Compile>
     <Compile Include="Presentation\DeliveryandExtras.aspx.designer.cs">
       <DependentUpon>DeliveryandExtras.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Presentation\DeliveryHandover.aspx.cs">
+      <DependentUpon>DeliveryHandover.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Presentation\DeliveryHandover.aspx.designer.cs">
+      <DependentUpon>DeliveryHandover.aspx</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Error403.aspx.cs">
       <DependentUpon>Error403.aspx</DependentUpon>

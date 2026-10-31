@@ -108,7 +108,7 @@
                         <tr>
                             <td class="fw-semibold"><%#: Eval("CustomerID") %></td>
                             <td><%#: Eval("FullName") %></td>
-                            <td><%#: Eval("EmailAddress") %></td>
+                            <td><%#: Eval("Email") %></td>
                             <td><%#: Eval("PhoneNumber") %></td>
                             <td><%#: Eval("BookingCount") %></td>
                             <td><span class='<%# Convert.ToBoolean(Eval("IsActive")) ? "badge rounded-pill text-bg-success" : "badge rounded-pill text-bg-secondary" %>'><%#: Eval("Status") %></span></td>

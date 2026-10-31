@@ -15,6 +15,24 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
     {
 
         /// <summary>
+        /// pnlDeliveryMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlDeliveryMessage;
+
+        /// <summary>
+        /// litDeliveryMessage control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litDeliveryMessage;
+
+        /// <summary>
         /// lnkAll control.
         /// </summary>
         /// <remarks>
@@ -51,6 +69,15 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         protected global::System.Web.UI.WebControls.LinkButton lnkCompleted;
 
         /// <summary>
+        /// lblDate control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblDate;
+
+        /// <summary>
         /// txtDate control.
         /// </summary>
         /// <remarks>
@@ -60,6 +87,15 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         protected global::System.Web.UI.WebControls.TextBox txtDate;
 
         /// <summary>
+        /// lblStatus control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblStatus;
+
+        /// <summary>
         /// ddlStatus control.
         /// </summary>
         /// <remarks>
@@ -67,6 +103,15 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlStatus;
+
+        /// <summary>
+        /// lblSearch control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Label lblSearch;
 
         /// <summary>
         /// txtSearch control.
@@ -87,24 +132,6 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         protected global::System.Web.UI.WebControls.Button btnSearch;
 
         /// <summary>
-        /// pnlDeliveryMessage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlDeliveryMessage;
-
-        /// <summary>
-        /// litDeliveryMessage control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Literal litDeliveryMessage;
-
-        /// <summary>
         /// rptDeliveries control.
         /// </summary>
         /// <remarks>
@@ -112,6 +139,24 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater rptDeliveries;
+
+        /// <summary>
+        /// pnlNoDeliveries control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Panel pnlNoDeliveries;
+
+        /// <summary>
+        /// litNoDeliveries control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.Literal litNoDeliveries;
 
         /// <summary>
         /// pnlDeliveryDetailsModal control.
@@ -247,14 +292,5 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.Repeater rptDeliveryDetailItems;
-
-        /// <summary>
-        /// pnlNoDeliveries control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.WebControls.Panel pnlNoDeliveries;
     }
 }

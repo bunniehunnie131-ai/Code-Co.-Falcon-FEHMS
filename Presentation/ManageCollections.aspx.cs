@@ -1,5 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Configuration;
+using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 using System.Web.UI;
@@ -10,209 +13,379 @@ namespace FEHMS_FortEventHireManagementSystem.Presentation
     public partial class ManageCollections : System.Web.UI.Page
     {
 
-        // Demo data contract for the page. A SQL repository can return this same model later.
-        private sealed class CollectionViewModel
+        private const string FilterKey = "CollectionListFilter";
+
+        private sealed class CollectionRow
         {
-            public string BookingId { get; set; }
+            public string BookingReference { get; set; }
             public string EventType { get; set; }
             public string Customer { get; set; }
-            public DateTime CollectionDate { get; set; }
-            public string CollectionTime { get; set; }
-            public string Venue { get; set; }
-            public string Items { get; set; }
-            public string Status { get; set; }
-            public string ImageUrl { get; set; }
+            public string Phone { get; set; }
+            public DateTime CollectionAt { get; set; }
             public DateTime EventEndAt { get; set; }
-            public string ContactPhone { get; set; }
-            public string CollectionAddress { get; set; }
-            public string CollectionNotes { get; set; }
-            public bool IsPackage { get; set; }
-            public string PackageName { get; set; }
-            public string PackageImageUrl { get; set; }
-            public List<EquipmentLineViewModel> EquipmentItems { get; set; }
-        }
-
-        private sealed class EquipmentLineViewModel
-        {
-            public string Name { get; set; }
-            public int Quantity { get; set; }
+            public string Location { get; set; }
+            public string ItemsSummary { get; set; }
             public string ImageUrl { get; set; }
+            public string TaskStatus { get; set; }
+            public string StatusCss { get; set; }
         }
 
-        private const string StatusViewStateKey = "StaffCollectionStatusFilter";
-        private const string StatusSessionKey = "StaffCollectionDemoStatuses";
+        private string ConnectionString
+        {
+            get
+            {
+                return ConfigurationManager.ConnectionStrings["ForteDB"].ConnectionString;
+            }
+        }
 
         protected void Page_Load(object sender, EventArgs e)
         {
+            /*
+             * TEMPORARY LOCAL TESTING ONLY.
+             * Uncomment this block when you restore the login requirement.
+             *
+            if (Session["UserID"] == null ||
+                String.Equals(Convert.ToString(Session["UserRole"]), "Customer",
+                    StringComparison.OrdinalIgnoreCase))
+            {
+                Response.Redirect("Login.aspx?returnUrl=" +
+                    Server.UrlEncode(Request.RawUrl), false);
+                Context.ApplicationInstance.CompleteRequest();
+                return;
+            }
+            */
+
             if (!IsPostBack)
             {
-                ViewState[StatusViewStateKey] = string.Empty;
-                string requestedBookingId = Request.QueryString["bookingId"];
-                if (!string.IsNullOrEmpty(requestedBookingId)) txtSearch.Text = requestedBookingId;
+                ViewState[FilterKey] = "All";
                 BindCollections();
-                if (!string.IsNullOrEmpty(requestedBookingId))
+            }
+        }
+
+        private int CurrentStaffID
+        {
+            get
+            {
+                int userID;
+
+                if (Session["UserID"] != null &&
+                    !String.Equals(Convert.ToString(Session["UserRole"]), "Customer",
+                        StringComparison.OrdinalIgnoreCase) &&
+                    Int32.TryParse(Convert.ToString(Session["UserID"]), out userID))
                 {
-                    CollectionViewModel requestedCollection = GetDemoCollections().FirstOrDefault(x => x.BookingId == requestedBookingId);
-                    Dictionary<string, string> statuses = Session[StatusSessionKey] as Dictionary<string, string>;
-                    string savedStatus;
-                    if (requestedCollection != null && statuses != null && statuses.TryGetValue(requestedBookingId, out savedStatus)) requestedCollection.Status = savedStatus;
-                    if (requestedCollection != null) ShowCollectionDetails(requestedCollection);
+                    return userID;
+                }
+
+                int requestedStaffID;
+                if (Int32.TryParse(Request.QueryString["staffId"], out requestedStaffID) &&
+                    IsActiveStaff(requestedStaffID))
+                {
+                    return requestedStaffID;
+                }
+
+                using (SqlConnection connection = new SqlConnection(ConnectionString))
+                using (SqlCommand command = new SqlCommand(@"
+SELECT TOP (1) s.UserID
+FROM dbo.Staff AS s
+INNER JOIN dbo.Users AS u ON u.UserID = s.UserID
+INNER JOIN dbo.Roles AS r ON r.RoleID = u.RoleID
+WHERE s.IsActive = 1
+  AND u.IsActive = 1
+  AND r.RoleName IN (N'Collection Staff', N'Staff')
+ORDER BY CASE WHEN r.RoleName = N'Collection Staff' THEN 0 ELSE 1 END,
+         s.UserID;", connection))
+                {
+                    connection.Open();
+                    object value = command.ExecuteScalar();
+
+                    if (value == null || value == DBNull.Value)
+                    {
+                        throw new InvalidOperationException(
+                            "No active collection staff account exists in the database.");
+                    }
+
+                    return Convert.ToInt32(value);
                 }
             }
         }
 
-        private List<CollectionViewModel> GetDemoCollections()
+        private bool IsActiveStaff(int userID)
         {
-            DateTime today = DateTime.Today;
-            return new List<CollectionViewModel>
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (SqlCommand command = new SqlCommand(@"
+SELECT COUNT(1)
+FROM dbo.Staff AS s
+INNER JOIN dbo.Users AS u ON u.UserID = s.UserID
+WHERE s.UserID = @UserID
+  AND s.IsActive = 1
+  AND u.IsActive = 1;", connection))
             {
-                // Demo event ended one hour ago so the Mark as Collected button is visible immediately.
-                new CollectionViewModel { BookingId = "BK002", EventType = "Birthday Party", Customer = "Lerato Tau", ContactPhone = "072 456 7890", CollectionDate = today, CollectionTime = "18:00", EventEndAt = DateTime.Now.AddHours(-1), Venue = "Midrand", CollectionAddress = "Midrand", CollectionNotes = "Collect the tables and chairs from the venue service area.", Items = "20 × Chairs, 5 × Tables", Status = "Pending", ImageUrl = "../Images/Chairs.jpg", EquipmentItems = new List<EquipmentLineViewModel> { new EquipmentLineViewModel { Name = "Chairs", Quantity = 20, ImageUrl = "../Images/Chairs.jpg" }, new EquipmentLineViewModel { Name = "Tables", Quantity = 5, ImageUrl = "../Images/Hero%20background.png" } } },
-                new CollectionViewModel { BookingId = "BK007", EventType = "School Gala", Customer = "School XYZ", ContactPhone = "011 555 0130", CollectionDate = today.AddDays(1), CollectionTime = "17:00", EventEndAt = today.AddDays(1).AddHours(15), Venue = "Parktown", CollectionAddress = "Parktown", CollectionNotes = "Coordinate collection with the school event contact.", Items = "Décor Items, 10 × Tables, 50 × Chairs", Status = "Pending", ImageUrl = "../Images/Hero%20background.png", IsPackage = true, PackageName = "School Gala Hire Package", PackageImageUrl = "../Images/Hero%20background.png", EquipmentItems = new List<EquipmentLineViewModel> { new EquipmentLineViewModel { Name = "Décor Items", Quantity = 1 }, new EquipmentLineViewModel { Name = "Tables", Quantity = 10 }, new EquipmentLineViewModel { Name = "Chairs", Quantity = 50 } } },
-                new CollectionViewModel { BookingId = "BK006", EventType = "Corporate Event", Customer = "ABC Corp", ContactPhone = "011 555 0199", CollectionDate = today.AddDays(-1), CollectionTime = "12:00", EventEndAt = today.AddDays(-1).AddHours(11), Venue = "Sandton Convention Centre", CollectionAddress = "Sandton Convention Centre", CollectionNotes = "Collection completed at the loading bay.", Items = "12 × Tables, 80 × Chairs", Status = "Collected", ImageUrl = "../Images/Chairs.jpg", EquipmentItems = new List<EquipmentLineViewModel> { new EquipmentLineViewModel { Name = "Tables", Quantity = 12, ImageUrl = "../Images/Hero%20background.png" }, new EquipmentLineViewModel { Name = "Chairs", Quantity = 80, ImageUrl = "../Images/Chairs.jpg" } } }
-            };
+                command.Parameters.Add("@UserID", SqlDbType.Int).Value = userID;
+                connection.Open();
+                return Convert.ToInt32(command.ExecuteScalar()) == 1;
+            }
+        }
+
+        private List<CollectionRow> GetCollections()
+        {
+            const string sql = @"
+SELECT
+    t.TaskID,
+    b.BookingReference,
+    b.EventType,
+    b.CustomerFullName,
+    b.CustomerPhone,
+    t.ScheduledAt AS CollectionAt,
+    COALESCE(b.EventEndAt, t.ScheduledAt) AS EventEndAt,
+    COALESCE(
+        NULLIF(t.TaskLocation, N''),
+        NULLIF(b.DeliveryAddress, N''),
+        NULLIF(b.DeliveryCity, N''),
+        N'Collection location not provided'
+    ) AS Location,
+    t.TaskStatus,
+    COALESCE(
+        STUFF((
+            SELECT N', ' + CONVERT(nvarchar(10), bi.Quantity)
+                   + N' × ' + bi.ProductName
+            FROM dbo.BookingItems AS bi
+            WHERE bi.BookingID = b.BookingID
+              AND bi.IsPackageHeader = 0
+            ORDER BY COALESCE(bi.ParentBookingItemID, bi.BookingItemID),
+                     bi.BookingItemID
+            FOR XML PATH(''), TYPE
+        ).value('.', 'nvarchar(max)'), 1, 2, N''),
+        N'No equipment items recorded'
+    ) AS ItemsSummary,
+    COALESCE((
+        SELECT TOP (1) p.ImageUrl
+        FROM dbo.BookingItems AS bi
+        LEFT JOIN dbo.Product AS p ON p.ProductID = bi.ProductID
+        WHERE bi.BookingID = b.BookingID
+          AND bi.IsPackageHeader = 0
+        ORDER BY bi.BookingItemID
+    ), N'../Images/Chairs.jpg') AS ImageUrl
+FROM dbo.BookingTasks AS t
+INNER JOIN dbo.Bookings AS b ON b.BookingID = t.BookingID
+WHERE t.AssignedStaffID = @StaffID
+  AND t.TaskType IN (N'Company Collection', N'Customer Collection')
+  AND t.TaskStatus <> N'Cancelled'
+ORDER BY t.ScheduledAt, b.BookingReference;";
+
+            List<CollectionRow> rows = new List<CollectionRow>();
+
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (SqlCommand command = new SqlCommand(sql, connection))
+            {
+                command.Parameters.Add("@StaffID", SqlDbType.Int).Value = CurrentStaffID;
+
+                using (SqlDataAdapter adapter = new SqlDataAdapter(command))
+                {
+                    DataTable table = new DataTable();
+                    adapter.Fill(table);
+
+                    foreach (DataRow row in table.Rows)
+                    {
+                        string image = Convert.ToString(row["ImageUrl"]);
+
+                        if (String.IsNullOrWhiteSpace(image))
+                            image = "../Images/Chairs.jpg";
+                        else if (image.StartsWith("~/", StringComparison.Ordinal))
+                            image = ResolveUrl(image);
+
+                        string status = Convert.ToString(row["TaskStatus"]);
+
+                        rows.Add(new CollectionRow
+                        {
+                            BookingReference = Convert.ToString(row["BookingReference"]),
+                            EventType = Convert.ToString(row["EventType"]),
+                            Customer = Convert.ToString(row["CustomerFullName"]),
+                            Phone = Convert.ToString(row["CustomerPhone"]),
+                            CollectionAt = Convert.ToDateTime(row["CollectionAt"]),
+                            EventEndAt = Convert.ToDateTime(row["EventEndAt"]),
+                            Location = Convert.ToString(row["Location"]),
+                            ItemsSummary = Convert.ToString(row["ItemsSummary"]),
+                            ImageUrl = image,
+                            TaskStatus = status,
+                            StatusCss = GetStatusCss(status)
+                        });
+                    }
+                }
+            }
+
+            return rows;
         }
 
         private void BindCollections()
         {
-            List<CollectionViewModel> all = GetDemoCollections();
-            Dictionary<string, string> savedStatuses = Session[StatusSessionKey] as Dictionary<string, string>;
-            if (savedStatuses != null)
+            try
             {
-                foreach (CollectionViewModel collection in all)
-                    if (savedStatuses.ContainsKey(collection.BookingId)) collection.Status = savedStatuses[collection.BookingId];
+                List<CollectionRow> all = GetCollections();
+
+                litAllCount.Text = all.Count.ToString();
+                litPendingCount.Text = all.Count(row =>
+                    row.TaskStatus == "Pending" || row.TaskStatus == "Scheduled").ToString();
+                litCollectedCount.Text = all.Count(row =>
+                    row.TaskStatus == "Collected" || row.TaskStatus == "Completed").ToString();
+
+                string filter = Convert.ToString(ViewState[FilterKey] ?? "All");
+                string search = (txtSearch.Text ?? String.Empty).Trim();
+
+                DateTime selectedDate;
+                bool filterByDate = DateTime.TryParse(txtDate.Text, out selectedDate);
+
+                IEnumerable<CollectionRow> result = all;
+
+                if (filter == "Pending")
+                {
+                    result = result.Where(row =>
+                        row.TaskStatus == "Pending" || row.TaskStatus == "Scheduled");
+                }
+                else if (filter == "Collected")
+                {
+                    result = result.Where(row =>
+                        row.TaskStatus == "Collected" || row.TaskStatus == "Completed");
+                }
+
+                if (!String.IsNullOrWhiteSpace(search))
+                {
+                    result = result.Where(row =>
+                        row.BookingReference.IndexOf(search,
+                            StringComparison.OrdinalIgnoreCase) >= 0 ||
+                        row.Customer.IndexOf(search,
+                            StringComparison.OrdinalIgnoreCase) >= 0 ||
+                        row.EventType.IndexOf(search,
+                            StringComparison.OrdinalIgnoreCase) >= 0);
+                }
+
+                if (filterByDate)
+                    result = result.Where(row =>
+                        row.CollectionAt.Date == selectedDate.Date);
+
+                List<CollectionRow> displayed = result
+                    .OrderBy(row => row.CollectionAt)
+                    .ThenBy(row => row.BookingReference)
+                    .ToList();
+
+                rptCollections.DataSource = displayed;
+                rptCollections.DataBind();
+
+                pnlEmpty.Visible = displayed.Count == 0;
+                litEmptyMessage.Text = all.Count == 0
+                    ? "No collection tasks are assigned to this staff account. Assign a collection task to an active collection staff member."
+                    : "No assigned collection tasks match these filters.";
+
+                SetActiveTab(filter);
+                pnlMessage.Visible = false;
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Trace.TraceError(
+                    "Manage collections load failed: " + ex);
+
+                rptCollections.DataSource = null;
+                rptCollections.DataBind();
+                pnlEmpty.Visible = false;
+
+                string message = "Bookings could not be loaded from the database.";
+                if (Request.IsLocal)
+                    message += " Details: " + ex.Message;
+
+                litMessage.Text = HttpUtility.HtmlEncode(message);
+                pnlMessage.Visible = true;
+            }
+        }
+
+        protected void rptCollections_ItemDataBound(
+            object sender, RepeaterItemEventArgs e)
+        {
+            if (e.Item.ItemType != ListItemType.Item &&
+                e.Item.ItemType != ListItemType.AlternatingItem)
+                return;
+
+            CollectionRow row = e.Item.DataItem as CollectionRow;
+            if (row == null)
+                return;
+
+            bool completed =
+                row.TaskStatus == "Collected" || row.TaskStatus == "Completed";
+            bool eventEnded = row.EventEndAt <= DateTime.Now;
+            bool ready = !completed &&
+                         eventEnded &&
+                         (row.TaskStatus == "Pending" ||
+                          row.TaskStatus == "Scheduled");
+
+            HyperLink formLink =
+                e.Item.FindControl("lnkOpenCollectionForm") as HyperLink;
+            PlaceHolder waiting =
+                e.Item.FindControl("phWaitingForEventEnd") as PlaceHolder;
+            PlaceHolder collected =
+                e.Item.FindControl("phAlreadyCollected") as PlaceHolder;
+
+            if (formLink != null)
+            {
+                formLink.Visible = ready;
+                formLink.NavigateUrl = "CollectionHandover.aspx?bookingRef=" +
+                    Server.UrlEncode(row.BookingReference);
             }
 
-            string status = Convert.ToString(ViewState[StatusViewStateKey]);
-            string search = (txtSearch.Text ?? string.Empty).Trim();
-            DateTime selectedDate;
-            bool useDate = DateTime.TryParse(txtDate.Text, out selectedDate);
+            if (waiting != null)
+                waiting.Visible = !completed && !eventEnded;
 
-            IEnumerable<CollectionViewModel> filtered = all;
-            if (!string.IsNullOrEmpty(status))
-                filtered = filtered.Where(x => status == "Completed" ? x.Status == "Completed" || x.Status == "Collected" : x.Status == status);
-            if (!string.IsNullOrEmpty(search))
-                filtered = filtered.Where(x => Contains(x.BookingId, search) || Contains(x.Customer, search) || Contains(x.EventType, search));
-            if (useDate) filtered = filtered.Where(x => x.CollectionDate.Date == selectedDate.Date);
-
-            List<CollectionViewModel> result = filtered.OrderBy(x => x.CollectionDate).ThenBy(x => x.CollectionTime).ToList();
-            rptCollections.DataSource = result;
-            rptCollections.DataBind();
-            pnlNoCollections.Visible = result.Count == 0;
-            pnlCollectionMessage.Visible = !string.IsNullOrEmpty(Convert.ToString(ViewState["CollectionUpdateMessage"]));
-            litCollectionMessage.Text = Convert.ToString(ViewState["CollectionUpdateMessage"]);
-            SetActiveTab(status);
+            if (collected != null)
+                collected.Visible = completed;
         }
 
-        private static bool Contains(string value, string search)
+        protected void FilterAll_Click(object sender, EventArgs e)
         {
-            return (value ?? string.Empty).IndexOf(search, StringComparison.OrdinalIgnoreCase) >= 0;
-        }
-
-        private void SelectStatus(string status)
-        {
-            ViewState[StatusViewStateKey] = status;
+            ViewState[FilterKey] = "All";
             BindCollections();
         }
 
-        protected void FilterAll_Click(object sender, EventArgs e) { SelectStatus(string.Empty); }
-        protected void FilterPending_Click(object sender, EventArgs e) { SelectStatus("Pending"); }
-        protected void FilterCompleted_Click(object sender, EventArgs e) { SelectStatus("Completed"); }
-        protected void Search_Click(object sender, EventArgs e) { BindCollections(); }
-
-        protected void rptCollections_ItemCommand(object source, RepeaterCommandEventArgs e)
+        protected void FilterPending_Click(object sender, EventArgs e)
         {
-            string bookingId = Convert.ToString(e.CommandArgument);
-            ViewState["CollectionUpdateMessage"] = string.Empty;
-            if (e.CommandName == "ViewDetails")
-            {
-                Dictionary<string, string> statuses = Session[StatusSessionKey] as Dictionary<string, string>;
-                CollectionViewModel collection = GetDemoCollections().FirstOrDefault(x => x.BookingId == bookingId);
-                string savedStatus;
-                if (collection != null && statuses != null && statuses.TryGetValue(bookingId, out savedStatus)) collection.Status = savedStatus;
-                if (collection != null) ShowCollectionDetails(collection);
-            }
-            else if (e.CommandName == "MarkCollected")
-            {
-                CollectionViewModel collection = GetDemoCollections().FirstOrDefault(x => x.BookingId == bookingId);
-                Dictionary<string, string> statuses = Session[StatusSessionKey] as Dictionary<string, string>;
-                if (statuses == null) statuses = new Dictionary<string, string>();
-                string currentStatus = collection == null ? string.Empty : collection.Status;
-                string savedStatus;
-                if (collection != null && statuses.TryGetValue(bookingId, out savedStatus)) currentStatus = savedStatus;
-
-                if (collection != null && currentStatus == "Pending" && collection.EventEndAt <= DateTime.Now)
-                {
-                    statuses[bookingId] = "Collected";
-                    Session[StatusSessionKey] = statuses;
-                    ViewState["CollectionUpdateMessage"] = bookingId + " has been marked as collected.";
-                }
-                else if (collection != null && currentStatus == "Pending")
-                {
-                    ViewState["CollectionUpdateMessage"] = "This collection can be completed after the event ends at " + collection.EventEndAt.ToString("dd MMM yyyy, HH:mm") + ".";
-                }
-            }
+            ViewState[FilterKey] = "Pending";
             BindCollections();
         }
 
-        private void ShowCollectionDetails(CollectionViewModel collection)
+        protected void FilterCollected_Click(object sender, EventArgs e)
         {
-            litCollectionDetailBooking.Text = HttpUtility.HtmlEncode(collection.BookingId + " · " + collection.EventType);
-            litCollectionDetailCustomer.Text = HttpUtility.HtmlEncode(collection.Customer);
-            litCollectionDetailPhone.Text = HttpUtility.HtmlEncode(collection.ContactPhone);
-            litCollectionDetailEvent.Text = HttpUtility.HtmlEncode(collection.EventType);
-            litCollectionDetailEnd.Text = HttpUtility.HtmlEncode(collection.EventEndAt.ToString("dd MMM yyyy, HH:mm"));
-            litCollectionDetailPickup.Text = HttpUtility.HtmlEncode(collection.CollectionDate.ToString("dd MMM yyyy") + " · " + collection.CollectionTime);
-            litCollectionDetailStatus.Text = HttpUtility.HtmlEncode(collection.Status);
-            litCollectionDetailAddress.Text = HttpUtility.HtmlEncode(collection.CollectionAddress);
-            litCollectionDetailInstructions.Text = HttpUtility.HtmlEncode(collection.CollectionNotes);
-            pnlCollectionPackageDetail.Visible = collection.IsPackage;
-            imgCollectionPackage.ImageUrl = collection.PackageImageUrl;
-            imgCollectionPackage.AlternateText = collection.PackageName;
-            litCollectionPackageName.Text = HttpUtility.HtmlEncode(collection.PackageName);
-            rptCollectionPackageItems.DataSource = collection.IsPackage ? collection.EquipmentItems : null;
-            rptCollectionPackageItems.DataBind();
-            rptCollectionDetailItems.Visible = !collection.IsPackage;
-            rptCollectionDetailItems.DataSource = collection.IsPackage ? null : collection.EquipmentItems;
-            rptCollectionDetailItems.DataBind();
-
-            Page.ClientScript.RegisterStartupScript(GetType(), "showCollectionDetails",
-                "window.addEventListener('load',function(){var m=document.getElementById('pnlCollectionDetailsModal');if(m&&window.bootstrap){bootstrap.Modal.getOrCreateInstance(m).show();}});", true);
+            ViewState[FilterKey] = "Collected";
+            BindCollections();
         }
 
-        protected bool CanMarkCollected(object value, object eventEndAt)
+        protected void Search_Click(object sender, EventArgs e)
         {
-            DateTime eventEnd;
-            return Convert.ToString(value) == "Pending" && DateTime.TryParse(Convert.ToString(eventEndAt), out eventEnd) && eventEnd <= DateTime.Now;
-        }
-
-        protected bool IsAwaitingEventEnd(object value, object eventEndAt)
-        {
-            DateTime eventEnd;
-            return Convert.ToString(value) == "Pending" && DateTime.TryParse(Convert.ToString(eventEndAt), out eventEnd) && eventEnd > DateTime.Now;
+            BindCollections();
         }
 
         protected void Clear_Click(object sender, EventArgs e)
         {
-            txtSearch.Text = string.Empty;
-            txtDate.Text = string.Empty;
-            ViewState[StatusViewStateKey] = string.Empty;
+            txtSearch.Text = String.Empty;
+            txtDate.Text = String.Empty;
+            ViewState[FilterKey] = "All";
             BindCollections();
         }
 
-        private void SetActiveTab(string status)
+        private void SetActiveTab(string filter)
         {
-            lnkAll.CssClass = "nav-link" + (string.IsNullOrEmpty(status) ? " active" : string.Empty);
-            lnkPending.CssClass = "nav-link" + (status == "Pending" ? " active" : string.Empty);
-            lnkCompleted.CssClass = "nav-link" + (status == "Completed" ? " active" : string.Empty);
+            lnkAll.CssClass = "nav-link" +
+                (filter == "All" ? " active" : String.Empty);
+            lnkPending.CssClass = "nav-link" +
+                (filter == "Pending" ? " active" : String.Empty);
+            lnkCollected.CssClass = "nav-link" +
+                (filter == "Collected" ? " active" : String.Empty);
         }
 
-        protected string StatusBadge(object value)
+        private string GetStatusCss(string status)
         {
-            string status = Convert.ToString(value);
-            if (status == "Completed" || status == "Collected") return "badge-success";
-            if (status == "Overdue") return "badge-danger";
-            return "badge-warning";
+            if (status == "Collected" || status == "Completed")
+                return "bg-success";
+
+            if (status == "Scheduled")
+                return "bg-primary";
+
+            return "bg-warning text-dark";
         }
 
     }

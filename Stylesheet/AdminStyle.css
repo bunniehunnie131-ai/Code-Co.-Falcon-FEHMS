@@ -1,9 +1,10 @@
 ﻿/* =========================================================
    SHARED ADMIN PAGE STYLES
-   Uses the variables already defined in Forte.css
+   Uses colours and standard controls from Forte.css
    ========================================================= */
 
 .admin-workspace {
+    box-sizing: border-box;
     width: 100%;
     min-width: 0;
     padding: clamp(14px, 1.8vw, 28px);
@@ -32,7 +33,7 @@
         color: var(--muted-text);
     }
 
-/* Panels and content containers */
+/* Panels */
 .admin-workspace .admin-panel,
 .admin-workspace .admin-dashboard-panel,
 .admin-workspace .admin-calendar-card,
@@ -53,10 +54,10 @@
 .admin-workspace .admin-dashboard-panel-heading,
 .admin-workspace .admin-panel-heading {
     display: flex;
+    min-height: 68px;
     align-items: center;
     justify-content: space-between;
     gap: 16px;
-    min-height: 68px;
     padding: 16px 20px;
     border-bottom: 1px solid var(--border-color);
 }
@@ -72,180 +73,10 @@
     padding: 18px 20px;
 }
 
-/* Search and filters */
-.admin-workspace .admin-filter-tabs {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 8px;
-    margin-bottom: 16px;
-}
-
-.admin-workspace .admin-filter-tab {
-    display: inline-flex;
-    min-height: 42px;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    padding: 9px 16px;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-small);
-    background: var(--surface-color);
-    color: var(--text-color);
-    font-weight: 600;
-    text-decoration: none;
-    white-space: nowrap;
-    transition: background-color 0.18s ease, border-color 0.18s ease;
-}
-
-    .admin-workspace .admin-filter-tab:hover {
-        border-color: var(--primary-color);
-        background: var(--background-color);
-        color: var(--primary-color);
-    }
-
-    .admin-workspace .admin-filter-tab.active {
-        border-color: var(--primary-color);
-        background: var(--primary-color);
-        color: var(--white);
-    }
-
-.admin-workspace .form-control,
-.admin-workspace .form-select {
-    min-height: 42px;
-    border-color: var(--border-color);
-    border-radius: var(--radius-small);
-    color: var(--text-color);
-}
-
-    .admin-workspace .form-control:focus,
-    .admin-workspace .form-select:focus {
-        border-color: var(--primary-light);
-        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.14);
-    }
-
-/* Tables: clear row and column lines with a bottom scrollbar when needed */
-.admin-workspace .table-responsive {
-    width: 100%;
-    min-width: 0;
-    margin: 0;
-    overflow-x: auto;
-    overflow-y: hidden;
-    overscroll-behavior-x: contain;
-    scrollbar-gutter: stable;
-    border: 1px solid var(--border-color);
-    border-radius: var(--radius-medium);
-    background: var(--surface-color);
-}
-
-.admin-workspace .admin-data-table {
-    width: 100%;
-    min-width: 900px;
-    margin: 0;
-    border-collapse: collapse;
-    color: var(--text-color);
-}
-
-    .admin-workspace .admin-data-table th,
-    .admin-workspace .admin-data-table td {
-        padding: 13px 14px;
-        vertical-align: middle;
-        border: 1px solid var(--border-color);
-    }
-
-    .admin-workspace .admin-data-table th {
-        background: var(--background-color);
-        color: var(--secondary-color);
-        font-size: 0.86rem;
-        font-weight: 700;
-        white-space: nowrap;
-    }
-
-    .admin-workspace .admin-data-table td {
-        background: var(--surface-color);
-        font-size: 0.9rem;
-        overflow-wrap: anywhere;
-    }
-
-    .admin-workspace .admin-data-table tbody tr:hover td {
-        background: rgba(30, 58, 138, 0.035);
-    }
-
-/* Give wider tables room; the wrapper provides horizontal scrolling */
-.admin-workspace-bookings .admin-data-table {
-    min-width: 1180px;
-}
-
-.admin-workspace-inventory .admin-data-table {
-    min-width: 1050px;
-}
-
-.admin-workspace-customers .admin-data-table,
-.admin-workspace-staff .admin-data-table,
-.admin-workspace-packages .admin-data-table {
-    min-width: 1000px;
-}
-
-.admin-workspace-assignment .admin-data-table {
-    min-width: 1450px;
-    table-layout: fixed;
-}
-
-    .admin-workspace-assignment .admin-data-table th,
-    .admin-workspace-assignment .admin-data-table td {
-        padding: 14px 12px;
-    }
-
-.admin-workspace-assignment .admin-assignment-staff {
-    min-width: 180px;
-}
-
-/* Status badges */
-.admin-workspace .badge-success {
-    background: var(--success-light);
-    color: #166534;
-}
-
-.admin-workspace .badge-warning {
-    background: var(--warning-light);
-    color: #92400e;
-}
-
-.admin-workspace .badge-danger {
-    background: var(--danger-light);
-    color: #991b1b;
-}
-
-.admin-workspace .badge-forte {
-    background: var(--info-light);
-    color: var(--primary-color);
-}
-
-/* Row action buttons */
-.admin-workspace .admin-icon-button {
-    display: inline-flex;
-    width: 38px;
-    height: 36px;
-    align-items: center;
-    justify-content: center;
-    padding: 0;
-    border-color: var(--border-color);
-    color: var(--primary-color);
-}
-
-    .admin-workspace .admin-icon-button:hover {
-        border-color: var(--primary-color);
-        background: var(--primary-color);
-        color: var(--white);
-    }
-
-.admin-workspace .admin-assign-button {
-    min-width: 84px;
-    white-space: nowrap;
-}
-
-/* Dashboard summary cards */
+/* Dashboard cards */
 .admin-workspace .admin-stat-card {
     display: flex;
+    min-width: 0;
     min-height: 96px;
     height: 100%;
     align-items: center;
@@ -273,6 +104,7 @@
     .admin-workspace .admin-stat-card strong {
         color: var(--primary-color);
         font-size: 1.55rem;
+        font-weight: 700;
         line-height: 1.2;
     }
 
@@ -281,7 +113,7 @@
         font-size: 0.86rem;
     }
 
-/* Dashboard list-style tables */
+/* Dashboard list and chart */
 .admin-workspace .admin-dashboard-list-head,
 .admin-workspace .admin-dashboard-list-row {
     display: grid;
@@ -301,6 +133,7 @@
 .admin-workspace .admin-dashboard-list-row {
     min-height: 50px;
     border-top: 1px solid var(--border-light);
+    color: var(--text-color);
     font-size: 0.88rem;
 }
 
@@ -315,7 +148,6 @@
     text-align: center;
 }
 
-/* Dashboard revenue chart */
 .admin-workspace .admin-chart {
     display: flex;
     min-height: 230px;
@@ -358,8 +190,270 @@
     background: var(--primary-color);
 }
 
-/* Booking calendar */
+/* Filter tabs */
+.admin-workspace .admin-filter-tabs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-bottom: 16px;
+}
+
+.admin-workspace .admin-filter-tab {
+    display: inline-flex;
+    min-height: 42px;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 9px 16px;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-small);
+    background: var(--surface-color);
+    color: var(--text-color);
+    font-weight: 600;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+    .admin-workspace .admin-filter-tab:hover {
+        border-color: var(--primary-color);
+        background: var(--background-color);
+        color: var(--primary-color);
+    }
+
+    .admin-workspace .admin-filter-tab.active {
+        border-color: var(--primary-color);
+        background: var(--primary-color);
+        color: var(--white);
+    }
+
+/* Tables: scoped override for Forte.css mobile table behaviour */
+.admin-workspace .table-responsive {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    overflow-x: auto;
+    overflow-y: hidden;
+    overscroll-behavior-x: contain;
+    scrollbar-gutter: auto;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius-medium);
+    background: var(--surface-color);
+}
+
+.admin-workspace .admin-data-table {
+    display: table;
+    width: 100%;
+    min-width: 900px;
+    margin: 0;
+    border-collapse: collapse;
+    color: var(--text-color);
+}
+
+    .admin-workspace .admin-data-table th,
+    .admin-workspace .admin-data-table td {
+        padding: 13px 14px;
+        border: 1px solid var(--border-color);
+        vertical-align: middle;
+    }
+
+    .admin-workspace .admin-data-table th {
+        background: var(--background-color);
+        color: var(--secondary-color);
+        font-size: 0.86rem;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    .admin-workspace .admin-data-table td {
+        background: var(--surface-color);
+        font-size: 0.9rem;
+        overflow-wrap: anywhere;
+    }
+
+    .admin-workspace .admin-data-table tbody tr:hover td {
+        background: rgba(30, 58, 138, 0.035);
+    }
+
+/* Table widths by page */
+.admin-workspace-bookings .admin-data-table {
+    min-width: 1180px;
+}
+
+.admin-workspace-inventory .admin-data-table {
+    min-width: 1050px;
+}
+
+.admin-workspace-staff .admin-data-table {
+    min-width: 1000px;
+}
+
+.admin-workspace-assignment .admin-data-table {
+    min-width: 1450px;
+    table-layout: fixed;
+}
+
+    .admin-workspace-assignment .admin-data-table th,
+    .admin-workspace-assignment .admin-data-table td {
+        padding: 14px 12px;
+    }
+
+.admin-workspace-assignment .admin-assignment-staff {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+}
+
+.admin-workspace-assignment .admin-assignment-table th:nth-child(8),
+.admin-workspace-assignment .admin-assignment-table td:nth-child(8) {
+    width: 250px;
+}
+
+.admin-workspace-assignment .admin-assignment-table th:nth-child(9),
+.admin-workspace-assignment .admin-assignment-table td:nth-child(9) {
+    width: 140px;
+}
+
+.admin-workspace-assignment .admin-assignment-table td:last-child {
+    white-space: nowrap;
+}
+
+/* Customer table */
+.admin-workspace-customers .table-responsive {
+    padding: 0;
+    scrollbar-gutter: auto;
+}
+
+.admin-workspace-customers .admin-data-table {
+    display: table;
+    width: 100%;
+    min-width: 0;
+    max-width: 100%;
+    margin: 0;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+    .admin-workspace-customers .admin-data-table th,
+    .admin-workspace-customers .admin-data-table td {
+        white-space: normal;
+        overflow-wrap: anywhere;
+    }
+
+/* Customer action button sizing only; colours come from Forte.css */
+.admin-workspace-customers .admin-customer-action {
+    display: inline-flex;
+    min-width: 58px;
+    min-height: 34px;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 9px;
+    font-size: 0.8rem;
+    line-height: 1.2;
+    text-decoration: none;
+    white-space: nowrap;
+}
+
+/* Align customer and package filter rows */
+.admin-workspace-customers .customer-search-row,
+.admin-workspace-packages .package-search-row {
+    align-items: center;
+}
+
+/* Package table: prevent narrow price and action columns */
+.admin-workspace-packages .table-responsive {
+    padding: 0;
+    scrollbar-gutter: auto;
+}
+
+.admin-workspace-packages .admin-data-table {
+    display: table;
+    width: 100%;
+    min-width: 1100px;
+    margin: 0;
+    table-layout: fixed;
+    border-collapse: collapse;
+}
+
+    .admin-workspace-packages .admin-data-table th:nth-child(1) {
+        width: 9%;
+    }
+
+    .admin-workspace-packages .admin-data-table th:nth-child(2) {
+        width: 20%;
+    }
+
+    .admin-workspace-packages .admin-data-table th:nth-child(3) {
+        width: 31%;
+    }
+
+    .admin-workspace-packages .admin-data-table th:nth-child(4) {
+        width: 12%;
+    }
+
+    .admin-workspace-packages .admin-data-table th:nth-child(5) {
+        width: 10%;
+    }
+
+    .admin-workspace-packages .admin-data-table th:nth-child(6) {
+        width: 8%;
+    }
+
+    .admin-workspace-packages .admin-data-table th:nth-child(7) {
+        width: 10%;
+    }
+
+    .admin-workspace-packages .admin-data-table td:nth-child(4) {
+        white-space: nowrap;
+    }
+
+/* Compact action controls; their colours come from Forte.css */
+.admin-workspace .admin-icon-button {
+    display: inline-flex;
+    width: 38px;
+    height: 36px;
+    min-height: 36px;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+}
+
+.admin-workspace-packages .admin-package-action {
+    display: inline-flex;
+    min-width: 58px;
+    min-height: 34px;
+    align-items: center;
+    justify-content: center;
+    padding: 5px 8px;
+    font-size: 0.8rem;
+    line-height: 1.2;
+    white-space: nowrap;
+}
+
+/* Inventory thumbnails */
+.admin-workspace .admin-product-thumb {
+    width: 48px;
+    height: 42px;
+    flex: 0 0 48px;
+    object-fit: cover;
+    border: 1px solid var(--border-light);
+    border-radius: 6px;
+}
+
+/* Calendar */
+.admin-workspace .admin-calendar-card {
+    overflow: hidden;
+}
+
+    .admin-workspace .admin-calendar-card .card-body {
+        min-width: 0;
+        overflow-x: auto;
+    }
+
 .admin-workspace .admin-calendar {
+    display: table;
     width: 100%;
     min-width: 900px;
     table-layout: fixed;
@@ -384,7 +478,106 @@
         background: var(--surface-color);
     }
 
-/* Smaller screens */
+    /* Calendar Previous / Month / Next row */
+    .admin-workspace .admin-calendar > tbody > tr:first-child > td {
+        height: 56px;
+        padding: 0;
+        vertical-align: middle;
+        background: var(--surface-color);
+    }
+
+        .admin-workspace .admin-calendar > tbody > tr:first-child > td table {
+            width: 100%;
+            height: 56px;
+            table-layout: fixed;
+            border-collapse: collapse;
+        }
+
+            .admin-workspace .admin-calendar > tbody > tr:first-child > td table td {
+                height: 56px;
+                padding: 8px;
+                border: 0;
+                text-align: center;
+                vertical-align: middle;
+            }
+
+                .admin-workspace .admin-calendar > tbody > tr:first-child > td table td:first-child,
+                .admin-workspace .admin-calendar > tbody > tr:first-child > td table td:last-child {
+                    width: 25%;
+                }
+
+                .admin-workspace .admin-calendar > tbody > tr:first-child > td table td:nth-child(2) {
+                    width: 50%;
+                    font-weight: 700;
+                }
+
+.admin-workspace .admin-calendar-legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 20px;
+    margin-top: 14px;
+}
+
+    .admin-workspace .admin-calendar-legend span {
+        display: inline-flex;
+        align-items: center;
+    }
+
+.admin-workspace .calendar-legend {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-right: 6px;
+    border-radius: 50%;
+}
+
+    .admin-workspace .calendar-legend.confirmed {
+        background: #198754;
+    }
+
+    .admin-workspace .calendar-legend.pending {
+        background: #f0ad00;
+    }
+
+    .admin-workspace .calendar-legend.cancelled {
+        background: #dc3545;
+    }
+
+.admin-workspace .admin-calendar .calendar-event {
+    display: block;
+    margin-top: 5px;
+    padding: 4px 6px;
+    border-radius: 5px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    line-height: 1.25;
+    overflow-wrap: anywhere;
+}
+
+    .admin-workspace .admin-calendar .calendar-event.confirmed {
+        border-left: 3px solid #198754;
+        background: #d1e7dd;
+        color: #146c43;
+    }
+
+    .admin-workspace .admin-calendar .calendar-event.pending {
+        border-left: 3px solid #f0ad00;
+        background: #fff3cd;
+        color: #664d03;
+    }
+
+    .admin-workspace .admin-calendar .calendar-event.cancelled {
+        border-left: 3px solid #dc3545;
+        background: #f8d7da;
+        color: #842029;
+    }
+
+.admin-workspace .admin-calendar td.admin-calendar-booked {
+    background: #f8fafc;
+}
+
+/* Responsive layout */
 @media (max-width: 767px) {
     .admin-workspace {
         padding: 12px;
@@ -408,34 +601,8 @@
         .admin-workspace .admin-data-table td {
             padding: 10px;
         }
-}
-.admin-workspace .admin-icon-button,
-.admin-workspace .admin-icon-button i {
-    color: var(--primary-color) !important;
-}
 
-    .admin-workspace .admin-icon-button:hover,
-    .admin-workspace .admin-icon-button:hover i {
-        color: var(--white) !important;
+    .admin-workspace-customers .admin-data-table {
+        min-width: 760px;
     }
-.admin-workspace-assignment .admin-assignment-table th:nth-child(8),
-.admin-workspace-assignment .admin-assignment-table td:nth-child(8) {
-    width: 250px;
-}
-
-.admin-workspace-assignment .admin-assignment-table th:nth-child(9),
-.admin-workspace-assignment .admin-assignment-table td:nth-child(9) {
-    width: 140px;
-}
-
-.admin-workspace-assignment .admin-assignment-staff {
-    display: block;
-    width: 100%;
-    min-width: 0;
-    max-width: 100%;
-    box-sizing: border-box;
-}
-
-.admin-workspace-assignment .admin-assignment-table td:last-child {
-    white-space: nowrap;
 }
